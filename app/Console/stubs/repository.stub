@@ -1,0 +1,37 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: autoDump
+ * Year: DummyDate
+ */
+
+namespace Repository;
+
+use App\Models\DummyModel;
+use App\Repositories\Contracts\DummyClassInterface;
+use Repository\BaseRepository;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
+
+class DummyClass extends BaseRepository implements DummyClassInterface
+{
+
+     public function __construct(Application $app)
+     {
+         parent::__construct($app);
+
+     }
+
+    /**
+       * Instantiate model
+       *
+       * @param DummyModel $model
+       */
+
+    public function model()
+    {
+        return DummyModel::class;
+    }
+
+
+}

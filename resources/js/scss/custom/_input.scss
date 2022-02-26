@@ -1,0 +1,20 @@
+.form-control {
+	background-color: $athens-gray;
+	border-color: $athens-gray;
+
+	&:focus {
+		box-shadow: none !important;
+		border-color: $robins-egg-blue;
+		background-color: $athens-gray;
+	}
+}
+
+input[type='text'].form-control,
+input[type='password'].form-control,
+input[type='number'].form-control {
+	padding: 10px 16px;
+
+	&::placeholder {
+		font-weight: 500;
+	}
+}
