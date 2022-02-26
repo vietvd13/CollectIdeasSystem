@@ -95,7 +95,7 @@ class MakeControllerCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return app_path() . '\Console\stubs\controller.stub';
+        return app_path() . '/Console/stubs/controller.stub';
     }
 
     /**

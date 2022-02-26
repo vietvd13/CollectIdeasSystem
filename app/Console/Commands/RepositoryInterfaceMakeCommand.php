@@ -68,7 +68,7 @@ class RepositoryInterfaceMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return app_path() . '\Console\stubs\repositoryInterface.stub';
+        return app_path() . '/Console/stubs/repositoryInterface.stub';
     }
 
     /**

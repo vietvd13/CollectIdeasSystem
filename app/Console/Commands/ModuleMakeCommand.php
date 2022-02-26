@@ -137,7 +137,7 @@ class ModuleMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return app_path() . '\Console\stubs\repository.stub';
+        return app_path() . '/Console/stubs/repository.stub';
     }
     /**
      * Get the default namespace for the class.
