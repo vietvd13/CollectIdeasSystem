@@ -9,14 +9,14 @@ use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputOption;
 
 
-class MakeControllerCommand extends BaseCommand
+class ServiceMakeCommand extends BaseCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'make:controllers';
+    protected $name = 'make:service';
 
     /**
      * The console command description.
@@ -30,7 +30,7 @@ class MakeControllerCommand extends BaseCommand
      *
      * @var string
      */
-    protected $type = 'Controller';
+    protected $type = 'Service';
 
     protected $className = '';
     protected $fileName = '';
@@ -48,7 +48,7 @@ class MakeControllerCommand extends BaseCommand
         $this->files->put($path, $this->buildClass($this->fileName));
         $this->info($this->type.' created successfully.');
 
-        $this->line("<info>Created Controller :</info> $this->fileName");
+        $this->line("<info>Created Service :</info> $this->fileName");
     }
 
     /**
@@ -84,7 +84,7 @@ class MakeControllerCommand extends BaseCommand
         $nameSlug = Str::of($this->className)->kebab();
         $nameSlug = Str::slug($nameSlug,'_');
         $stub = str_replace('DummyRoute', $nameSlug, $stub);
-
+        $stub = str_replace('DummyAgrument', $this->argument('name'), $stub);
         return $stub;
     }
 
@@ -95,7 +95,7 @@ class MakeControllerCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return app_path() . '/Console/stubs/controller.stub';
+        return app_path() . '/Console/stubs/service.stub';
     }
 
     /**
@@ -106,7 +106,7 @@ class MakeControllerCommand extends BaseCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Http\Controllers\Api';
+        return $rootNamespace.'\Services';
     }
 
     /**
@@ -117,7 +117,7 @@ class MakeControllerCommand extends BaseCommand
     protected function getOptions()
     {
         return [
-            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the repository already exists.'],
+            ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the service already exists.'],
         ];
     }
 }

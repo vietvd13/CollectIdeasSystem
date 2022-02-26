@@ -14,7 +14,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
-
 abstract class BaseRepository implements BaseRepositoryInterface
 {
     /**

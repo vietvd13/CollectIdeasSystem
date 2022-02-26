@@ -91,7 +91,7 @@ class MakeResourceCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return app_path() . '\Console\stubs\resource.stub';
+        return app_path() . '/Console/stubs/resource.stub';
     }
 
     /**

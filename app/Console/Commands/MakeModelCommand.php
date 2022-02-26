@@ -77,7 +77,7 @@ class MakeModelCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return app_path() . '\Console\stubs\model.stub';
+        return app_path() . '/Console/stubs/model.stub';
     }
 
     /**
