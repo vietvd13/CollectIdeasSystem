@@ -1,22 +1,22 @@
 <?php
 /**
- * Created by TienNamNguyen.
- * User: namnt
- * Year: DummyDate
+ * Created by PhpStorm.
+ * User: autoDump
+ * Year: 2022-02-26
  */
 
-namespace DummyNamespace;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class DummyClass extends Model
+class Idea extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'DummyTable';
+    protected $table = 'ideas';
 
     protected $fillable = [];
 

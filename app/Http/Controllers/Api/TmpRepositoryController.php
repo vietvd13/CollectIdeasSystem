@@ -1,38 +1,38 @@
 <?php
 /**
- * Created by TienNamNguyen.
- * User: namnt
- * Year: DummyDate
+ * Created by PhpStorm.
+ * User: autoDump
+ * Year: 2022-02-26
  */
 
-namespace DummyNamespace;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DummyNameRequest;
-use App\Repositories\Contracts\DummyNameRepositoryInterface;
+use App\Http\Requests\TmpRepositoryRequest;
+use App\Repositories\Contracts\TmpRepositoryRepositoryInterface;
 use App\Http\Resources\BaseResource;
-use App\Http\Resources\DummyNameResource;
+use App\Http\Resources\TmpRepositoryResource;
 use Illuminate\Http\Request;
 
-class DummyClass extends Controller
+class TmpRepositoryController extends Controller
 {
 
      /**
      * var Repository
      */
-    protected $service;
+    protected $repository;
 
-    public function __construct(DummyNameServiceInterface $service)
+    public function __construct(TmpRepositoryRepositoryInterface $repository)
     {
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     /**
      * @OA\Get(
-     *   path="/api/DummyRoute",
-     *   tags={"DummyName"},
-     *   summary="List DummyRoute",
-     *   operationId="DummyRoute_index",
+     *   path="/api/tmp_repository",
+     *   tags={"TmpRepository"},
+     *   summary="List tmp_repository",
+     *   operationId="tmp_repository_index",
      *   @OA\Response(
      *     response=200,
      *     description="Send request success",
@@ -69,7 +69,7 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(DummyNameRequest $request)
+    public function index(TmpRepositoryRequest $request)
     {
         $data = $this->repository->paginate($request->per_page);
         return $this->responseJson(200, BaseResource::collection($data));
@@ -77,10 +77,10 @@ class DummyClass extends Controller
 
     /**
      * @OA\Post(
-     *   path="/api/DummyRoute",
-     *   tags={"DummyName"},
-     *   summary="Add new DummyRoute",
-     *   operationId="DummyRoute_create",
+     *   path="/api/tmp_repository",
+     *   tags={"TmpRepository"},
+     *   summary="Add new tmp_repository",
+     *   operationId="tmp_repository_create",
      *   @OA\Parameter(name="name", in="query", required=true,
      *     @OA\Schema(type="string"),
      *   ),
@@ -98,11 +98,11 @@ class DummyClass extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function store(DummyNameRequest $request)
+    public function store(TmpRepositoryRequest $request)
     {
         try {
             $data = $this->repository->create($request->all());
-            return $this->responseJson(200, new DummyNameResource($data));
+            return $this->responseJson(200, new TmpRepositoryResource($data));
         } catch (\Exception $e) {
             throw $e;
         }
@@ -110,10 +110,10 @@ class DummyClass extends Controller
 
     /**
      * @OA\Get(
-     *   path="/api/DummyRoute/{id}",
-     *   tags={"DummyName"},
-     *   summary="Detail DummyName",
-     *   operationId="DummyRoute_show",
+     *   path="/api/tmp_repository/{id}",
+     *   tags={"TmpRepository"},
+     *   summary="Detail TmpRepository",
+     *   operationId="tmp_repository_show",
      *   @OA\Parameter(
      *     name="id",
      *     in="path",
@@ -156,10 +156,10 @@ class DummyClass extends Controller
 
     /**
      * @OA\Put(
-     *   path="/api/DummyRoute/{id}",
-     *   tags={"DummyName"},
-     *   summary="Update DummyName",
-     *   operationId="DummyRoute_update",
+     *   path="/api/tmp_repository/{id}",
+     *   tags={"TmpRepository"},
+     *   summary="Update TmpRepository",
+     *   operationId="tmp_repository_update",
      *   @OA\Parameter(
      *     name="id",
      *     in="path",
@@ -203,7 +203,7 @@ class DummyClass extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(DummyNameRequest $request, $id)
+    public function update(TmpRepositoryRequest $request, $id)
     {
         $attributes = $request->except([]);
         $data = $this->repository->update($attributes, $id);
@@ -212,10 +212,10 @@ class DummyClass extends Controller
 
     /**
      * @OA\Delete(
-     *   path="/api/DummyRoute/{id}",
-     *   tags={"DummyName"},
-     *   summary="Delete DummyName",
-     *   operationId="DummyRoute_delete",
+     *   path="/api/tmp_repository/{id}",
+     *   tags={"TmpRepository"},
+     *   summary="Delete TmpRepository",
+     *   operationId="tmp_repository_delete",
      *   @OA\Parameter(
      *      name="id",
      *      in="path",

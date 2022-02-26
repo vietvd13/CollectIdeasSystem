@@ -1,19 +1,19 @@
 <?php
 /**
- * Created by TienNamNguyen.
- * User: namnt
- * Year: DummyDate
+ * Created by PhpStorm.
+ * User: autoDump
+ * Year: 2022-02-26
  */
 
 namespace Repository;
 
-use App\Models\DummyModel;
-use App\Repositories\Contracts\DummyClassInterface;
+use App\Models\TmpRepository;
+use App\Repositories\Contracts\TmpRepositoryRepositoryInterface;
 use Repository\BaseRepository;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 
-class DummyClass extends BaseRepository implements DummyClassInterface
+class TmpRepositoryRepository extends BaseRepository implements TmpRepositoryRepositoryInterface
 {
 
      public function __construct(Application $app)
@@ -25,12 +25,12 @@ class DummyClass extends BaseRepository implements DummyClassInterface
     /**
        * Instantiate model
        *
-       * @param DummyModel $model
+       * @param TmpRepository $model
        */
 
     public function model()
     {
-        return DummyModel::class;
+        return TmpRepository::class;
     }
 
 

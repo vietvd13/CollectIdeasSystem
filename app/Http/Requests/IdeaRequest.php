@@ -1,16 +1,16 @@
 <?php
 /**
- * Created by TienNamNguyen.
- * User: namnt
- * Year: DummyDate
+ * Created by PhpStorm.
+ * User: autoDump
+ * Year: 2022-02-26
  */
 
-namespace DummyNamespace;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
 
-class DummyClass extends FormRequest
+class IdeaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

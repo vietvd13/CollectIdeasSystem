@@ -1,13 +1,13 @@
 <?php
 /**
- * Created by TienNamNguyen.
- * User: namnt
- * Year: DummyDate
+ * Created by PhpStorm.
+ * User: autoDump
+ * Year: 2022-02-26
  */
 
-namespace DummyNamespace;
+namespace App\Http\Resources;
 
-class DummyClass extends BaseResource
+class TmpRepositoryResource extends BaseResource
 {
     /**
      * Transform the resource into an array.

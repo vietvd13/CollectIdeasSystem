@@ -93,7 +93,7 @@ class MakeRequestCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return app_path() . '\Console\stubs\request.stub';
+        return app_path() . '/Console/stubs/request.stub';
     }
 
     /**
