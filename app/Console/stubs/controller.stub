@@ -1,7 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: autoDump
+ * Created by TienNamNguyen.
+ * User: namnt
  * Year: DummyDate
  */
 
@@ -20,11 +20,11 @@ class DummyClass extends Controller
      /**
      * var Repository
      */
-    protected $repository;
+    protected $service;
 
-    public function __construct(DummyNameRepositoryInterface $repository)
+    public function __construct(DummyNameServiceInterface $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
