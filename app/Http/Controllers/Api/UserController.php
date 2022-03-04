@@ -198,7 +198,37 @@ class UserController extends Controller
      *     description="Send request success",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":200,"data":{"id": 1,"name":"......"}}
+     *      example={
+     *        "status": 200,
+     *       "data": {
+     *           "status": 200,
+     *           "profile": {
+     *               "id": 1,
+     *               "name": "Admin",
+     *               "email": "admin@gmail.com",
+     *               "email_verified_at": "2022-03-01T17:07:32.000000Z",
+     *               "created_at": "2022-03-01T17:07:32.000000Z",
+     *               "updated_at": "2022-03-01T17:07:32.000000Z",
+     *               "roles": {
+     *                   {
+     *                       "id": 4,
+     *                       "name": "ADMIN",
+     *                       "guard_name": "api",
+     *                       "created_at": "2022-03-01T17:07:32.000000Z",
+     *                       "updated_at": "2022-03-01T17:07:32.000000Z",
+     *                       "pivot": {
+     *                           "model_id": 1,
+     *                           "role_id": 4,
+     *                           "model_type": "App\\Models\\User"
+     *                       }
+     *                   }
+     *               }
+     *           },
+     *           "roles": {
+     *               "ADMIN"
+     *           }
+     *       }
+     *   }
      *     )
      *   ),
      *   @OA\Response(
@@ -219,7 +249,7 @@ class UserController extends Controller
     {
         try {
             $user = $this->service->find($id);
-            return $this->responseJson(200, new UserResource());
+            return $this->responseJson(200, new UserResource($user));
         } catch (\Exception $e) {
             throw $e;
         }
