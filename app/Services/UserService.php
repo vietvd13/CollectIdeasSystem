@@ -24,7 +24,15 @@ class UserService extends BaseService implements UserServiceInterface
     {
         $user = $this->repository->find($id);
         if ($user) {
-
+            return [
+                'status' => 200,
+                'profile' => $user,
+                'roles' => $user->getRoleNames()
+            ];
         }
+        return [
+            'status' => 404,
+            'message' => ERROR_USER_NOT_FOUND
+        ];
     }
 }
