@@ -7,7 +7,7 @@
 
 namespace App\Http\Resources;
 
-class AuthResource extends BaseResource
+class UserResource extends BaseResource
 {
     /**
      * Transform the resource into an array.
