@@ -19,6 +19,15 @@ interface BaseServiceInterface
     public function all($columns = ['*']);
 
     /**
+     * Retrieve find 1 data
+     *
+     * @param array $columns
+     *
+     * @return mixed
+     */
+    public function find($id);
+
+    /**
      * Retrieve all data, paginated
      *
      * @param null $limit
