@@ -75,6 +75,7 @@
 <script>
 	import Logo from '@/assets/images/student.png';
 	import { getCSRF } from '@/api/modules/auth';
+	import { setRoutes } from '@/utils/setRoutes';
 
 	const urlAPI = {
 		urlGetCSRF: '/api/csrf-cookie'
@@ -107,6 +108,17 @@
 						this.$store
 							.dispatch('auth/doLogin', Account)
 							.then(() => {
+								const ROLES = this.$store.getters.roles;
+
+								const accessRoutes = this.$store.dispatch(
+									'permission/generateRoutes',
+									{
+										roles: ROLES,
+										permissions: []
+									}
+								);
+
+								setRoutes(accessRoutes);
 								this.$router.push('/');
 							})
 							.catch(() => {
