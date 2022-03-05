@@ -1,7 +1,5 @@
 import axios from 'axios';
 import i18n from '@/lang';
-import router from '@/router';
-import { getToken } from '@/utils/handleToken';
 import { getLanguage } from '@/lang/helper/getLang';
 import { MakeToast } from '@/toast/toastMessage';
 
@@ -14,16 +12,7 @@ const service = axios.create({
 
 service.interceptors.request.use(
 	config => {
-		const token = getToken();
 		config.headers['Accept-Language'] = getLanguage();
-
-		if (token) {
-			config.headers['Authorization'] = token;
-		} else {
-			if (router.currentRoute.path !== '/login') {
-				router.push({ path: '/login' });
-			}
-		}
 
 		return config;
 	},
