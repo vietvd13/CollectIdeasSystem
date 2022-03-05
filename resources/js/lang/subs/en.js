@@ -19,7 +19,14 @@ export default {
 		TITLE: 'Login',
 		PLACEHOLDER_ACCOUNT: 'Enter your account',
 		PLACEHOLDER_PASSWORD: 'Enter your password',
-		BUTTON_LOGIN: 'Login'
+		BUTTON_LOGIN: 'Login',
+		LOGIN_SUCCESS: 'Successful login',
+		LOGIN_ERROR: 'You have failed to login'
+	},
+	LOGOUT: {
+		TEXT_LOGOUT: 'Logout',
+		LOGOUT_SUCCESS: 'You have successfully logged out',
+		LOGOUT_ERROR: 'You have failed to log out'
 	},
 	PAGE_NOT_FOUND: {
 		DETAIL: "We can't seem to find the page you're looking for",
