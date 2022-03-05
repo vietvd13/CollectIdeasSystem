@@ -11,9 +11,9 @@
 		"postinstall": "npm run prod",
 		"prepare": "husky install"
 	},
-    "lint-staged": {
-        "**/*": "prettier --write --ignore-unknown"
-    },
+	"lint-staged": {
+		"**/*": "prettier --write --ignore-unknown"
+	},
 	"devDependencies": {
 		"@popperjs/core": "^2.10.2",
 		"axios": "^0.21",

@@ -5,9 +5,20 @@ Vue.use(VueRouter);
 
 import Login from './modules/login';
 import errorRoute from './modules/error';
+import AccountManagement from './modules/account';
+import Layout from '@/layout';
 
 export const constantRoutes = [
+	{
+		path: '/',
+		name: 'Dashboard',
+		meta: {
+			title: 'Dashboard'
+		},
+		component: Layout
+	},
 	Login,
+	AccountManagement,
 	errorRoute,
 	{
 		path: '*',
