@@ -9,7 +9,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\User;
 class UserRequest extends FormRequest
 {
     /**
@@ -47,7 +47,11 @@ class UserRequest extends FormRequest
         }
         if(Route::getCurrentRoute()->getActionMethod() == 'store'){
             return  [
-
+                User::NAME => 'required|string',
+                User::EMAIL => 'required|email',
+                User::PASSWORD => 'required|unique:users|regex:/(^[a-zA-Z]+[a-zA-Z0-9\\-]*$)/u',
+                // User::BIRTH =>  ,
+                // User::ROLE
             ];
         }
      }

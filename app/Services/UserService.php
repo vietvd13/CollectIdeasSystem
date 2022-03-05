@@ -35,4 +35,9 @@ class UserService extends BaseService implements UserServiceInterface
             'message' => ERROR_USER_NOT_FOUND
         ];
     }
+
+    public function create(array $attributes)
+    {
+
+    }
 }
