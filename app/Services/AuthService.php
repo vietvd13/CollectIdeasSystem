@@ -23,7 +23,7 @@ class AuthService extends BaseService implements AuthServiceInterface
         $this->repository = $repository;
     }
 
-    public function login(string $email, string $password): array | null
+    public function login(string $email, string $password): ?array
     {
         if (Auth::attempt(["email" => $email, "password" => $password])) {
             if ($user = $this->repository->where(['email' => $email])->first()) {
