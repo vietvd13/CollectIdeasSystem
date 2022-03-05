@@ -74,6 +74,11 @@
 
 <script>
 	import Logo from '@/assets/images/student.png';
+	import { getCSRF } from '@/api/modules/auth';
+
+	const urlAPI = {
+		urlGetCSRF: '/api/csrf-cookie'
+	};
 
 	export default {
 		name: 'Login',
@@ -93,11 +98,24 @@
 				this.isProcess = true;
 
 				const Account = {
-					account: this.User.account || '',
+					email: this.User.account || '',
 					password: this.User.password || ''
 				};
 
-				console.log(Account);
+				getCSRF(urlAPI['urlGetCSRF'])
+					.then(() => {
+						this.$store
+							.dispatch('auth/doLogin', Account)
+							.then(() => {
+								this.$router.push('/');
+							})
+							.catch(() => {
+								console.log('ERROR: Do Login');
+							});
+					})
+					.catch(() => {
+						console.log('ERROR: Get CSRF');
+					});
 			},
 
 			handleShowPassword() {
