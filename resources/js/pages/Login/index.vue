@@ -104,10 +104,17 @@
 
 				getCSRF(urlAPI['urlGetCSRF'])
 					.then(() => {
-						this.$store.dispatch('auth/doLogin', Account);
+						this.$store
+							.dispatch('auth/doLogin', Account)
+							.then(() => {
+								this.$router.push('/');
+							})
+							.catch(() => {
+								console.log('ERROR: Do Login');
+							});
 					})
-					.catch(error => {
-						console.log(error);
+					.catch(() => {
+						console.log('ERROR: Get CSRF');
 					});
 			},
 

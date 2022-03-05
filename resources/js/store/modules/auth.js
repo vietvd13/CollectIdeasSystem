@@ -2,9 +2,28 @@ import { postLogin, getUser } from '@/api/modules/auth';
 import { isLogged, setLogged, removeToken } from '@/utils/auth';
 import { resetRouter } from '@/router';
 
-const state = {};
+const state = {
+	id: '',
+	name: '',
+	email: '',
+	token: isLogged(),
+	roles: []
+};
 
-const mutations = {};
+const mutations = {
+	SET_ID: (state, id) => {
+		state.id = id;
+	},
+	SET_NAME: (state, name) => {
+		state.name = name;
+	},
+	SET_EMAIL: (state, email) => {
+		state.email = email;
+	},
+	SET_ROLES: (state, roles) => {
+		state.roles = roles;
+	}
+};
 
 const actions = {
 	doLogin({ commit }, account) {
@@ -13,7 +32,16 @@ const actions = {
 
 			postLogin(URL, account)
 				.then(res => {
-					console.log(res);
+					if (res['status'] !== 200) {
+						reject();
+					}
+
+					const DATA = res['data'];
+
+					commit('SET_ID', DATA['profile']['id']);
+					commit('SET_NAME', DATA['profile']['name']);
+					commit('SET_EMAIL', DATA['profile']['email']);
+					commit('SET_ROLES', DATA['roles']);
 
 					setLogged('1');
 					resolve();
@@ -29,9 +57,18 @@ const actions = {
 
 			getUser(URL)
 				.then(res => {
-					const { data } = res;
+					if (res['status'] !== 200) {
+						reject();
+					}
 
-					resolve(data);
+					const DATA = res['data'];
+
+					commit('SET_ID', DATA['profile']['id']);
+					commit('SET_NAME', DATA['profile']['name']);
+					commit('SET_EMAIL', DATA['profile']['email']);
+					commit('SET_ROLES', DATA['roles']);
+
+					resolve(DATA);
 				})
 				.catch(err => {
 					reject(err);
@@ -41,6 +78,13 @@ const actions = {
 	doLogout({ commit }) {
 		removeToken();
 		resetRouter();
+	},
+	resetToken({ commit }) {
+		return new Promise(resolve => {
+			commit('SET_ROLES', []);
+			removeToken();
+			resolve();
+		});
 	}
 };
 

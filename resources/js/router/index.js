@@ -5,23 +5,22 @@ Vue.use(VueRouter);
 
 import Login from './modules/login';
 import errorRoute from './modules/error';
+import Dashboard from './modules/dashboard';
 import AccountManagement from './modules/account';
-import Layout from '@/layout';
 
 export const constantRoutes = [
+	Login,
 	{
 		path: '/',
-		name: 'Dashboard',
-		meta: {
-			title: 'Dashboard'
-		},
-		component: Layout
+		redirect: { name: 'Dashboard' },
+		hidden: true
 	},
-	Login,
+	Dashboard,
 	AccountManagement,
 	errorRoute,
 	{
 		path: '*',
+		hidden: true,
 		redirect: { name: 'PageNotFound' }
 	}
 ];
