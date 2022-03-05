@@ -76,6 +76,11 @@ const actions = {
 		});
 	},
 	doLogout({ commit }) {
+		commit('SET_ID', '');
+		commit('SET_NAME', '');
+		commit('SET_EMAIL', '');
+		commit('SET_ROLES', []);
+
 		removeToken();
 		resetRouter();
 	},
