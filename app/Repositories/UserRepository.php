@@ -1,19 +1,19 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: autoDump
- * Year: 2022-02-26
+ * Created by TienNamNguyen.
+ * User: namnt
+ * Year: 2022-03-01
  */
 
 namespace Repository;
 
-use App\Models\TmpRepository;
-use App\Repositories\Contracts\TmpRepositoryRepositoryInterface;
+use App\Models\User;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use Repository\BaseRepository;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 
-class TmpRepositoryRepository extends BaseRepository implements TmpRepositoryRepositoryInterface
+class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
 
      public function __construct(Application $app)
@@ -25,13 +25,11 @@ class TmpRepositoryRepository extends BaseRepository implements TmpRepositoryRep
     /**
        * Instantiate model
        *
-       * @param TmpRepository $model
+       * @param User $model
        */
 
     public function model()
     {
-        return TmpRepository::class;
+        return User::class;
     }
-
-
 }

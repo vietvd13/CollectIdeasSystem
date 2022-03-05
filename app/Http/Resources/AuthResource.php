@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: autoDump
- * Year: 2021-10-06
+ * Created by TienNamNguyen.
+ * User: namnt
+ * Year: 2022-03-01
  */
 
 namespace App\Http\Resources;

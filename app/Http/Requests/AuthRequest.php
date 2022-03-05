@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: autoDump
- * Year: 2022-02-26
+ * Created by TienNamNguyen.
+ * User: namnt
+ * Year: 2022-03-01
  */
 
 namespace App\Http\Requests;
@@ -10,7 +10,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
 
-class TmpRepositoryRequest extends FormRequest
+class AuthRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,9 +30,7 @@ class TmpRepositoryRequest extends FormRequest
     public function rules()
     {
           switch (Route::getCurrentRoute()->getActionMethod()){
-                case 'update':
-                    return $this->getCustomRule();
-                case 'store':
+                case 'login':
                     return $this->getCustomRule();
                 default:
                     return [];
@@ -40,14 +38,10 @@ class TmpRepositoryRequest extends FormRequest
     }
 
      public function getCustomRule(){
-        if(Route::getCurrentRoute()->getActionMethod() == 'update'){
-            return [
-
-            ];
-        }
-        if(Route::getCurrentRoute()->getActionMethod() == 'store'){
+        if(Route::getCurrentRoute()->getActionMethod() == 'login'){
             return  [
-
+                "email" => "required|string",
+                "password" => "required|string"
             ];
         }
      }

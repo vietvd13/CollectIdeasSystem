@@ -1,13 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: autoDump
- * Year: 2022-02-26
+ * Created by TienNamNguyen.
+ * User: namnt
+ * Year: 2022-03-01
  */
 
 namespace App\Http\Resources;
 
-class TmpRepositoryResource extends BaseResource
+class UserResource extends BaseResource
 {
     /**
      * Transform the resource into an array.
