@@ -1,0 +1,42 @@
+.account-management {
+    padding: 20px;
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__searching {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 20px;
+
+        &-filter {
+            width: 25%;
+        }
+        &-keyword {
+            width: 25%;
+            input {
+                background-color: inherit;
+                &:focus {
+                    background-color: inherit;
+                }
+            }
+        }
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+            &-filter {
+                width: 100%;
+            }
+            &-keyword {
+                width: 100%;
+            }
+        }
+    }
+    &__content {
+        table {
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+        }
+    }
+}
