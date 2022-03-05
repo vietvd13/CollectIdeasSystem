@@ -31,7 +31,7 @@ class UserController extends Controller
     /**
      * @OA\Infor(),
      * @OA\Get(
-     *   path="/api/user",
+     *   path="/api/users",
      *   tags={"User"},
      *   summary="List user",
      *   operationId="user_index",
@@ -147,7 +147,7 @@ class UserController extends Controller
     /**
      * @OA\Infor(),
      * @OA\Post(
-     *   path="/api/user",
+     *   path="/api/users",
      *   tags={"User"},
      *   summary="Add new user",
      *   operationId="user_create",
@@ -181,7 +181,7 @@ class UserController extends Controller
     /**
      * @OA\Infor(),
      * @OA\Get(
-     *   path="/api/user/{id}",
+     *   path="/api/users/{id}",
      *   tags={"User"},
      *   summary="Detail User",
      *   operationId="user_show",
@@ -258,7 +258,7 @@ class UserController extends Controller
     /**
      * @OA\Infor(),
      * @OA\Put(
-     *   path="/api/user/{id}",
+     *   path="/api/users/{id}",
      *   tags={"User"},
      *   summary="Update User",
      *   operationId="user_update",
@@ -315,7 +315,7 @@ class UserController extends Controller
     /**
      * @OA\Infor(),
      * @OA\Delete(
-     *   path="/api/user/{id}",
+     *   path="/api/users/{id}",
      *   tags={"User"},
      *   summary="Delete User",
      *   operationId="user_delete",
