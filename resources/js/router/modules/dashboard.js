@@ -4,7 +4,7 @@ const Dashboard = {
 	path: '/dashboard',
 	name: 'Dashboard',
 	meta: {
-		title: 'Dashboard'
+		title: 'ROUTER.DASHBOARD'
 	},
 	component: Layout,
 	redirect: {
@@ -15,7 +15,7 @@ const Dashboard = {
 			path: 'index',
 			name: 'DashboardIndex',
 			meta: {
-				title: 'Dashboard'
+				title: 'ROUTER.DASHBOARD'
 			},
 			component: () => import(/* webpackChunkName: "Dashboard" */ '@/pages/Dashboard/index')
 		}

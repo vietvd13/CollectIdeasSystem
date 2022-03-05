@@ -4,7 +4,7 @@ const AccountManagement = {
 	path: '/account-management',
 	name: 'AccountManagement',
 	meta: {
-		title: 'Account Management'
+		title: 'ROUTER.ACCOUNT_MANAGEMENT'
 	},
 	component: Layout,
 	redirect: {
@@ -15,7 +15,7 @@ const AccountManagement = {
 			path: 'list',
 			name: 'AccountManagementList',
 			meta: {
-				title: 'Account Management List'
+				title: 'ROUTER.ACCOUNT_MANAGEMENT'
 			},
 			component: () =>
 				import(

@@ -8,12 +8,24 @@
 			<b-navbar-nav>
 				<b-nav-item v-for="(item, index) in routes" :key="`router-${index}`">
 					<router-link :to="item['path']">
-						{{ item['meta']['title'] }}
+						{{ $t(item['meta']['title']) }}
 					</router-link>
 				</b-nav-item>
 			</b-navbar-nav>
 
 			<b-navbar-nav class="ml-auto">
+				<b-nav-item-dropdown right>
+					<template #button-content>
+						{{ $t('NAVBAR.LANGUAGE') }}
+					</template>
+					<b-dropdown-item href="#" @click="setLanguage('en')">
+						{{ $t('NAVBAR.ENGLISH') }}
+					</b-dropdown-item>
+					<b-dropdown-item href="#" @click="setLanguage('vn')">
+						{{ $t('NAVBAR.VIETNAMESE') }}
+					</b-dropdown-item>
+				</b-nav-item-dropdown>
+
 				<b-nav-item-dropdown right>
 					<template #button-content>
 						{{ name }}
@@ -26,6 +38,7 @@
 </template>
 
 <script>
+	import { MakeToast } from '@/toast/toastMessage';
 	export default {
 		name: 'Navbar',
 		computed: {
@@ -34,6 +47,28 @@
 			},
 			name() {
 				return this.$store.getters.name;
+			}
+		},
+		methods: {
+			setLanguage(lang) {
+				this.$store
+					.dispatch('app/setLanguage', lang)
+					.then(() => {
+						this.$i18n.locale = lang;
+
+						MakeToast({
+							variant: 'success',
+							title: this.$t('TOAST.SUCCESS'),
+							content: this.$t('I18N.CHANGE_LANGUAGE.SUCCESS')
+						});
+					})
+					.catch(() => {
+						MakeToast({
+							variant: 'error',
+							title: this.$t('TOAST.DANGER'),
+							content: this.$t('I18N.CHANGE_LANGUAGE.FAILED')
+						});
+					});
 			}
 		}
 	};
