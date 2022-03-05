@@ -12,6 +12,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface AuthServiceInterface extends BaseServiceInterface
 {
-    public function login(string $email, string $password): array | null;
-    public function authUser(User $user): array | null;
+    public function login(string $email, string $password): ?array;
+    public function authUser(User $user): ?array;
 }
