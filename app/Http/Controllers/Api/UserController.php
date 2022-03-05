@@ -12,6 +12,7 @@ use App\Http\Requests\UserRequest;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Http\Resources\BaseResource;
 use App\Http\Resources\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\Contracts\UserServiceInterface;
@@ -151,16 +152,31 @@ class UserController extends Controller
      *   tags={"User"},
      *   summary="Add new user",
      *   operationId="user_create",
-     *   @OA\Parameter(name="name", in="query", required=true,
-     *     @OA\Schema(type="string"),
+     * @OA\RequestBody(
+     *       @OA\MediaType(
+     *          mediaType="application/json",
+     *          example={
+     *       "name": "Nguyen Nam 2222",
+     *       "email": "namnt@gmail.com",
+     *       "password": "paSSWORD",
+     *       "birth": "2000-05-27",
+     *       "role": 2
+     *   },
+     *        @OA\Schema(
+     *            required={},
+     *            @OA\Property(
+     *              property="name",
+     *              format="string",
+     *            ),
+     *         )
+     *      )
      *   ),
-     *
      *   @OA\Response(
      *     response=200,
      *     description="Send request success",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":200,"data":{"id": 1,"name": "......"}}
+     *      example={"status":200}
      *     )
      *   ),
      *   security={},
@@ -171,7 +187,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         try {
-            $data = $this->repository->create($request->all());
+            $data = $this->service->create($request->all());
             return $this->responseJson(200, new UserResource($data));
         } catch (\Exception $e) {
             throw $e;
@@ -236,7 +252,7 @@ class UserController extends Controller
      *     description="Login false",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":401,"message":"Username or password invalid"}
+     *      example={"status":401,"message":"Username or password invalid"}
      *     )
      *   ),
      *   security={{"auth": {}}},
@@ -270,12 +286,17 @@ class UserController extends Controller
      *      type="string",
      *     ),
      *   ),
-     *   @OA\RequestBody(
+      * @OA\RequestBody(
      *       @OA\MediaType(
      *          mediaType="application/json",
-     *          example={"name":"string"},
-     *          @OA\Schema(
-     *            required={"name"},
+     *          example={
+     *       "name": "Nguyen Nam 2222",
+     *       "new_password": "new_paSSWORD",
+     *       "birth": "2000-05-27",
+     *       "role": 2
+     *   },
+     *        @OA\Schema(
+     *            required={},
      *            @OA\Property(
      *              property="name",
      *              format="string",
@@ -288,7 +309,7 @@ class UserController extends Controller
      *     description="Send request success",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":200,"data":{"id": 1,"name":  "............."}}
+     *      example={"status":200}
      *     ),
      *   ),
      *   @OA\Response(
@@ -296,7 +317,7 @@ class UserController extends Controller
      *     description="Access Deny permission",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":403,"message":"Access Deny permission"}
+     *      example={"status":403,"message":"Access Deny permission"}
      *     ),
      *   ),
      *   security={{"auth": {}}},
@@ -308,7 +329,7 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         $attributes = $request->except([]);
-        $data = $this->repository->update($attributes, $id);
+        $data = $this->service->update($attributes, $id);
         return $this->responseJson(200, new BaseResource($data));
     }
 
@@ -332,7 +353,7 @@ class UserController extends Controller
      *     description="Send request success",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":200,"data":"Send request success"}
+     *      example={"status":200}
      *     )
      *   ),
      *   security={{"auth": {}}},
@@ -343,7 +364,70 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->repository->delete($id);
+        $this->service->delete($id);
         return $this->responseJson(200, null, trans('messages.mes.delete_success'));
+    }
+
+
+    /**
+     * @OA\Infor(),
+     * @OA\Get(
+     *   path="/api/roles",
+     *   tags={"Role"},
+     *   summary="List Roles",
+     *   operationId="user_roles",
+     *   @OA\Response(
+     *     response=200,
+     *     description="Send request success",
+     *     @OA\MediaType(
+     *      mediaType="application/json",
+     *      example={
+     *       {
+     *           "id": 1,
+     *           "name": "QAM",
+     *           "guard_name": "api",
+     *           "created_at": "2022-03-05T18:01:41.000000Z",
+     *           "updated_at": "2022-03-05T18:01:41.000000Z"
+     *       },
+     *       {
+     *           "id": 2,
+     *           "name": "QAC",
+     *           "guard_name": "api",
+     *           "created_at": "2022-03-05T18:01:41.000000Z",
+     *           "updated_at": "2022-03-05T18:01:41.000000Z"
+     *       },
+     *       {
+     *           "id": 3,
+     *           "name": "STAFF",
+     *           "guard_name": "api",
+     *           "created_at": "2022-03-05T18:01:41.000000Z",
+     *           "updated_at": "2022-03-05T18:01:41.000000Z"
+     *       },
+     *       {
+     *           "id": 4,
+     *           "name": "ADMIN",
+     *           "guard_name": "api",
+     *           "created_at": "2022-03-05T18:01:41.000000Z",
+     *           "updated_at": "2022-03-05T18:01:41.000000Z"
+     *       }
+     *   }
+     *     )
+     *   ),
+     *   @OA\Response(
+     *     response=401,
+     *     description="Login false",
+     *     @OA\MediaType(
+     *      mediaType="application/json",
+     *      example={"status": 403}
+     *     )
+     *   ),
+     *   security={{"auth": {}}},
+     * )
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function roles() {
+        return Role::all();
     }
 }
