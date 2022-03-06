@@ -37,5 +37,34 @@ export default {
 			SUCCESS: 'Change language successfully.',
 			FAILED: 'Language change failed.'
 		}
+	},
+	USER: {
+		TITLE: "USER",
+		CREATE_USER: "Create User",
+		FORM: {
+			TITLE: "Create User",
+			PASSWORD: "Password",
+			EMAIL: "Email",
+			NAME: "Name",
+			BIRTH: "Date of Birth",
+			CREATE: "Create",
+			ROLE: "Role",
+			SUCCESS: "Create Successfully"
+		},
+		SEARCH_BY: {
+			KEYWORD: "Keyword",
+			ROLE: "Role",
+			PLACEHOLDER_KEYWORD: "Enter the keyword"
+		},
+		TABLE: {
+			HEADING: {
+				ID: 'ID',
+				EMAIL: "Email",
+				NAME: "Fullname",
+				ROLE: "Role",
+				BIRTH: "Date of Birth",
+				ACTIONS: "Actions",
+			}
+		}
 	}
 };

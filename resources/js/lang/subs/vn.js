@@ -37,5 +37,34 @@ export default {
 			SUCCESS: 'Thay đổi ngôn ngữ thành công',
 			FAILED: 'Thay đổi ngôn ngữ thất bại'
 		}
+	},
+	USER: {
+		TITLE: "Người dùng",
+		CREATE_USER: "Tạo Người Dùng",
+		FORM: {
+			TITLE: "Tạo Người Dùng",
+			PASSWORD: "Mật khẩu",
+			EMAIL: "Email",
+			NAME: "Họ và Tên",
+			BIRTH: "Ngày Sinh",
+			CREATE: "Tạo",
+			ROLE: "Vai trò",
+			SUCCESS: "Tạo Tài Khoản Thành Công"
+		},
+		SEARCH_BY: {
+			KEYWORD: "Từ Khoá",
+			ROLE: "Vai Trò",
+			PLACEHOLDER_KEYWORD: "Nhập từ khoá tìm kiếm"
+		},
+		TABLE: {
+			HEADING: {
+				ID: 'ID',
+				EMAIL: "Email",
+				NAME: "Họ Và Tên",
+				ROLE: "Vai Trò",
+				BIRTH: "Ngày Sinh",
+				ACTIONS: "Hành động",
+			}
+		}
 	}
 };
