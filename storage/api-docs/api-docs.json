@@ -380,255 +380,7 @@
                 ]
             }
         },
-        "/api/tmp_repository": {
-            "get": {
-                "tags": [
-                    "TmpRepository"
-                ],
-                "summary": "List tmp_repository",
-                "operationId": "tmp_repository_index",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "per_page",
-                        "in": "query",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Send request success",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "code": 200,
-                                    "data": [
-                                        {
-                                            "id": 1,
-                                            "name": "..........."
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Login false",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "code": 401,
-                                    "message": "Username or password invalid"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "TmpRepository"
-                ],
-                "summary": "Add new tmp_repository",
-                "operationId": "tmp_repository_create",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Send request success",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "code": 200,
-                                    "data": {
-                                        "id": 1,
-                                        "name": "......"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": []
-            }
-        },
-        "/api/tmp_repository/{id}": {
-            "get": {
-                "tags": [
-                    "TmpRepository"
-                ],
-                "summary": "Detail TmpRepository",
-                "operationId": "tmp_repository_show",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Send request success",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "code": 200,
-                                    "data": {
-                                        "id": 1,
-                                        "name": "......"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Login false",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "code": 401,
-                                    "message": "Username or password invalid"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "TmpRepository"
-                ],
-                "summary": "Update TmpRepository",
-                "operationId": "tmp_repository_update",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "format": "string"
-                                    }
-                                },
-                                "type": "object"
-                            },
-                            "example": {
-                                "name": "string"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Send request success",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "code": 200,
-                                    "data": {
-                                        "id": 1,
-                                        "name": "............."
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Access Deny permission",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "code": 403,
-                                    "message": "Access Deny permission"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "TmpRepository"
-                ],
-                "summary": "Delete TmpRepository",
-                "operationId": "tmp_repository_delete",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Send request success",
-                        "content": {
-                            "application/json": {
-                                "example": {
-                                    "code": 200,
-                                    "data": "Send request success"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "auth": []
-                    }
-                ]
-            }
-        },
-        "/api/user": {
+        "/api/users": {
             "get": {
                 "tags": [
                     "User"
@@ -755,27 +507,35 @@
                 ],
                 "summary": "Add new user",
                 "operationId": "user_create",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "name": {
+                                        "format": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "example": {
+                                "name": "Nguyen Nam 2222",
+                                "email": "namnt@gmail.com",
+                                "password": "paSSWORD",
+                                "birth": "2000-05-27",
+                                "role": 2
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "Send request success",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "code": 200,
-                                    "data": {
-                                        "id": 1,
-                                        "name": "......"
-                                    }
+                                    "status": 200
                                 }
                             }
                         }
@@ -784,7 +544,7 @@
                 "security": []
             }
         },
-        "/api/user/{id}": {
+        "/api/users/{id}": {
             "get": {
                 "tags": [
                     "User"
@@ -845,7 +605,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "code": 401,
+                                    "status": 401,
                                     "message": "Username or password invalid"
                                 }
                             }
@@ -878,9 +638,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "name"
-                                ],
+                                "required": [],
                                 "properties": {
                                     "name": {
                                         "format": "string"
@@ -889,7 +647,10 @@
                                 "type": "object"
                             },
                             "example": {
-                                "name": "string"
+                                "name": "Nguyen Nam 2222",
+                                "new_password": "new_paSSWORD",
+                                "birth": "2000-05-27",
+                                "role": 2
                             }
                         }
                     }
@@ -900,11 +661,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "code": 200,
-                                    "data": {
-                                        "id": 1,
-                                        "name": "............."
-                                    }
+                                    "status": 200
                                 }
                             }
                         }
@@ -914,7 +671,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "code": 403,
+                                    "status": 403,
                                     "message": "Access Deny permission"
                                 }
                             }
@@ -949,8 +706,70 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "code": 200,
-                                    "data": "Send request success"
+                                    "status": 200
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth": []
+                    }
+                ]
+            }
+        },
+        "/api/roles": {
+            "get": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "List Roles",
+                "operationId": "user_roles",
+                "responses": {
+                    "200": {
+                        "description": "Send request success",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "name": "QAM",
+                                        "guard_name": "api",
+                                        "created_at": "2022-03-05T18:01:41.000000Z",
+                                        "updated_at": "2022-03-05T18:01:41.000000Z"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "name": "QAC",
+                                        "guard_name": "api",
+                                        "created_at": "2022-03-05T18:01:41.000000Z",
+                                        "updated_at": "2022-03-05T18:01:41.000000Z"
+                                    },
+                                    {
+                                        "id": 3,
+                                        "name": "STAFF",
+                                        "guard_name": "api",
+                                        "created_at": "2022-03-05T18:01:41.000000Z",
+                                        "updated_at": "2022-03-05T18:01:41.000000Z"
+                                    },
+                                    {
+                                        "id": 4,
+                                        "name": "ADMIN",
+                                        "guard_name": "api",
+                                        "created_at": "2022-03-05T18:01:41.000000Z",
+                                        "updated_at": "2022-03-05T18:01:41.000000Z"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Login false",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "status": 403
                                 }
                             }
                         }

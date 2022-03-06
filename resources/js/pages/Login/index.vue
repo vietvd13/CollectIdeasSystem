@@ -76,6 +76,7 @@
 	import Logo from '@/assets/images/student.png';
 	import { getCSRF } from '@/api/modules/auth';
 	import { setRoutes } from '@/utils/setRoutes';
+	import { MakeToast } from '@/toast/toastMessage';
 
 	const urlAPI = {
 		urlGetCSRF: '/api/csrf-cookie'
@@ -120,13 +121,31 @@
 
 								setRoutes(accessRoutes);
 								this.$router.push('/');
+
+								MakeToast({
+									variant: 'success',
+									title: this.$t('TOAST.SUCCESS'),
+									content: this.$t('LOGIN.LOGIN_SUCCESS')
+								});
 							})
 							.catch(() => {
-								console.log('ERROR: Do Login');
+								MakeToast({
+									variant: 'danger',
+									title: this.$t('TOAST.DANGER'),
+									content: this.$t('LOGIN.LOGIN_ERROR')
+								});
+
+								this.isProcess = false;
 							});
 					})
 					.catch(() => {
-						console.log('ERROR: Get CSRF');
+						MakeToast({
+							variant: 'danger',
+							title: this.$t('TOAST.DANGER'),
+							content: this.$t('LOGIN.LOGIN_ERROR')
+						});
+
+						this.isProcess = false;
 					});
 			},
 

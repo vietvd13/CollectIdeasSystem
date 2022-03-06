@@ -30,7 +30,9 @@
 					<template #button-content>
 						{{ name }}
 					</template>
-					<b-dropdown-item href="#">Sign Out</b-dropdown-item>
+					<b-dropdown-item href="#" @click="doLogout()">{{
+						$t('LOGOUT.TEXT_LOGOUT')
+					}}</b-dropdown-item>
 				</b-nav-item-dropdown>
 			</b-navbar-nav>
 		</b-collapse>
@@ -64,9 +66,29 @@
 					})
 					.catch(() => {
 						MakeToast({
-							variant: 'error',
+							variant: 'danger',
 							title: this.$t('TOAST.DANGER'),
 							content: this.$t('I18N.CHANGE_LANGUAGE.FAILED')
+						});
+					});
+			},
+			doLogout() {
+				this.$store
+					.dispatch('auth/doLogout')
+					.then(() => {
+						this.$router.push('/login');
+
+						MakeToast({
+							variant: 'success',
+							title: this.$t('TOAST.SUCCESS'),
+							content: this.$t('LOGOUT.LOGOUT_SUCCESS')
+						});
+					})
+					.catch(() => {
+						MakeToast({
+							variant: 'danger',
+							title: this.$t('TOAST.DANGER'),
+							content: this.$t('LOGOUT.LOGOUT_ERROR')
 						});
 					});
 			}
