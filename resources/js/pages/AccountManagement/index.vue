@@ -14,8 +14,8 @@
 		<div class="account-management__searching">
 			<div class="account-management__searching-filter">
 				<label for="filer">{{ $t('USER.SEARCH_BY.ROLE') }}</label>
-				<b-form-select v-model="selected">
-					<b-form-select-option :value="null">Select</b-form-select-option>
+				<b-form-select v-model="selected" @change="handleSearchByRole()">
+					<b-form-select-option :value="null">Select the role</b-form-select-option>
 					<b-form-select-option
 						v-for="(role, index) in options"
 						:key="index"
@@ -31,9 +31,12 @@
 					<b-form-input
 						:placeholder="$t('USER.SEARCH_BY.PLACEHOLDER_KEYWORD')"
 						v-model="keyword"
+						@change="handleSearchByKeyWords()"
 					></b-form-input>
 					<b-input-group-append>
-						<b-button variant="primary" @click="handleSearchByKeyWords()"><i class="fas fa-search"></i></b-button>
+						<b-button variant="primary" @click="handleSearchByKeyWords()"
+							><i class="fas fa-search"></i
+						></b-button>
 					</b-input-group-append>
 				</b-input-group>
 			</div>
@@ -72,7 +75,7 @@
 						<td>{{ users.id }}</td>
 						<td>{{ users.email }}</td>
 						<td>{{ users.name }}</td>
-						<td>{{ users.name }}</td>
+						<td>{{ users.roles[0].name }}</td>
 						<td>{{ users.birth }}</td>
 						<td>
 							<button @click="handleModal(users.id)" class="btn btn-warning">
@@ -107,7 +110,10 @@
 				<div class="row mt-2">
 					<div class="col-md-12 col-sm-12 col-lg-12">
 						<label for="">{{ $t('USER.FORM.EMAIL') }}</label>
-						<b-form-input v-model="newUser.email"></b-form-input>
+						<b-form-input
+							:readonly="action === 'EDIT' ? true : false"
+							v-model="newUser.email"
+						></b-form-input>
 					</div>
 					<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
 						<label for="">{{ $t('USER.FORM.PASSWORD') }}</label>
@@ -121,7 +127,9 @@
 					<div class="col-md-12 col-sm-12 col-lg-12">
 						<label for="">{{ $t('USER.FORM.ROLE') }}</label>
 						<b-form-select v-model="newUser.role">
-							<b-form-select-option :value="null">Select</b-form-select-option>
+							<b-form-select-option :value="null"
+								>Select the role</b-form-select-option
+							>
 							<b-form-select-option
 								v-for="(role, index) in options"
 								:key="index"
@@ -138,11 +146,19 @@
 				</div>
 				<template #modal-footer>
 					<div>
-						<b-button class="btn btn-primary" v-if="action === 'CREATE'" @click="handleCreateUser()">
+						<b-button
+							class="btn btn-primary"
+							v-if="action === 'CREATE'"
+							@click="handleCreateUser()"
+						>
 							Create
 						</b-button>
 
-						<b-button class="btn btn-primary" v-if="action === 'EDIT'" @click="handleEditUser()">
+						<b-button
+							class="btn btn-primary"
+							v-if="action === 'EDIT'"
+							@click="handleEditUser()"
+						>
 							Save
 						</b-button>
 
@@ -157,7 +173,7 @@
 </template>
 
 <script>
-	import { getUserTable, postUser, deleteUser, getOneUser,editUser } from '@/api/modules/user';
+	import { getUserTable, postUser, deleteUser, getOneUser, editUser } from '@/api/modules/user';
 	import { getListRole } from '@/api/modules/role';
 	import { MakeToast } from '@/toast/toastMessage';
 	import { validPassword, validEmail, isEmptyOrWhiteSpace } from '../../utils/validate';
@@ -175,7 +191,6 @@
 				options: [],
 				isLoading: false,
 				listUser: [],
-				selected: null,
 				newUser: {
 					email: '',
 					password: '',
@@ -185,7 +200,8 @@
 				},
 				action: '',
 				showModal: false,
-				keyword: ""
+				keyword: '',
+				ids: 0
 			};
 		},
 		computed: {
@@ -203,24 +219,25 @@
 		},
 		methods: {
 			async handleModal(id) {
-				// this.isResetDataModal();
-				console.log(id, "CREATE");
-				if (id) {
-					this.action = 'EDIT',
+				console.log(id, 'EDIT');
+				this.ids = id;
+				if (this.ids) {
+					(this.action = 'EDIT'),
 						await getOneUser(id)
 							.then(res => {
-								this.newUser.name = res.data.profile.name;
-								this.newUser.email = res.data.profile.email;
-								res.data.profile.roles.map(item => {
-									this.selected = item.id;
+								this.newUser.name = res.data.name;
+								this.newUser.email = res.data.email;
+								console.log(res.data);
+								res.data.roles.map(item => {
+									this.newUser.role = item.id;
 								});
-								this.newUser.birth = res.data.profile.birth;
+								this.newUser.birth = res.data.birth;
 							})
 							.catch(err => {
 								console.log(err);
 							});
 				} else {
-
+					this.isResetDataModal();
 					this.action = 'CREATE';
 					console.log('CREATE');
 				}
@@ -237,19 +254,16 @@
 			},
 			async handleGetListUser() {
 				this.isLoading = true;
-				const params = {
-					page: this.currentPage,
-					per_page: this.perPage
-				};
-				await getUserTable(params)
+				// const params = {
+				// 	page: this.currentPage,
+				// 	per_page: this.perPage
+				// };
+				await getUserTable()
 					.then(res => {
 						if (res.status === 200) {
-							console.log(params);
-							this.listUser.push(res.data.data);
-							this.listUser.map(item => {
-								this.listUser = item;
+							this.listUser = res.data.map(user => {
+								return user;
 							});
-
 							this.isLoading = false;
 						}
 					})
@@ -259,7 +273,6 @@
 			},
 			async handleCreateUser() {
 				console.log(this.newUser);
-				this.isResetDataModal();
 				const data = {
 					name: this.newUser.name,
 					email: this.newUser.email,
@@ -267,6 +280,7 @@
 					birth: this.newUser.birth,
 					role: this.newUser.role
 				};
+				console.log(data);
 				if (
 					isEmptyOrWhiteSpace(data.name) ||
 					isEmptyOrWhiteSpace(data.birth) ||
@@ -308,24 +322,49 @@
 						});
 				}
 			},
-			async handleEditUser(id) {
+			async handleEditUser() {
 				this.action = 'EDIT';
-				if (this.action === 'EDIT') {
-					await editUser(id)
+				const data = {
+					name: this.newUser.name,
+					new_password: this.newUser.password,
+					birth: this.newUser.birth,
+					role: this.newUser.role
+				};
+				if (
+					isEmptyOrWhiteSpace(data.name) ||
+					isEmptyOrWhiteSpace(data.birth) ||
+					data.role === null
+				) {
+					MakeToast({
+						variant: 'warning',
+						title: 'Warning',
+						content: 'You can not use white space'
+					});
+				} else if (!validPassword(data.new_password)) {
+					MakeToast({
+						variant: 'warning',
+						title: 'Warning',
+						content: 'Password must be at least >= 8 characters'
+					});
+				} else {
+					console.log(data);
+					await editUser(this.ids, data)
 						.then(res => {
-							this.newUser.name = res.data.profile.name;
-							this.newUser.email = res.data.profile.email;
-							res.data.profile.roles.map(item => {
-								this.selected = item.id;
-							});
-							this.newUser.birth = res.data.profile.birth;
-							console.log(res);
+							if (res.status == 200) {
+								MakeToast({
+									variant: 'success',
+									title: this.$t('TOAST.SUCCESS'),
+									content: this.$t('USER.FORM.SUCCESS')
+								});
+								this.handleGetListUser();
+								this.showModal = false;
+								this.isResetDataModal();
+							}
 						})
 						.catch(err => {
 							console.log(err);
 						});
 				}
-				console.log(id);
 			},
 			handleDeleteUser(id) {
 				this.$bvModal
@@ -367,23 +406,37 @@
 					});
 			},
 			isResetDataModal() {
-				console.log("RESET DATA");
+				console.log('RESET DATA');
 				this.newUser = {
 					email: '',
 					password: '',
 					name: '',
-					selected: null,
+					role: null,
 					birth: ''
 				};
 			},
 			handleSearchByKeyWords() {
-				this.listUser.map(item => {
-					if(item.name === this.keyword) {
-						this.listUser = item;
+				this.listUser = this.listUser.filter(item => {
+					if (item.name === this.keyword) {
+						return item;
+					} else if (this.keyword === '') {
+						this.handleGetListUser();
+					} else {
+						console.log('No data');
 					}
-				})
+				});
+			},
+			handleSearchByRole() {
+				this.listUser = this.listUser.filter(item => {
+					if (item.roles[0].id === this.selected) {
+						return item;
+					} else if (this.selected === null) {
+						this.handleGetListUser();
+					} else {
+						console.log('No data');
+					}
+				});
 			}
-			
 		}
 	};
 </script>
