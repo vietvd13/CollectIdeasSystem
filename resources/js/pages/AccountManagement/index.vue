@@ -15,7 +15,7 @@
 			<div class="account-management__searching-filter">
 				<label for="filer">{{ $t('USER.SEARCH_BY.ROLE') }}</label>
 				<b-form-select v-model="selected" @change="handleSearchByRole()">
-					<b-form-select-option :value="null">Select the role</b-form-select-option>
+					<b-form-select-option :value="null">{{$t('USER.SELECT_ROLE')}}</b-form-select-option>
 					<b-form-select-option
 						v-for="(role, index) in options"
 						:key="index"
@@ -128,7 +128,7 @@
 						<label for="">{{ $t('USER.FORM.ROLE') }}</label>
 						<b-form-select v-model="newUser.role">
 							<b-form-select-option :value="null"
-								>Select the role</b-form-select-option
+								>{{$t('USER.FORM.SELECT_ROLE')}}</b-form-select-option
 							>
 							<b-form-select-option
 								v-for="(role, index) in options"
@@ -151,7 +151,7 @@
 							v-if="action === 'CREATE'"
 							@click="handleCreateUser()"
 						>
-							Create
+							{{$t('USER.FORM.CREATE')}}
 						</b-button>
 
 						<b-button
@@ -159,11 +159,11 @@
 							v-if="action === 'EDIT'"
 							@click="handleEditUser()"
 						>
-							Save
+							{{$t('USER.FORM.SAVE')}}
 						</b-button>
 
 						<b-button class="btn btn-danger" @click="showModal = false">
-							Close
+							{{$t("USER.FORM.CLOSE")}}
 						</b-button>
 					</div>
 				</template>
@@ -289,19 +289,19 @@
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
-						content: 'You can not use white space'
+						content: this.$t('USER.FORM.MESSAGE.SPACE')
 					});
 				} else if (!validEmail(data.email)) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
-						content: 'Invalid Email'
+						content: this.$t('USER.FORM.MESSAGE.EMAIL')
 					});
 				} else if (!validPassword(data.password)) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
-						content: 'Password invalid'
+						content: this.$t("USER.FORM.MESSAGE.PASSWORD")
 					});
 				} else {
 					await postUser(data)
@@ -338,13 +338,13 @@
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
-						content: 'You can not use white space'
+						content: this.$t('USER.FORM.MESSAGE.SPACE')
 					});
 				} else if (!validPassword(data.new_password)) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
-						content: 'Password must be at least >= 8 characters'
+						content: this.$t('USER.FORM.MESSAGE.PASSWORD')
 					});
 				} else {
 					console.log(data);
