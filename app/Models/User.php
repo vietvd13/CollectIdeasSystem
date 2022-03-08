@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -25,6 +24,7 @@ class User extends Authenticatable
     const PASSWORD = 'password';
     const BIRTH = 'birth';
     const ROLE = 'role';
+    const NEW_PASSWORD = 'new_password';
     protected $hidden = [
         User::PASSWORD
     ];
@@ -35,7 +35,6 @@ class User extends Authenticatable
         User::PASSWORD,
         User::BIRTH
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *

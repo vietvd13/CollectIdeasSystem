@@ -7,6 +7,9 @@ class Role extends \Spatie\Permission\Models\Role
     //
     public $guard_name = 'api';
 
+    protected $hidden = [
+        "pivot"
+    ];
     /**
      * Check whether current role is admin
      * @return bool

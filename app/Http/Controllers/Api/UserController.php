@@ -9,11 +9,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
-use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Http\Resources\BaseResource;
 use App\Http\Resources\UserResource;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\Role;
 use App\Services\Contracts\UserServiceInterface;
 class UserController extends Controller
 {
@@ -63,72 +61,142 @@ class UserController extends Controller
      *     @OA\MediaType(
      *      mediaType="application/json",
      *      example={
-     * "status": 200,
-     * "data": {
-     *    "current_page": 1,
-     *  "data": {
+     *   "status": 200,
+     *   "data": {
      *       {
-     *          "id": 1,
+     *           "id": 1,
      *           "name": "Admin",
      *           "email": "admin@gmail.com",
-     *           "email_verified_at": "2022-03-01T17:07:32.000000Z",
-     *           "created_at": "2022-03-01T17:07:32.000000Z",
-     *           "updated_at": "2022-03-01T17:07:32.000000Z"
+     *           "birth": "2000-05-27",
+     *           "created_at": "2022-03-08T06:23:13.000000Z",
+     *           "updated_at": "2022-03-08T06:23:13.000000Z",
+     *           "roles": {
+     *               {
+     *                   "id": 1,
+     *                   "name": "QAM",
+     *                   "guard_name": "api",
+     *                   "created_at": "2022-03-08T06:23:13.000000Z",
+     *                   "updated_at": "2022-03-08T06:23:13.000000Z",
+     *                   "pivot": {
+     *                       "model_id": 1,
+     *                       "role_id": 1,
+     *                       "model_type": "App\\Models\\User"
+     *                   }
+     *               }
+     *           }
      *       },
      *       {
      *           "id": 2,
      *           "name": "QAM",
      *           "email": "aqm@gmail.com",
-     *           "email_verified_at": "2022-03-01T17:07:32.000000Z",
-     *           "created_at": "2022-03-01T17:07:32.000000Z",
-     *           "updated_at": "2022-03-01T17:07:32.000000Z"
+     *           "birth": "2000-05-27",
+     *           "created_at": "2022-03-08T06:23:13.000000Z",
+     *           "updated_at": "2022-03-08T06:23:13.000000Z",
+     *           "roles": {
+     *               {
+     *                   "id": 1,
+     *                   "name": "QAM",
+     *                   "guard_name": "api",
+     *                   "created_at": "2022-03-08T06:23:13.000000Z",
+     *                   "updated_at": "2022-03-08T06:23:13.000000Z",
+     *                   "pivot": {
+     *                       "model_id": 2,
+     *                       "role_id": 1,
+     *                       "model_type": "App\\Models\\User"
+     *                   }
+     *               }
+     *           }
      *       },
      *       {
      *           "id": 3,
      *           "name": "QAC",
      *           "email": "aqc@gmail.com",
-     *           "email_verified_at": "2022-03-01T17:07:32.000000Z",
-     *           "created_at": "2022-03-01T17:07:32.000000Z",
-     *           "updated_at": "2022-03-01T17:07:32.000000Z"
+     *           "birth": "2000-05-27",
+     *           "created_at": "2022-03-08T06:23:13.000000Z",
+     *           "updated_at": "2022-03-08T06:23:13.000000Z",
+     *           "roles": {
+     *               {
+     *                   "id": 2,
+     *                   "name": "QAC",
+     *                   "guard_name": "api",
+     *                   "created_at": "2022-03-08T06:23:13.000000Z",
+     *                   "updated_at": "2022-03-08T06:23:13.000000Z",
+     *                   "pivot": {
+     *                       "model_id": 3,
+     *                       "role_id": 2,
+     *                       "model_type": "App\\Models\\User"
+     *                   }
+     *               }
+     *           }
      *       },
      *       {
      *           "id": 4,
      *           "name": "STAFF",
      *           "email": "staff@gmail.com",
-     *           "email_verified_at": "2022-03-01T17:07:32.000000Z",
-     *           "created_at": "2022-03-01T17:07:32.000000Z",
-     *           "updated_at": "2022-03-01T17:07:32.000000Z"
-     *       }
-     *   },
-     *   "first_page_url": "http://127.0.0.1:8000/api/users?per_page=10&page=1",
-     *   "from": 1,
-     *   "last_page": 1,
-     *   "last_page_url": "http://127.0.0.1:8000/api/users?per_page=10&page=1",
-     *   "links": {
-     *       {
-     *           "url": null,
-     *           "label": "&laquo; Previous",
-     *           "active": false
+     *           "birth": "2000-05-27",
+     *           "created_at": "2022-03-08T06:23:13.000000Z",
+     *           "updated_at": "2022-03-08T06:23:13.000000Z",
+     *           "roles": {
+     *               {
+     *                   "id": 3,
+     *                   "name": "STAFF",
+     *                   "guard_name": "api",
+     *                   "created_at": "2022-03-08T06:23:13.000000Z",
+     *                   "updated_at": "2022-03-08T06:23:13.000000Z",
+     *                   "pivot": {
+     *                       "model_id": 4,
+     *                       "role_id": 3,
+     *                       "model_type": "App\\Models\\User"
+     *                   }
+     *               }
+     *           }
      *       },
      *       {
-     *           "url": "http://127.0.0.1:8000/api/users?per_page=10&page=1",
-     *           "label": "1",
-     *           "active": true
+     *           "id": 7,
+     *           "name": "Admin",
+     *           "email": "admin12@gmail.com",
+     *           "birth": "2000-05-27",
+     *           "created_at": "2022-03-08T13:12:58.000000Z",
+     *           "updated_at": "2022-03-08T13:12:58.000000Z",
+     *           "roles": {
+     *               {
+     *                   "id": 1,
+     *                   "name": "QAM",
+     *                   "guard_name": "api",
+     *                   "created_at": "2022-03-08T06:23:13.000000Z",
+     *                   "updated_at": "2022-03-08T06:23:13.000000Z",
+     *                   "pivot": {
+     *                       "model_id": 7,
+     *                       "role_id": 1,
+     *                       "model_type": "App\\Models\\User"
+     *                   }
+     *               }
+     *           }
      *       },
      *       {
-     *           "url": null,
-     *           "label": "Next &raquo;",
-     *           "active": false
+     *           "id": 9,
+     *           "name": "Admin",
+     *           "email": "admin132@gmail.com",
+     *           "birth": "2000-05-27",
+     *           "created_at": "2022-03-08T13:14:52.000000Z",
+     *           "updated_at": "2022-03-08T13:14:52.000000Z",
+     *           "roles": {
+     *               {
+     *                   "id": 1,
+     *                   "name": "QAM",
+     *                   "guard_name": "api",
+     *                   "created_at": "2022-03-08T06:23:13.000000Z",
+     *                   "updated_at": "2022-03-08T06:23:13.000000Z",
+     *                   "pivot": {
+     *                       "model_id": 9,
+     *                       "role_id": 1,
+     *                       "model_type": "App\\Models\\User"
+     *                   }
+     *               }
+     *           }
      *       }
-     *   },
-     *   "next_page_url": null,
-     *   "path": "http://127.0.0.1:8000/api/users",
-     *   "per_page": "10",
-     *   "prev_page_url": null,
-     *   "to": 4,
-     *   "total": 4
-     * }
-     * }
+     *   }
+     *   }
      *     )
      *   ),
      *   security={{"auth": {}}},
@@ -141,7 +209,7 @@ class UserController extends Controller
     {
        //return $request->per_page;
         $data = $this->service->paginate($request->per_page);
-        return $this->responseJson(200, new UserResource($data));
+        return $this->responseJson(200, UserResource::collection($data));
     }
 
     /**
@@ -151,16 +219,31 @@ class UserController extends Controller
      *   tags={"User"},
      *   summary="Add new user",
      *   operationId="user_create",
-     *   @OA\Parameter(name="name", in="query", required=true,
-     *     @OA\Schema(type="string"),
+     * @OA\RequestBody(
+     *       @OA\MediaType(
+     *          mediaType="application/json",
+     *          example={
+     *       "name": "Nguyen Nam 2222",
+     *       "email": "namnt@gmail.com",
+     *       "password": "paSSWORD",
+     *       "birth": "2000-05-27",
+     *       "role": 2
+     *   },
+     *        @OA\Schema(
+     *            required={},
+     *            @OA\Property(
+     *              property="name",
+     *              format="string",
+     *            ),
+     *         )
+     *      )
      *   ),
-     *
      *   @OA\Response(
      *     response=200,
      *     description="Send request success",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":200,"data":{"id": 1,"name": "......"}}
+     *      example={"status":200}
      *     )
      *   ),
      *   security={},
@@ -171,8 +254,8 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         try {
-            $data = $this->repository->create($request->all());
-            return $this->responseJson(200, new UserResource($data));
+            $data = $this->service->create($request->all());
+            return $this->responseJson($data['status'], new UserResource($data['data']));
         } catch (\Exception $e) {
             throw $e;
         }
@@ -201,8 +284,6 @@ class UserController extends Controller
      *      example={
      *        "status": 200,
      *       "data": {
-     *           "status": 200,
-     *           "profile": {
      *               "id": 1,
      *               "name": "Admin",
      *               "email": "admin@gmail.com",
@@ -223,10 +304,6 @@ class UserController extends Controller
      *                       }
      *                   }
      *               }
-     *           },
-     *           "roles": {
-     *               "ADMIN"
-     *           }
      *       }
      *   }
      *     )
@@ -236,7 +313,7 @@ class UserController extends Controller
      *     description="Login false",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":401,"message":"Username or password invalid"}
+     *      example={"status":401,"message":"Username or password invalid"}
      *     )
      *   ),
      *   security={{"auth": {}}},
@@ -249,7 +326,7 @@ class UserController extends Controller
     {
         try {
             $user = $this->service->find($id);
-            return $this->responseJson(200, new UserResource($user));
+            return $this->responseJson($user['status'], new UserResource($user['profile']));
         } catch (\Exception $e) {
             throw $e;
         }
@@ -270,12 +347,17 @@ class UserController extends Controller
      *      type="string",
      *     ),
      *   ),
-     *   @OA\RequestBody(
+      * @OA\RequestBody(
      *       @OA\MediaType(
      *          mediaType="application/json",
-     *          example={"name":"string"},
-     *          @OA\Schema(
-     *            required={"name"},
+     *          example={
+     *       "name": "Nguyen Nam 2222",
+     *       "new_password": "new_paSSWORD",
+     *       "birth": "2000-05-27",
+     *       "role": 2
+     *   },
+     *        @OA\Schema(
+     *            required={},
      *            @OA\Property(
      *              property="name",
      *              format="string",
@@ -288,7 +370,7 @@ class UserController extends Controller
      *     description="Send request success",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":200,"data":{"id": 1,"name":  "............."}}
+     *      example={"status":200}
      *     ),
      *   ),
      *   @OA\Response(
@@ -296,7 +378,7 @@ class UserController extends Controller
      *     description="Access Deny permission",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":403,"message":"Access Deny permission"}
+     *      example={"status":403,"message":"Access Deny permission"}
      *     ),
      *   ),
      *   security={{"auth": {}}},
@@ -308,7 +390,7 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         $attributes = $request->except([]);
-        $data = $this->repository->update($attributes, $id);
+        $data = $this->service->update($attributes, $id);
         return $this->responseJson(200, new BaseResource($data));
     }
 
@@ -332,7 +414,7 @@ class UserController extends Controller
      *     description="Send request success",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":200,"data":"Send request success"}
+     *      example={"status":200}
      *     )
      *   ),
      *   security={{"auth": {}}},
@@ -343,7 +425,70 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->repository->delete($id);
+        $this->service->delete($id);
         return $this->responseJson(200, null, trans('messages.mes.delete_success'));
+    }
+
+
+    /**
+     * @OA\Infor(),
+     * @OA\Get(
+     *   path="/api/roles",
+     *   tags={"Role"},
+     *   summary="List Roles",
+     *   operationId="user_roles",
+     *   @OA\Response(
+     *     response=200,
+     *     description="Send request success",
+     *     @OA\MediaType(
+     *      mediaType="application/json",
+     *      example={
+     *       {
+     *           "id": 1,
+     *           "name": "QAM",
+     *           "guard_name": "api",
+     *           "created_at": "2022-03-05T18:01:41.000000Z",
+     *           "updated_at": "2022-03-05T18:01:41.000000Z"
+     *       },
+     *       {
+     *           "id": 2,
+     *           "name": "QAC",
+     *           "guard_name": "api",
+     *           "created_at": "2022-03-05T18:01:41.000000Z",
+     *           "updated_at": "2022-03-05T18:01:41.000000Z"
+     *       },
+     *       {
+     *           "id": 3,
+     *           "name": "STAFF",
+     *           "guard_name": "api",
+     *           "created_at": "2022-03-05T18:01:41.000000Z",
+     *           "updated_at": "2022-03-05T18:01:41.000000Z"
+     *       },
+     *       {
+     *           "id": 4,
+     *           "name": "ADMIN",
+     *           "guard_name": "api",
+     *           "created_at": "2022-03-05T18:01:41.000000Z",
+     *           "updated_at": "2022-03-05T18:01:41.000000Z"
+     *       }
+     *   }
+     *     )
+     *   ),
+     *   @OA\Response(
+     *     response=401,
+     *     description="Login false",
+     *     @OA\MediaType(
+     *      mediaType="application/json",
+     *      example={"status": 403}
+     *     )
+     *   ),
+     *   security={{"auth": {}}},
+     * )
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function roles() {
+        return Role::all();
     }
 }

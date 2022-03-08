@@ -2,14 +2,12 @@
 /**
  * Created by TienNamNguyen.
  * User: namnt
- * Year: 2022-03-01
+ * Year: 2022-03-07
  */
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-
-class UserResource extends JsonResource
+class CategoryResource extends BaseResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +17,6 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $this->getRoleNames();
         return parent::toArray($request);
     }
 }
