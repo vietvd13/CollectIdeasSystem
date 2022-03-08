@@ -28,10 +28,10 @@ class UserService extends BaseService implements UserServiceInterface
     {
         $user = $this->repository->find($id);
         if ($user) {
+            $user->roles =$user->getRoleNames();
             return [
                 'status' => 200,
                 'profile' => $user,
-                'roles' => $user->getRoleNames()
             ];
         }
         return [
@@ -47,12 +47,10 @@ class UserService extends BaseService implements UserServiceInterface
             $attributes[User::PASSWORD] = Hash::make($attributes[User::PASSWORD]);
             if ($user = $this->repository->create($attributes)) {
                 $user->syncRoles($role);
+                $user->roles =$user->getRoleNames();
                 return [
                     'status' => 200,
-                    'data' => [
-                        'profile' => $user,
-                        'roles' => $user->getRoleNames()
-                    ]
+                    'data' => $user
                 ];
             }
         } else {
@@ -78,12 +76,10 @@ class UserService extends BaseService implements UserServiceInterface
                 if ($role = Role::findById($attributes[User::ROLE])) {
                     $user->syncRoles($role);
                 }
+                $user->roles =$user->getRoleNames();
                 return [
                     "status" => 200,
-                    "data" => [
-                        'profile' => $user,
-                        'roles' => $user->getRoleNames()
-                    ]
+                    "data" => $user
                 ];
             }
 

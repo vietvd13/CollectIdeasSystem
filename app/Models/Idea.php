@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Idea extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $table = 'ideas';
 
