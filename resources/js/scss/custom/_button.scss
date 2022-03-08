@@ -7,11 +7,13 @@
 
 	&:active {
 		box-shadow: none;
+		background: #242368;
 	}
 
 	&:active {
 		&:focus {
 			box-shadow: none;
+			background: #242368;
 		}
 	}
 }

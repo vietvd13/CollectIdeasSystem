@@ -39,7 +39,7 @@ export default {
 		}
 	},
 	USER: {
-		TITLE: "USER",
+		TITLE: "Account Mamangement",
 		CREATE_USER: "Create User",
 		FORM: {
 			TITLE: "Create User",

@@ -7,5 +7,16 @@ export function postUser(data) {
 }
 
 export function getUserTable(params) {
-	return RequestApi.getAll(URL,  {params} );
+	return RequestApi.getAll(`${URL}/?${params}`);
+}
+
+export function editUser(id, data) {
+	return RequestApi.putOne(`${URL}/${id}`, data);
+}
+export function getOneUser(id) {
+	return RequestApi.getOne(`${URL}/${id}`);
+}
+
+export function deleteUser(id) {
+	return RequestApi.deleteOne(`${URL}/${id}`);
 }
