@@ -254,10 +254,6 @@
 			},
 			async handleGetListUser() {
 				this.isLoading = true;
-				// const params = {
-				// 	page: this.currentPage,
-				// 	per_page: this.perPage
-				// };
 				await getUserTable()
 					.then(res => {
 						if (res.status === 200) {

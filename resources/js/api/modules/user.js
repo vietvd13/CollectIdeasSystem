@@ -7,7 +7,7 @@ export function postUser(data) {
 }
 
 export function getUserTable(params) {
-	return RequestApi.getAll(`${URL}/?${params}`);
+	return RequestApi.getAll(URL, params);
 }
 
 export function editUser(id, data) {
