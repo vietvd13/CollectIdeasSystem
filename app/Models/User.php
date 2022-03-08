@@ -35,7 +35,6 @@ class User extends Authenticatable
         User::PASSWORD,
         User::BIRTH
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *

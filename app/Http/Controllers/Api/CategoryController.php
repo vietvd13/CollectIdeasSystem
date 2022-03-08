@@ -42,7 +42,11 @@ class CategoryController extends Controller
      *           "data": {
      *               {
      *                   "id": 2,
-     *                   "name": "category 01 update",
+     *                   "topic_name": "Topic name deo gi dai the",
+     *                   "description": "All member, please note your idea here before 2022-11-11",
+     *                   "owner": 1,
+     *                   "start_collect_date": "2022-10-01 19:00:00",
+     *                   "end_collect_date" : "2022-11-11",
      *                   "created_at": "2022-03-07T05:51:17.000000Z",
      *                   "updated_at": "2022-03-07T05:51:17.000000Z"
      *               }
@@ -118,10 +122,24 @@ class CategoryController extends Controller
      *   tags={"Category"},
      *   summary="Add new category",
      *   operationId="category_create",
-     *   @OA\Parameter(name="name", in="query", required=true,
-     *     @OA\Schema(type="string"),
+     * @OA\RequestBody(
+     *       @OA\MediaType(
+     *          mediaType="application/json",
+     *          example={
+     *       "topic_name": "name",
+     *       "description": "description",
+     *       "start_collect_date": "2022-11-11",
+     *       "end_collect_date": "2023-01-01"
+     *   },
+     *        @OA\Schema(
+     *            required={},
+     *            @OA\Property(
+     *              property="name",
+     *              format="string",
+     *            ),
+     *         )
+     *      )
      *   ),
-     *
      *   @OA\Response(
      *     response=200,
      *     description="Send request success",
@@ -205,12 +223,17 @@ class CategoryController extends Controller
      *      type="string",
      *     ),
      *   ),
-     *   @OA\RequestBody(
+     * @OA\RequestBody(
      *       @OA\MediaType(
      *          mediaType="application/json",
-     *          example={"name":"string"},
-     *          @OA\Schema(
-     *            required={"name"},
+     *          example={
+     *       "topic_name": "name",
+     *       "description": "description",
+     *       "start_collect_date": "2022-11-11",
+     *       "end_collect_date": "2023-01-01"
+     *   },
+     *        @OA\Schema(
+     *            required={},
      *            @OA\Property(
      *              property="name",
      *              format="string",

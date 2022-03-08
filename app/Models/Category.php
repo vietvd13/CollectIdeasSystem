@@ -15,11 +15,19 @@ class Category extends Model
 {
     use HasFactory;
 
-    const NAME = "name";
+    const TOPIC_NAME = "topic_name";
+    const DESCRIPTION = "description";
+    const START_COLLECT_DATE = "start_collect_date";
+    const END_COLLECT_DATE = "end_collect_date";
+    const OWNER = "owner";
     protected $table = 'categories';
 
     protected $fillable = [
-        User::NAME
+        Category::TOPIC_NAME,
+        Category::DESCRIPTION,
+        Category::START_COLLECT_DATE,
+        Category::END_COLLECT_DATE,
+        Category::OWNER
     ];
 
     protected $casts = [

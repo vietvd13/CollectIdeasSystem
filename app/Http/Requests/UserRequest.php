@@ -45,7 +45,7 @@ class UserRequest extends FormRequest
                 User::NAME => 'required|string',
                 User::EMAIL => 'in:inactive',
                 User::PASSWORD => 'in:inactive',
-                User::NEW_PASSWORD => 'required|regex:/^\S*$/u|min:8',
+                User::NEW_PASSWORD => 'regex:/^\S*$/u|min:8',
                 User::BIRTH =>  'required|date_format:Y-m-d',
                 User::ROLE => 'required|integer'
             ];
