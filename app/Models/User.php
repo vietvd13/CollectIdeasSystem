@@ -48,4 +48,8 @@ class User extends Authenticatable
      */
 
     protected $guard_name = 'api';
+
+    public function categories() {
+        return $this->hasMany('App\Models\Category', 'id', 'owner');
+    }
 }

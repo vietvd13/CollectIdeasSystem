@@ -48,7 +48,15 @@ class CategoryController extends Controller
      *                   "start_collect_date": "2022-10-01 19:00:00",
      *                   "end_collect_date" : "2022-11-11",
      *                   "created_at": "2022-03-07T05:51:17.000000Z",
-     *                   "updated_at": "2022-03-07T05:51:17.000000Z"
+     *                   "updated_at": "2022-03-07T05:51:17.000000Z",
+     *                  "user": {
+     *                       "id": 1,
+     *                       "name": "Admin",
+     *                       "email": "admin@gmail.com",
+     *                       "birth": "2000-05-27",
+     *                       "created_at": "2022-03-08T06:23:13.000000Z",
+     *                       "updated_at": "2022-03-08T06:23:13.000000Z"
+     *                   }
      *               }
      *           },
      *           "first_page_url": "http://127.0.0.1:8000/api/category?page=1",
@@ -156,7 +164,9 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         try {
-            $data = $this->service->create($request->all());
+            $attributes = $request->all();
+            $attributes = array_merge($attributes, ["owner" => $request->user()->id]);
+            $data = $this->service->create($attributes);
             return $this->responseJson(200, new CategoryResource($data));
         } catch (\Exception $e) {
             throw $e;
@@ -265,7 +275,8 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        $attributes = $request->except([]);
+        $attributes = $request->all();
+        $attributes = array_merge($attributes, ["owner" => $request->user()->id]);
         $data = $this->service->update($attributes, $id);
         return $this->responseJson(200, new CategoryResource($data));
     }
