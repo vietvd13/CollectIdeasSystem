@@ -106,7 +106,7 @@ export default {
 				END: 'End date',
 				DESCRIPTION: 'Description',
 				ACTIONS: 'Actions',
-				STATUS: 'Status'
+				OWNER: 'Owner'
 			}
 		}
 	}

@@ -14,15 +14,15 @@
 		<div class="category-management__searching">
 			<div class="category-management__searching-filter">
 				<label for="filer">{{ $t('CATEGORY.SEARCH_BY.TYPE') }}</label>
-				<b-form-select v-model="selected" @change="handleSearchByRole()">
+				<b-form-select v-model="selected">
 					<b-form-select-option :value="null">{{
 						$t('CATEGORY.SELECT_TYPE')
 					}}</b-form-select-option>
 					<b-form-select-option
-						v-for="(type, index) in options"
+						v-for="(type, index) in listCategory"
 						:key="index"
-						:value="type.id"
-						>{{ type.name }}</b-form-select-option
+						:value="type.topic_name"
+						>{{ type.topic_name }}</b-form-select-option
 					>
 				</b-form-select>
 			</div>
@@ -68,25 +68,28 @@
 						<span>{{ $t('CATEGORY.TABLE.HEADING.DESCRIPTION') }}</span>
 					</b-th>
 					<b-th>
-						<span>{{ $t('CATEGORY.TABLE.HEADING.STATUS') }}</span>
+						<span>{{ $t('CATEGORY.TABLE.HEADING.OWNER') }}</span>
 					</b-th>
 					<b-th>
 						<span>{{ $t('CATEGORY.TABLE.HEADING.ACTIONS') }}</span>
 					</b-th>
 				</b-thead>
 				<b-tbody>
-					<tr v-for="(category, index) in listCategory" :key="index">
-						<td>{{ category.id }}</td>
-						<td>{{ category.name }}</td>
-						<td>{{ category.start }}</td>
-						<td>{{ category.end }}</td>
-						<td>{{ category.description }}</td>
-						<td>{{ category.status }}</td>
+					<tr v-for="(Category, index) in listCategory" :key="index">
+						<td>{{ Category.id }}</td>
+						<td>{{ Category.topic_name }}</td>
+						<td>{{ Category.start_collect_date }}</td>
+						<td>{{ Category.end_collect_date }}</td>
+						<td>{{ Category.description }}</td>
+						<td>{{ Category.owner }}</td>
 						<td>
-							<button @click="handleModal(category.id)" class="btn btn-warning">
+							<button @click="handleModal(Category.id)" class="btn btn-warning">
 								<i class="fas fa-edit"></i>
 							</button>
-							<button @click="handleDeleteUser(category.id)" class="btn btn-danger">
+							<button
+								@click="handleDeleteCategory(Category.id)"
+								class="btn btn-danger"
+							>
 								<i class="fas fa-trash-alt"></i>
 							</button>
 						</td>
@@ -103,25 +106,36 @@
 			<b-modal
 				id="modal-1"
 				v-model="showModal"
-				:title="action === 'CREATE' ? $t('USER.FORM.TITLE') : 'EDIT User'"
+				:title="action === 'CREATE' ? $t('CATEGORY.FORM.TITLE') : 'EDIT Category'"
 				centered
 			>
 				<div class="row mt-2">
 					<div class="col-md-12 col-sm-12 col-lg-12">
 						<label for="">{{ $t('CATEGORY.FORM.CATEGORY_NAME') }}</label>
-						<b-form-input type="text" v-model="newCategory.name"></b-form-input>
+						<b-form-input type="text" v-model="newCategory.topic_name"></b-form-input>
 					</div>
 					<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
 						<label for="">{{ $t('CATEGORY.FORM.START_DATE') }}</label>
-						<b-form-input type="date" v-model="newCategory.start"></b-form-input>
+						<b-form-input
+							type="date"
+							v-model="newCategory.start_collect_date"
+						></b-form-input>
 					</div>
 					<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
 						<label for="">{{ $t('CATEGORY.FORM.END_DATE') }}</label>
-						<b-form-input type="date" v-model="newCategory.end"></b-form-input>
+						<b-form-input
+							type="date"
+							:readonly="action === 'EDIT' ? true : false"
+							v-model="newCategory.end_collect_date"
+						></b-form-input>
 					</div>
 					<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
 						<label for="">{{ $t('CATEGORY.FORM.DESCRIPTION') }}</label>
-						<b-form-textarea id="textarea-rows" rows="4"></b-form-textarea>
+						<b-form-textarea
+							id="textarea-rows"
+							rows="4"
+							v-model="newCategory.description"
+						></b-form-textarea>
 					</div>
 				</div>
 				<template #modal-footer>
@@ -175,20 +189,13 @@
 				showModal: false,
 				selected: null,
 				isLoading: false,
-				listCategory: [
-					{
-						id: 1,
-						name: 'ac',
-						start: '1',
-						end: '2',
-						description: '3',
-						status: ''
-					}
-				],
+				listCategory: [],
 				newCategory: {
-					name: '',
-					start: '',
-					end: '',
+					id: '',
+					topic_name: '',
+					start_collect_date: '',
+					end_collect_date: '',
+					owner: '',
 					description: ''
 				},
 				options: [],
@@ -215,17 +222,17 @@
 				console.log(id, 'EDIT');
 				this.ids = id;
 				if (this.ids) {
-					(this.action = 'EDIT'),
-						await getOneCategory(id)
-							.then(res => {
-								this.newCategory.name = res.data.name;
-								this.newCategory.start = res.data.start;
-								this.newCategory.end = res.data.end;
-								this.newCategory.description = res.data.description;
-							})
-							.catch(err => {
-								console.log(err);
-							});
+					this.action = 'EDIT';
+					await getOneCategory(id)
+						.then(res => {
+							this.newCategory.topic_name = res.data.topic_name;
+							this.newCategory.start_collect_date = res.data.start_collect_date;
+							this.newCategory.end_collect_date = res.data.end_collect_date;
+							this.newCategory.description = res.data.description;
+						})
+						.catch(err => {
+							console.log(err);
+						});
 				} else {
 					this.isResetDataModal();
 					this.action = 'CREATE';
@@ -239,9 +246,7 @@
 					.then(res => {
 						if (res.status === 200) {
 							console.log(res);
-							this.listCategory = res.data.map(category => {
-								return category;
-							});
+							this.listCategory = res.data.data;
 							this.isLoading = false;
 						}
 					})
@@ -252,9 +257,9 @@
 			async handleCreateCategory() {
 				console.log(this.newCategory);
 				const data = {
-					name: this.newCategory.name,
-					start: this.newCategory.start,
-					end: this.newCategory.end,
+					topic_name: this.newCategory.topic_name,
+					start_collect_date: this.newCategory.start_collect_date,
+					end_collect_date: this.newCategory.end_collect_date,
 					description: this.newCategory.description
 				};
 				console.log(data);
@@ -278,7 +283,7 @@
 									title: this.$t('TOAST.SUCCESS'),
 									content: this.$t('CATEGORY.FORM.SUCCESS')
 								});
-								this.handleGetListUser();
+								this.handleGetListCategory();
 								this.showModal = false;
 								this.isResetDataModal();
 							}
@@ -287,6 +292,94 @@
 							console.log(err);
 						});
 				}
+			},
+			async handleEditCategory() {
+				this.action = 'EDIT';
+				const data = {
+					topic_name: this.newCategory.topic_name,
+					start_collect_date: this.newCategory.start_collect_date,
+					end_collect_date: this.newCategory.end_collect_date,
+					description: this.newCategory.description
+				};
+				if (
+					isEmptyOrWhiteSpace(data.name) ||
+					isEmptyOrWhiteSpace(data.start) ||
+					isEmptyOrWhiteSpace(data.end) ||
+					isEmptyOrWhiteSpace(data.description)
+				) {
+					MakeToast({
+						variant: 'warning',
+						title: 'Warning',
+						content: this.$t('CATEGORY.FORM.MESSAGE.SPACE')
+					});
+				} else {
+					console.log(data);
+					await editCategory(this.ids, data)
+						.then(res => {
+							if (res.status == 200) {
+								MakeToast({
+									variant: 'success',
+									title: this.$t('TOAST.SUCCESS'),
+									content: this.$t('CATEGORY.FORM.SUCCESS')
+								});
+								this.handleGetListCategory();
+								this.showModal = false;
+								this.isResetDataModal();
+							}
+						})
+						.catch(err => {
+							console.log(err);
+						});
+				}
+			},
+			handleDeleteCategory(id) {
+				this.$bvModal
+					.msgBoxConfirm('Do you want to delete this category?', {
+						title: 'Warning',
+						size: 'sm',
+						buttonSize: 'sm',
+						okVariant: 'danger',
+						okTitle: 'OK',
+						cancelTitle: 'Cancel',
+						footerClass: 'p-2',
+						hideHeaderClose: false,
+						centered: true
+					})
+					.then(value => {
+						if (value === true) {
+							deleteCategory(id)
+								.then(res => {
+									if (res.status === 200) {
+										MakeToast({
+											variant: 'success',
+											title: this.$t('TOAST.SUCCESS'),
+											content: 'Successfully to delete this category'
+										});
+										this.handleGetListCategory();
+									} else {
+										MakeToast({
+											variant: 'warning',
+											title: this.$t('TOAST.WARNING'),
+											content: 'You can not delete this category'
+										});
+									}
+									console.log(res);
+								})
+								.catch(err => {
+									console.log(err);
+								});
+						}
+					});
+			},
+			isResetDataModal() {
+				console.log('RESET DATA');
+				this.newCategory = {
+					id: '',
+					topic_name: '',
+					start_collect_date: '',
+					end_collect_date: '',
+					description: ''
+				};
 			}
 		}
 	};

@@ -106,7 +106,7 @@ export default {
 				END: 'Ngày kết thúc',
 				DESCRIPTION: 'Mô tả',
 				ACTIONS: 'Hành động',
-				STATUS: 'Trạng thái'
+				OWNER: 'Người tạo'
 			}
 		}
 	}

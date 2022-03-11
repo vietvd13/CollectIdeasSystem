@@ -75,6 +75,7 @@ const actions = {
 				});
 		});
 	},
+
 	doLogout({ commit }) {
 		commit('SET_ID', '');
 		commit('SET_NAME', '');
