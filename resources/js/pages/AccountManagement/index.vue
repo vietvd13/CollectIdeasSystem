@@ -15,7 +15,9 @@
 			<div class="account-management__searching-filter">
 				<label for="filer">{{ $t('USER.SEARCH_BY.ROLE') }}</label>
 				<b-form-select v-model="selected" @change="handleSearchByRole()">
-					<b-form-select-option :value="null">{{$t('USER.SELECT_ROLE')}}</b-form-select-option>
+					<b-form-select-option :value="null">{{
+						$t('USER.SELECT_ROLE')
+					}}</b-form-select-option>
 					<b-form-select-option
 						v-for="(role, index) in options"
 						:key="index"
@@ -43,12 +45,14 @@
 		</div>
 		<div class="account-management__content mt-3">
 			<b-table-simple
+				id="my-table"
 				class="text-center"
 				responsive
 				:per-page="perPage"
 				:current-page="currentPage"
 				:outlined="false"
 				:fixed="false"
+				:items="listUser"
 			>
 				<b-thead>
 					<b-th>
@@ -95,10 +99,10 @@
 				</b-tbody>
 			</b-table-simple>
 			<b-pagination
-				v-model="currentPage"
-				:per-page="perPage"
-				:total-rows="rows"
 				aria-controls="my-table"
+				v-model="params.currentPage"
+				:per-page="params.perPage"
+				:total-rows="rows"
 			></b-pagination>
 
 			<b-modal
@@ -127,9 +131,9 @@
 					<div class="col-md-12 col-sm-12 col-lg-12">
 						<label for="">{{ $t('USER.FORM.ROLE') }}</label>
 						<b-form-select v-model="newUser.role">
-							<b-form-select-option :value="null"
-								>{{$t('USER.FORM.SELECT_ROLE')}}</b-form-select-option
-							>
+							<b-form-select-option :value="null">{{
+								$t('USER.SELECT_ROLE')
+							}}</b-form-select-option>
 							<b-form-select-option
 								v-for="(role, index) in options"
 								:key="index"
@@ -151,7 +155,7 @@
 							v-if="action === 'CREATE'"
 							@click="handleCreateUser()"
 						>
-							{{$t('USER.FORM.CREATE')}}
+							{{ $t('USER.FORM.CREATE') }}
 						</b-button>
 
 						<b-button
@@ -159,11 +163,11 @@
 							v-if="action === 'EDIT'"
 							@click="handleEditUser()"
 						>
-							{{$t('USER.FORM.SAVE')}}
+							{{ $t('USER.FORM.SAVE') }}
 						</b-button>
 
 						<b-button class="btn btn-danger" @click="showModal = false">
-							{{$t("USER.FORM.CLOSE")}}
+							{{ $t('USER.FORM.CLOSE') }}
 						</b-button>
 					</div>
 				</template>
@@ -178,6 +182,10 @@
 	import { MakeToast } from '@/toast/toastMessage';
 	import { validPassword, validEmail, isEmptyOrWhiteSpace } from '../../utils/validate';
 	import LazyLoad from '../../layout/Lazyload.vue';
+	const paramInit = {
+		perPage: 5,
+		currentPage: 1,
+	}
 	export default {
 		name: 'AccountManagementList',
 		components: {
@@ -185,8 +193,7 @@
 		},
 		data() {
 			return {
-				perPage: 15,
-				currentPage: 1,
+				params: {...paramInit},
 				selected: null,
 				options: [],
 				isLoading: false,
@@ -209,7 +216,7 @@
 				return this.listUser.length;
 			},
 			isChangePage() {
-				return this.currentPage;
+				return this.params.currentPage;
 			}
 		},
 		watch: {
@@ -253,8 +260,9 @@
 					});
 			},
 			async handleGetListUser() {
+				const params = this.params
 				this.isLoading = true;
-				await getUserTable()
+				await getUserTable(params)
 					.then(res => {
 						if (res.status === 200) {
 							this.listUser = res.data.map(user => {
@@ -297,7 +305,7 @@
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
-						content: this.$t("USER.FORM.MESSAGE.PASSWORD")
+						content: this.$t('USER.FORM.MESSAGE.PASSWORD')
 					});
 				} else {
 					await postUser(data)
@@ -411,9 +419,9 @@
 					birth: ''
 				};
 			},
-			handleSearchByKeyWords() {
+			handleSearchByKeyWords(keysearch) {
 				this.listUser = this.listUser.filter(item => {
-					if (item.name === this.keyword) {
+					if (item.name.toLowerCase() === this.keyword.toLowerCase()) {
 						return item;
 					} else if (this.keyword === '') {
 						this.handleGetListUser();
