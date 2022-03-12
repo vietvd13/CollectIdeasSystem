@@ -33,5 +33,10 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         return Category::class;
     }
 
+    public function paginate($limit = null, $columns = ['*'], $method = "paginate")
+    {
+        return $this->model->with('user')->paginate($limit, $columns);
+    }
+
 
 }
