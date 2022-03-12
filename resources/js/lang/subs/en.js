@@ -39,39 +39,74 @@ export default {
 		}
 	},
 	USER: {
-		TITLE: "Account Mamangement",
-		CREATE_USER: "Create User",
-		SELECT_ROLE: "Select Role",
+		TITLE: 'Account Mamangement',
+		CREATE_USER: 'Create User',
+		SELECT_ROLE: 'Select Role',
 		FORM: {
-			TITLE: "Create User",
-			PASSWORD: "Password",
-			EMAIL: "Email",
-			NAME: "Name",
-			BIRTH: "Date of Birth",
-			CREATE: "Create",
-			ROLE: "Role",
-			SUCCESS: "Create Successfully",
-			SAVE: "SAVE",
-			CLOSE: "Close",
+			TITLE: 'Create User',
+			PASSWORD: 'Password',
+			EMAIL: 'Email',
+			NAME: 'Name',
+			BIRTH: 'Date of Birth',
+			CREATE: 'Create',
+			ROLE: 'Role',
+			SUCCESS: 'Create Successfully',
+			SAVE: 'SAVE',
+			CLOSE: 'Close',
 			MESSAGE: {
-				EMAIL: "Invalid Email",
-				SPACE: "You must enter a valid value",
-				PASSWORD: "Invalid Password! Password must be at least 8 characters",
+				EMAIL: 'Invalid Email',
+				SPACE: 'You must enter a valid value',
+				PASSWORD: 'Invalid Password! Password must be at least 8 characters'
 			}
 		},
 		SEARCH_BY: {
-			KEYWORD: "Keyword",
-			ROLE: "Role",
-			PLACEHOLDER_KEYWORD: "Enter the keyword"
+			KEYWORD: 'Keyword',
+			ROLE: 'Role',
+			PLACEHOLDER_KEYWORD: 'Enter the keyword'
 		},
 		TABLE: {
 			HEADING: {
 				ID: 'ID',
-				EMAIL: "Email",
-				NAME: "Fullname",
-				ROLE: "Role",
-				BIRTH: "Date of Birth",
-				ACTIONS: "Actions",
+				EMAIL: 'Email',
+				NAME: 'Fullname',
+				ROLE: 'Role',
+				BIRTH: 'Date of Birth',
+				ACTIONS: 'Actions'
+			}
+		}
+	},
+	CATEGORY: {
+		TITLE: 'Category Management',
+		CREATE_CATEGORY: 'Create category',
+		SELECT_TYPE: 'Select category type',
+		FORM: {
+			TITLE: 'Create category',
+			CATEGORY_NAME: 'Category name',
+			START_DATE: 'Start date',
+			END_DATE: 'End date',
+			DESCRIPTION: 'Description',
+			CREATE: 'Create',
+			SUCCESS: 'Create Successfully',
+			SAVE: 'SAVE',
+			CLOSE: 'Close',
+			MESSAGE: {
+				SPACE: 'You must enter a valid value'
+			}
+		},
+		SEARCH_BY: {
+			KEYWORD: 'Keyword',
+			TYPE: 'Type',
+			PLACEHOLDER_KEYWORD: 'Enter the keyword'
+		},
+		TABLE: {
+			HEADING: {
+				ID: 'ID',
+				NAME: 'Name of categories',
+				START: 'Start date',
+				END: 'End date',
+				DESCRIPTION: 'Description',
+				ACTIONS: 'Actions',
+				OWNER: 'Owner'
 			}
 		}
 	}
