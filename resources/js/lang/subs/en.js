@@ -37,5 +37,42 @@ export default {
 			SUCCESS: 'Change language successfully.',
 			FAILED: 'Language change failed.'
 		}
+	},
+	USER: {
+		TITLE: "Account Mamangement",
+		CREATE_USER: "Create User",
+		SELECT_ROLE: "Select Role",
+		FORM: {
+			TITLE: "Create User",
+			PASSWORD: "Password",
+			EMAIL: "Email",
+			NAME: "Name",
+			BIRTH: "Date of Birth",
+			CREATE: "Create",
+			ROLE: "Role",
+			SUCCESS: "Create Successfully",
+			SAVE: "SAVE",
+			CLOSE: "Close",
+			MESSAGE: {
+				EMAIL: "Invalid Email",
+				SPACE: "You must enter a valid value",
+				PASSWORD: "Invalid Password! Password must be at least 8 characters",
+			}
+		},
+		SEARCH_BY: {
+			KEYWORD: "Keyword",
+			ROLE: "Role",
+			PLACEHOLDER_KEYWORD: "Enter the keyword"
+		},
+		TABLE: {
+			HEADING: {
+				ID: 'ID',
+				EMAIL: "Email",
+				NAME: "Fullname",
+				ROLE: "Role",
+				BIRTH: "Date of Birth",
+				ACTIONS: "Actions",
+			}
+		}
 	}
 };
