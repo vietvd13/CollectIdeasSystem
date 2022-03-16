@@ -9,9 +9,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IdeaRequest;
-use App\Repositories\Contracts\IdeaRepositoryInterface;
 use App\Http\Resources\BaseResource;
 use App\Http\Resources\IdeaResource;
+use App\Services\Contracts\IdeaServiceInterface;
 use Illuminate\Http\Request;
 
 class IdeaController extends Controller
@@ -20,11 +20,11 @@ class IdeaController extends Controller
      /**
      * var Repository
      */
-    protected $repository;
+    protected $service;
 
-    public function __construct(IdeaRepositoryInterface $repository)
+    public function __construct(IdeaServiceInterface $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -71,7 +71,7 @@ class IdeaController extends Controller
      */
     public function index(IdeaRequest $request)
     {
-        $data = $this->repository->paginate($request->per_page);
+        $data = $this->service->paginate($request->per_page);
         return $this->responseJson(200, BaseResource::collection($data));
     }
 
@@ -101,8 +101,9 @@ class IdeaController extends Controller
     public function store(IdeaRequest $request)
     {
         try {
-            $data = $this->repository->create($request->all());
-            return $this->responseJson(200, new IdeaResource($data));
+
+            $data = $this->service->create(array_merge($request->all(), ['owner' => $request->user()->id]));
+            return $this->responseJson(200, $data);
         } catch (\Exception $e) {
             throw $e;
         }
@@ -147,7 +148,7 @@ class IdeaController extends Controller
     public function show($id)
     {
         try {
-            $department = $this->repository->find($id);
+            $department = $this->service->find($id);
             return $this->responseJson(200, new BaseResource($department));
         } catch (\Exception $e) {
             throw $e;
@@ -206,7 +207,7 @@ class IdeaController extends Controller
     public function update(IdeaRequest $request, $id)
     {
         $attributes = $request->except([]);
-        $data = $this->repository->update($attributes, $id);
+        $data = $this->service->update($attributes, $id);
         return $this->responseJson(200, new BaseResource($data));
     }
 
@@ -240,7 +241,7 @@ class IdeaController extends Controller
      */
     public function destroy($id)
     {
-        $this->repository->delete($id);
+        $this->service->delete($id);
         return $this->responseJson(200, null, trans('messages.mes.delete_success'));
     }
 }

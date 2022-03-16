@@ -19,9 +19,14 @@ use App\Repositories\Contracts\CategoryRepositoryInterface;
 use Service\CategoryService;
 use App\Services\Contracts\CategoryServiceInterface;
 use App\Repositories\Contracts\DepartmentRepositoryInterface;
+use App\Repositories\Contracts\IdeaRepositoryInterface;
 use App\Services\Contracts\DepartmentServiceInterface;
+use App\Services\Contracts\IdeaServiceInterface;
 use Repository\DepartmentRepository;
+use Repository\IdeaRepository;
 use Service\DepartmentService;
+use Service\IdeaService;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -40,6 +45,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(DepartmentRepositoryInterface::class, DepartmentRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(CategoryServiceInterface::class, CategoryService::class);
+        $this->app->bind(IdeaRepositoryInterface::class, IdeaRepository::class);
+        $this->app->bind(IdeaServiceInterface::class, IdeaService::class);
     }
 
     /**

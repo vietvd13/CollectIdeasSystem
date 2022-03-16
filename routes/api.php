@@ -18,5 +18,6 @@ Route::namespace('Api')->group(function() {
         Route::get('roles','UserController@roles');
         Route::apiResource('category', 'CategoryController');
         Route::apiResource('department', 'DepartmentController');
+        Route::apiResource('idea', 'IdeaController');
     });
 });
