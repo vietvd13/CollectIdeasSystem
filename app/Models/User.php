@@ -52,4 +52,8 @@ class User extends Authenticatable
     public function categories() {
         return $this->hasMany('App\Models\Category', 'id', 'owner');
     }
+
+    public function department() {
+        return $this->hasOne('App\Models\Department', 'department_id', 'id');
+    }
 }
