@@ -23,6 +23,7 @@ class TransactionService
                 return $th;
             }
         });
+        error_log($status);
         return $status;
     }
 }

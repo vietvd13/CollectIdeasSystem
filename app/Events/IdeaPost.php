@@ -9,14 +9,10 @@ class IdeaPost implements ShouldBroadcastNow
 {
   use Dispatchable, InteractsWithSockets, SerializesModels;
 
-  public $idea_id;
-  public $contents;
-  public $owner;
-  public function __construct($idea_id, $contents, $owner)
+  public $payload;
+  public function __construct(array $payload)
   {
-      $this->idea_id = $idea_id;
-      $this->contents = $contents;
-      $this->owner = $owner;
+      $this->payload = $payload;
   }
 
   public function broadcastOn()

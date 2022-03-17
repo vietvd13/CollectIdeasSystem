@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class IdeadAttatchFilesTable extends Migration
+class IdeaAttatchFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class IdeadAttatchFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('iead_attatch_files', function (Blueprint $table) {
+        Schema::create('idea_attatch_files', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('idea_id')->unsigned();
             $table->string('file_extension');
