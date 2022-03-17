@@ -419,14 +419,14 @@
 					birth: ''
 				};
 			},
-			handleSearchByKeyWords(keysearch) {
+			handleSearchByKeyWords() {
 				this.listUser = this.listUser.filter(item => {
-					if (item.name.toLowerCase() === this.keyword.toLowerCase()) {
+					if (item.name.toLowerCase() == this.keyword.toLowerCase()) {
 						return item;
-					} else if (this.keyword === '') {
+					} else if (this.keyword == '') {
 						this.handleGetListUser();
 					} else {
-						console.log('No data');
+						this.listUser = [];
 					}
 				});
 			},

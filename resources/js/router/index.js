@@ -7,6 +7,7 @@ import Login from './modules/login';
 import errorRoute from './modules/error';
 import Dashboard from './modules/dashboard';
 import AccountManagement from './modules/account';
+import PostIdeas from './modules/UserIdeas';
 
 export const constantRoutes = [
 	Login,
@@ -17,6 +18,7 @@ export const constantRoutes = [
 	},
 	Dashboard,
 	AccountManagement,
+	PostIdeas,
 	errorRoute,
 	{
 		path: '*',
