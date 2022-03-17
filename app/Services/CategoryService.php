@@ -18,4 +18,9 @@ class CategoryService extends BaseService implements CategoryServiceInterface
     {
         $this->repository = $repository;
     }
+
+    public function create(array $attributes)
+    {
+        $this->repository->create($attributes);
+    }
 }

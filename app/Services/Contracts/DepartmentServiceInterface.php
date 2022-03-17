@@ -2,12 +2,13 @@
 /**
  * Created by TienNamNguyen.
  * User: namnt
- * Year: 2022-03-07
+ * Year: 2022-03-16
  */
 
 namespace App\Services\Contracts;
 
-interface CategoryServiceInterface extends BaseServiceInterface
-{
 
+interface DepartmentServiceInterface extends BaseServiceInterface
+{
+    //
 }

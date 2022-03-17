@@ -1,6 +1,7 @@
 <?php
 namespace Service;
 use App\Services\Contracts\BaseServiceInterface;
+use Illuminate\Support\Facades\Storage;
 abstract class BaseService implements BaseServiceInterface {
     /**
      * Retrieve all data
@@ -9,6 +10,7 @@ abstract class BaseService implements BaseServiceInterface {
      *
      * @return mixed
      */
+
     public function all($columns = ['*']) {
         return $this->repository->all();
     }
@@ -84,4 +86,42 @@ abstract class BaseService implements BaseServiceInterface {
     public function delete($id) {
         return $this->repository->delete($id);
     }
+
+    /**
+     * Upload a file
+     *
+     * @param @file
+     *
+     * @return boolean
+     */
+
+    public function uploadFile($file, array $attributes = [], $path = "ideafiles")
+    {
+        if ($file) {
+            return $file->storeAs($path,
+                "idea_file_id_{$attributes['idea_id']}_owner_{$attributes['owner']}_{$attributes['file_order']}_.{$file->getClientOriginalExtension()}"
+            );
+        }
+    }
+
+    /**
+     * Detatch a file
+     *
+     * @param @file
+     *
+     * @return boolean
+     */
+
+    // public function detatchFile($file, array $attributes = [])
+    // {
+
+    // }
+
+    // public static function readFile() {
+
+    // }
+
+    // public static function downloadFile() {
+
+    // }
 }

@@ -25,6 +25,7 @@ class User extends Authenticatable
     const BIRTH = 'birth';
     const ROLE = 'role';
     const NEW_PASSWORD = 'new_password';
+    const DEPARTMENT = 'department_id';
     protected $hidden = [
         User::PASSWORD
     ];
@@ -33,7 +34,8 @@ class User extends Authenticatable
         User::NAME,
         User::EMAIL,
         User::PASSWORD,
-        User::BIRTH
+        User::BIRTH,
+        User::DEPARTMENT
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -48,4 +50,12 @@ class User extends Authenticatable
      */
 
     protected $guard_name = 'api';
+
+    public function categories() {
+        return $this->hasMany('App\Models\Category', 'id', 'owner');
+    }
+
+    public function department() {
+        return $this->hasOne('App\Models\Department', 'id', 'id');
+    }
 }

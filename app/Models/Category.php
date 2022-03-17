@@ -9,6 +9,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
@@ -33,5 +34,13 @@ class Category extends Model
     protected $casts = [
         'data' => 'array'
     ];
+
+    public function user() {
+        return $this->HasOne('App\Models\User', 'id', 'owner');
+    }
+
+    public function idea() {
+        return $this->hasMany('App\Models\Idea', 'category_id', 'id');
+    }
 
 }
