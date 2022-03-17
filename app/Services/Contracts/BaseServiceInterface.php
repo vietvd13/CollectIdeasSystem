@@ -75,4 +75,39 @@ interface BaseServiceInterface
      */
     public function delete($id);
 
+    /**
+     * Upload a file
+     *
+     * @param $file, $attributes
+     *
+     * @return boolean
+     */
+    public function uploadFile($file, array $attributes = []);
+
+    /**
+     * detatch a file
+     *
+     * @param $file, $attributes
+     *
+     * @return boolean
+     */
+    // public function detatchFile($file, array $attributes = []);
+
+    // /**
+    //  * read a file in online mode
+    //  *
+    //  * @param $file, $attributes
+    //  *
+    //  *
+    //  */
+    // public static function readFile();
+
+    // /**
+    //  * detatch a file
+    //  *
+    //  * @param $file, $attributes
+    //  *
+    //  * @return boolean
+    //  */
+    // public static function downloadFile();
 }

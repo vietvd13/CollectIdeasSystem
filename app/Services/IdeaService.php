@@ -37,19 +37,30 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                     Idea::OWNER => $attributes[Idea::OWNER],
                     Idea::CONTENTS => $attributes[Idea::CONTENTS]
                 ];
-                $idea = $category->idea()->create($ideadContents);
-                event(new IdeaPost($idea->id, $idea->contents, $idea->owner));
+                if ($idea = $category->idea()->create($ideadContents)) {
+                    if (isset($attributes['files'])) {
+                        foreach ($attributes['files'] as $key => $file) {
+                            $pathFile = $this->uploadFile($file, [
+                                'idea_id' => $idea->id,
+                                'owner' => $idea->owner,
+                                'file_order' => $key
+                            ]);
+                            // dd($file->getClientOriginalExtension());
+                            $fileAttached[] = [
+                                'file_extension' => $file->getClientOriginalExtension(),
+                                'path' => $pathFile
+                            ];
+                        }
+                        $attatchsFiles = $idea->files()->createMany($fileAttached);
+                    }
+                    event(new IdeaPost([
+                        'idea_id' => $idea->id,
+                        'contents' => $idea->contents,
+                        'owner' => $idea->owner,
+                        'attatched_files' => isset($fileAttached) ? $fileAttached : null
+                    ]));
+                }
             }
-
-            // if ($idea = $repository->create($ideadContents)) {
-            //     if (isset($attributes['file']))
-            //     foreach ($attributes['file'] as $key => $file) {
-            //         if (UploadService::attatchFile($file)) {
-
-            //         }
-            //     }
-            //    // event(new IdeaPost($idea->id, $idea->contents, $idea->owner));
-            // }
         });
         $status;
     }

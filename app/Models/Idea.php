@@ -37,7 +37,7 @@ class Idea extends Model
     }
 
     public function comments() {
-        return $this->hasMany('App\Models\IdeaComment', 'iead_id', 'id');
+        return $this->hasMany('App\Models\IdeaComment', 'idea_id', 'id');
     }
 
     public function likes() {
