@@ -8,6 +8,7 @@
 namespace Service;
 
 use App\Events\IdeaPost;
+use App\Jobs\MailJob;
 use App\Models\Idea;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\IdeaRepositoryInterface;
@@ -15,6 +16,7 @@ use App\Services\Contracts\IdeaServiceInterface;
 use Service\BaseService;
 use Service\TransactionService;
 use Service\UploadService;
+use Redis;
 class IdeaService extends BaseService implements IdeaServiceInterface
 {
 
@@ -53,13 +55,17 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                         }
                         $attatchsFiles = $idea->files()->createMany($fileAttached);
                     }
-                    event(new IdeaPost([
-                        'idea_id' => $idea->id,
-                        'contents' => $idea->contents,
-                        'owner' => $idea->owner,
-                        'attatched_files' => isset($fileAttached) ? $fileAttached : null
-                    ]));
+                    $send = [
+                        "category_id" => $category->id,
+                        "owner" => $idea->owner,
+                        "idea_content" => $idea->contents,
+                        "attatched_files" => isset($fileAttached) ? $fileAttached : null,
+                        "topic_contents" => $category->contents,
+                        "created_at" => $idea->created_at
+                    ];
+                    event(new IdeaPost($send));
                 }
+                MailJob::dispatch('thangld2407@gmail.com', $send)->onQueue('emails');
             }
         });
         $status;
