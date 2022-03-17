@@ -39,4 +39,8 @@ class Category extends Model
         return $this->HasOne('App\Models\User', 'id', 'owner');
     }
 
+    public function idea() {
+        return $this->hasMany('App\Models\Idea', 'category_id', 'id');
+    }
+
 }

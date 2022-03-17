@@ -1,20 +1,20 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: autoDump
- * Year: 2022-02-26
+ * Created by TienNamNguyen.
+ * User: namnt
+ * Year: 2022-03-16
  */
 
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\IdeaRequest;
+use App\Http\Requests\DepartmentRequest;
+use App\Services\Contracts\DepartmentServiceInterface;
 use App\Http\Resources\BaseResource;
-use App\Http\Resources\IdeaResource;
-use App\Services\Contracts\IdeaServiceInterface;
+use App\Http\Resources\DepartmentResource;
 use Illuminate\Http\Request;
 
-class IdeaController extends Controller
+class DepartmentController extends Controller
 {
 
      /**
@@ -22,23 +22,78 @@ class IdeaController extends Controller
      */
     protected $service;
 
-    public function __construct(IdeaServiceInterface $service)
+    public function __construct(DepartmentServiceInterface $service)
     {
         $this->service = $service;
     }
 
     /**
      * @OA\Get(
-     *   path="/api/idea",
-     *   tags={"Idea"},
-     *   summary="List idea",
-     *   operationId="idea_index",
+     *   path="/api/department",
+     *   tags={"Department"},
+     *   summary="List department",
+     *   operationId="department_index",
      *   @OA\Response(
      *     response=200,
      *     description="Send request success",
      *     @OA\MediaType(
      *      mediaType="application/json",
-     *      example={"code":200,"data":{{"id": 1,"name": "..........."}}}
+     *      example={
+     *       "status": 200,
+     *       "data": {
+     *           "current_page": 1,
+     *           "data": {
+     *               {
+     *                   "id": 2,
+     *                   "name": "IT Ha Noi uPDATE",
+     *                   "deleted_at": null,
+     *                   "created_at": "2022-03-16T15:28:38.000000Z",
+     *                   "updated_at": "2022-03-16T15:31:41.000000Z"
+     *               },
+     *               {
+     *                   "id": 3,
+     *                   "name": "Marketing",
+     *                   "deleted_at": null,
+     *                   "created_at": "2022-03-16T15:28:38.000000Z",
+     *                   "updated_at": "2022-03-16T15:28:38.000000Z"
+     *               },
+     *               {
+     *                   "id": 4,
+     *                   "name": "Security",
+     *                   "deleted_at": null,
+     *                   "created_at": "2022-03-16T15:28:38.000000Z",
+     *                   "updated_at": "2022-03-16T15:28:38.000000Z"
+     *               }
+     *           },
+     *           "first_page_url": "http://127.0.0.1:8000/api/department?page=1",
+     *           "from": 1,
+     *           "last_page": 1,
+     *           "last_page_url": "http://127.0.0.1:8000/api/department?page=1",
+     *           "links": {
+     *               {
+     *                   "url": null,
+     *                   "label": "&laquo; Previous",
+     *                   "active": false
+     *               },
+     *               {
+     *                   "url": "http://127.0.0.1:8000/api/department?page=1",
+     *                   "label": "1",
+     *                   "active": true
+     *               },
+     *               {
+     *                   "url": null,
+     *                   "label": "Next &raquo;",
+     *                   "active": false
+     *               }
+     *           },
+     *           "next_page_url": null,
+     *           "path": "http://127.0.0.1:8000/api/department",
+     *           "per_page": 15,
+     *           "prev_page_url": null,
+     *           "to": 3,
+     *           "total": 3
+     *       }
+     *   }
      *     )
      *   ),
      *   @OA\Parameter(
@@ -69,18 +124,18 @@ class IdeaController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(IdeaRequest $request)
+    public function index(DepartmentRequest $request)
     {
         $data = $this->service->paginate($request->per_page);
-        return $this->responseJson(200, BaseResource::collection($data));
+        return $this->responseJson(200, new DepartmentResource($data));
     }
 
     /**
      * @OA\Post(
-     *   path="/api/idea",
-     *   tags={"Idea"},
-     *   summary="Add new idea",
-     *   operationId="idea_create",
+     *   path="/api/department",
+     *   tags={"Department"},
+     *   summary="Add new department",
+     *   operationId="department_create",
      *   @OA\Parameter(name="name", in="query", required=true,
      *     @OA\Schema(type="string"),
      *   ),
@@ -98,12 +153,11 @@ class IdeaController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function store(IdeaRequest $request)
+    public function store(DepartmentRequest $request)
     {
         try {
-
-            $data = $this->service->create(array_merge($request->all(), ['owner' => $request->user()->id]));
-            return $this->responseJson(200, $data);
+            $data = $this->service->create($request->all());
+            return $this->responseJson(200, new DepartmentResource($data));
         } catch (\Exception $e) {
             throw $e;
         }
@@ -111,10 +165,10 @@ class IdeaController extends Controller
 
     /**
      * @OA\Get(
-     *   path="/api/idea/{id}",
-     *   tags={"Idea"},
-     *   summary="Detail Idea",
-     *   operationId="idea_show",
+     *   path="/api/department/{id}",
+     *   tags={"Department"},
+     *   summary="Detail Department",
+     *   operationId="department_show",
      *   @OA\Parameter(
      *     name="id",
      *     in="path",
@@ -157,10 +211,10 @@ class IdeaController extends Controller
 
     /**
      * @OA\Put(
-     *   path="/api/idea/{id}",
-     *   tags={"Idea"},
-     *   summary="Update Idea",
-     *   operationId="idea_update",
+     *   path="/api/department/{id}",
+     *   tags={"Department"},
+     *   summary="Update Department",
+     *   operationId="department_update",
      *   @OA\Parameter(
      *     name="id",
      *     in="path",
@@ -204,7 +258,7 @@ class IdeaController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(IdeaRequest $request, $id)
+    public function update(DepartmentRequest $request, $id)
     {
         $attributes = $request->except([]);
         $data = $this->service->update($attributes, $id);
@@ -213,10 +267,10 @@ class IdeaController extends Controller
 
     /**
      * @OA\Delete(
-     *   path="/api/idea/{id}",
-     *   tags={"Idea"},
-     *   summary="Delete Idea",
-     *   operationId="idea_delete",
+     *   path="/api/department/{id}",
+     *   tags={"Department"},
+     *   summary="Delete Department",
+     *   operationId="department_delete",
      *   @OA\Parameter(
      *      name="id",
      *      in="path",
