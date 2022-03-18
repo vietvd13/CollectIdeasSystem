@@ -79,6 +79,7 @@ export default {
 		TITLE: 'Quản lý danh mục',
 		CREATE_CATEGORY: 'Tạo danh mục',
 		SELECT_TYPE: 'Chọn loại danh mục',
+		EDIT_CATEGORY: 'Sửa danh mục',
 		FORM: {
 			TITLE: 'Tạo danh mục',
 			CATEGORY_NAME: 'Tên danh mục',

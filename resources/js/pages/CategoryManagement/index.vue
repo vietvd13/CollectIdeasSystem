@@ -53,9 +53,6 @@
 			>
 				<b-thead>
 					<b-th>
-						<span>{{ $t('CATEGORY.TABLE.HEADING.ID') }}</span>
-					</b-th>
-					<b-th>
 						<span>{{ $t('CATEGORY.TABLE.HEADING.NAME') }}</span>
 					</b-th>
 					<b-th>
@@ -76,12 +73,11 @@
 				</b-thead>
 				<b-tbody>
 					<tr v-for="(Category, index) in listCategory" :key="index">
-						<td>{{ Category.id }}</td>
 						<td>{{ Category.topic_name }}</td>
 						<td>{{ Category.start_collect_date }}</td>
 						<td>{{ Category.end_collect_date }}</td>
 						<td>{{ Category.description }}</td>
-						<td>{{ Category.owner }}</td>
+						<td>{{ name }}</td>
 						<td>
 							<button @click="handleModal(Category.id)" class="btn btn-warning">
 								<i class="fas fa-edit"></i>
@@ -106,7 +102,9 @@
 			<b-modal
 				id="modal-1"
 				v-model="showModal"
-				:title="action === 'CREATE' ? $t('CATEGORY.FORM.TITLE') : 'EDIT Category'"
+				:title="
+					action === 'CREATE' ? $t('CATEGORY.FORM.TITLE') : $t('CATEGORY.EDIT_CATEGORY')
+				"
 				centered
 			>
 				<div class="row mt-2">
@@ -174,6 +172,7 @@
 		getOneCategory,
 		editCategory
 	} from '@/api/modules/category';
+	import { getListRole } from '@/api/modules/role';
 	import { MakeToast } from '@/toast/toastMessage';
 	import { isEmptyOrWhiteSpace } from '../../utils/validate';
 	import LazyLoad from '../../layout/Lazyload.vue';
@@ -210,6 +209,9 @@
 			},
 			isChangePage() {
 				return this.currentPage;
+			},
+			name() {
+				return this.$store.getters.name;
 			}
 		},
 		watch: {
@@ -240,6 +242,15 @@
 				}
 				this.showModal = true;
 			},
+			async getRole() {
+				await getListRole()
+					.then(res => {
+						this.newCategory.owner = res.data.name;
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			},
 			async handleGetListCategory() {
 				this.isLoading = true;
 				await getCategoryTable()
@@ -264,9 +275,9 @@
 				};
 				console.log(data);
 				if (
-					isEmptyOrWhiteSpace(data.name) ||
-					isEmptyOrWhiteSpace(data.start) ||
-					isEmptyOrWhiteSpace(data.end) ||
+					isEmptyOrWhiteSpace(data.topic_name) ||
+					isEmptyOrWhiteSpace(data.start_collect_date) ||
+					isEmptyOrWhiteSpace(data.end_collect_date) ||
 					isEmptyOrWhiteSpace(data.description)
 				) {
 					MakeToast({
@@ -415,5 +426,13 @@
 	}
 	.category-management__searching button {
 		background: #242368;
+	}
+	.category-management table thead {
+		background: #242368;
+		color: white;
+	}
+	.category-management .page-item.active .page-link {
+		background-color: #242368;
+		border-color: #242368;
 	}
 </style>
