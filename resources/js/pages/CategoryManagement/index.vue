@@ -77,7 +77,7 @@
 						<td>{{ Category.start_collect_date }}</td>
 						<td>{{ Category.end_collect_date }}</td>
 						<td>{{ Category.description }}</td>
-						<td>{{ name }}</td>
+						<td>{{ Category.user.name }}</td>
 						<td>
 							<button @click="handleModal(Category.id)" class="btn btn-warning">
 								<i class="fas fa-edit"></i>
@@ -90,12 +90,17 @@
 							</button>
 						</td>
 					</tr>
-					<LazyLoad @lazyload="handleGetListCategory()" />
+					<LazyLoad
+						@lazyload="
+							handleGetListCategory();
+							getOwner();
+						"
+					/>
 				</b-tbody>
 			</b-table-simple>
 			<b-pagination
-				v-model="currentPage"
-				:per-page="perPage"
+				v-model="params.currentPage"
+				:per-page="params.perPage"
 				:total-rows="rows"
 				aria-controls="my-table"
 			></b-pagination>
@@ -172,10 +177,13 @@
 		getOneCategory,
 		editCategory
 	} from '@/api/modules/category';
-	import { getListRole } from '@/api/modules/role';
 	import { MakeToast } from '@/toast/toastMessage';
 	import { isEmptyOrWhiteSpace } from '../../utils/validate';
 	import LazyLoad from '../../layout/Lazyload.vue';
+	const paramInit = {
+		perPage: 5,
+		currentPage: 1
+	};
 	export default {
 		name: 'CategoryManagement',
 		components: {
@@ -183,6 +191,7 @@
 		},
 		data() {
 			return {
+				params: { ...paramInit },
 				perPage: 15,
 				currentPage: 1,
 				showModal: false,
@@ -208,7 +217,7 @@
 				return this.listCategory.length;
 			},
 			isChangePage() {
-				return this.currentPage;
+				return this.params.currentPage;
 			},
 			name() {
 				return this.$store.getters.name;
@@ -242,18 +251,10 @@
 				}
 				this.showModal = true;
 			},
-			async getRole() {
-				await getListRole()
-					.then(res => {
-						this.newCategory.owner = res.data.name;
-					})
-					.catch(err => {
-						console.log(err);
-					});
-			},
 			async handleGetListCategory() {
+				const params = this.params;
 				this.isLoading = true;
-				await getCategoryTable()
+				await getCategoryTable(params)
 					.then(res => {
 						if (res.status === 200) {
 							console.log(res);
@@ -313,9 +314,9 @@
 					description: this.newCategory.description
 				};
 				if (
-					isEmptyOrWhiteSpace(data.name) ||
-					isEmptyOrWhiteSpace(data.start) ||
-					isEmptyOrWhiteSpace(data.end) ||
+					isEmptyOrWhiteSpace(data.topic_name) ||
+					isEmptyOrWhiteSpace(data.start_collect_date) ||
+					isEmptyOrWhiteSpace(data.end_collect_date) ||
 					isEmptyOrWhiteSpace(data.description)
 				) {
 					MakeToast({
@@ -381,6 +382,17 @@
 								});
 						}
 					});
+			},
+			handleSearchByKeyWords(keysearch) {
+				this.listCategory = this.listCategory.filter(item => {
+					if (item.topic_name.toLowerCase() === this.keyword.toLowerCase()) {
+						return item;
+					} else if (this.keyword === '') {
+						this.handleGetListCategory();
+					} else {
+						console.log('No data');
+					}
+				});
 			},
 			isResetDataModal() {
 				console.log('RESET DATA');
