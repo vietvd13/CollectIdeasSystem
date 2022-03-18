@@ -30,139 +30,10 @@
 			</div>
 		</div>
 		<div class="manage-ideas__content row">
-			<div class="col-md-2 col-lg-2 col-sm-12">
-				<b-list-group>
-					<b-list-group-item>Cras justo odio</b-list-group-item>
-					<b-list-group-item active>Dapibus ac facilisis in</b-list-group-item>
-					<b-list-group-item>Morbi leo risus</b-list-group-item>
-					<b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-					<b-list-group-item>Vestibulum at eros</b-list-group-item>
-				</b-list-group>
-			</div>
-			<div class="col-md-8 col-sm-12 col-lg-8 h-100 manage-ideas__content-list">
-				<div class="card" v-for="(card, index) in listPost" :key="index">
-					<div class="card-header d-flex align-items-center justify-content-between">
-						<div class="user">
-							<b-avatar href="#bar" src="https://placekitten.com/300/300"></b-avatar>
-							<b>{{ card.user }}</b>
-						</div>
-						<div class="time">
-							<span class="text-muted">2 hours ago</span>
-						</div>
-					</div>
-					<div class="card-body">
-						<p class="card-text">{{ card.ideas }}</p>
-					</div>
-
-					<div
-						class="card-footer d-flex justify-content-between border-0 pb-0 bg-transparent"
-					>
-						<ul class="list-inline mb-0 mr-2">
-							<li class="list-inline-item">
-								<a href="#" class="text-pink">
-									<i class="far fa-thumbs-up"></i>
-									Thích
-								</a>
-							</li>
-							<li class="list-inline-item">
-								<a href="#" class="text-body">
-									<i class="far fa-thumbs-down"></i>
-									Không thích
-								</a>
-							</li>
-						</ul>
-					</div>
-
-					<div class="card-footer">
-						<div class="input-group">
-							<span class="input-group-append">
-								<b-avatar
-									href="#bar"
-									src="https://placekitten.com/300/300"
-								></b-avatar>
-							</span>
-							<input
-								type="text"
-								class="form-control border-right-0"
-								placeholder="Add comment..."
-							/>
-
-							<span class="input-group-append">
-								<button class="btn btn-primary" type="button"
-									><i class="fas fa-paper-plane"></i
-								></button>
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-2 col-sm-12 col-lg-2 mt-sm-2">
-				<div class="card">
-					<div class="card-header d-flex align-items-center justify-content-between">
-						<div class="user">
-							<b-avatar href="#bar" src="https://placekitten.com/300/300"></b-avatar>
-							Le Dinh Thang
-						</div>
-						<div class="time">
-							<span class="text-muted">1mins</span>
-						</div>
-					</div>
-					<div class="card-body">
-						<p class="card-text">
-							Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, ipsa
-							beatae a dicta magnam dolore, consectetur sequi ipsum obcaecati
-							adipisci, quos asperiores id culpa quibusdam nostrum delectus
-							necessitatibus reprehenderit accusamus?
-						</p>
-
-						><p class="card-text">
-							<a href="#" class="mr-1">#limitless</a>
-							<a href="#" class="mr-1">#template</a>
-							<a href="#" class="mr-1">#is</a>
-							<a href="#" class="mr-1">#awesome</a>
-						</p>
-					</div>
-
-					<div
-						class="card-footer d-flex justify-content-between border-0 pb-0 bg-transparent"
-					>
-						<ul class="list-inline mb-0">
-							<li class="list-inline-item">
-								<a href="#" class="text-pink">
-									<i class="far fa-thumbs-up"></i>
-									Lượt Thích
-								</a>
-							</li>
-							<li class="list-inline-item">
-								<a href="#" class="text-body">
-									<i class="far fa-thumbs-down"></i>
-									Lượt Không thích
-								</a>
-							</li>
-						</ul>
-					</div>
-
-					<div class="card-footer">
-						<div class="input-group">
-							<span class="input-group-append">
-								<b-avatar
-									href="#bar"
-									src="https://placekitten.com/300/300"
-								></b-avatar>
-							</span>
-							<input
-								type="text"
-								class="form-control border-right-0"
-								placeholder="Add comment..."
-							/>
-
-							<span class="input-group-append">
-								<button class="btn btn-primary" type="button"
-									><i class="fas fa-paper-plane"></i
-								></button>
-							</span>
-						</div>
-					</div>
+			<div class="col-md-12 col-lg-12 manage-ideas__content-post">
+				<div class="area-post">
+					<b-avatar variant="primary" text="BV"></b-avatar>
+					<b-input placeholder="What is your ideas ?"></b-input>
 				</div>
 			</div>
 		</div>
@@ -171,118 +42,111 @@
 			<div class="row mt-2">
 				<div class="col-md-12 col-sm-12 col-lg-12">
 					<label for="">Content</label>
-					<b-form-textarea></b-form-textarea>
+					<b-form-textarea v-model="data.contents"></b-form-textarea>
+				</div>
+				<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
+					<label for="">Department</label>
+					<b-select> </b-select>
 				</div>
 				<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
 					<label for="">Category</label>
-					<b-select>
-						<b-select-option>CRUD SYSTEM</b-select-option>
-						<b-select-option>CRUD SYSTEM</b-select-option>
-						<b-select-option>CRUD SYSTEM</b-select-option>
-						<b-select-option>CRUD SYSTEM</b-select-option>
+					<b-select v-model="data.category_id">
+						<b-form-select-option :value="null">
+							Select the category
+						</b-form-select-option>
+						<b-select-option
+							v-for="(category, index) in listCategory"
+							:key="index"
+							:value="category.id"
+						>
+							{{ category.topic_name }}
+						</b-select-option>
 					</b-select>
 				</div>
 				<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
 					<label for="">Upload your Ideas</label>
-					<b-form-file></b-form-file>
+
+					<b-form-file
+						multiple="multiple"
+						ref="file"
+						accept=".pdf,image/*"
+						id="upload-ideas"
+					></b-form-file>
 				</div>
 			</div>
+
 			<template #modal-footer>
 				<div>
-					<b-button class="btn btn-danger" @click="showModal = false">
+					<b-button class="btn btn-danger" @click="modal = false">
 						{{ $t('USER.FORM.CLOSE') }}
 					</b-button>
-					<b-button
-						v-b-modal.modal-liences
-						class="btn btn-primary"
-					>
+					<b-button type="submit" class="btn btn-primary" @click="handlePostIdea()">
 						Post
 					</b-button>
 				</div>
 			</template>
 		</b-modal>
-		<b-modal id="modal-liences" title="Read the Liences">
-			<p class="my-4">
-				Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque veritatis, aliquam
-				exercitationem quibusdam quidem quae maxime ipsa alias, ullam inventore tempore
-				obcaecati odit quaerat voluptatem ut culpa officiis iusto quisquam.
-			</p>
-			<b-form-checkbox
-				id="checkbox-1"
-				v-model="status"
-				name="checkbox-1"
-				value="accepted"
-				unchecked-value="not_accepted"
-			>
-				I accept the terms and use
-			</b-form-checkbox>
-			<template #modal-footer>
-				<div>
-					<b-button class="btn btn-danger" @click="showModal = false">
-						{{ $t('USER.FORM.CLOSE') }}
-					</b-button>
-					<b-button bv class="btn btn-primary"> Đồng ý </b-button>
-				</div>
-			</template>
-		</b-modal>
+		<LazyLoad @lazyload="getListCategory()" />
 	</div>
 </template>
 
 <script>
+	import Pusher from 'pusher-js'; // import Pusher
+	import LazyLoad from '../../layout/Lazyload.vue';
+	import { getCategoryTable } from '@/api/modules/category';
+	import { postIdeas } from '@/api/modules/idea';
 	export default {
 		name: 'Ideas',
+		components: {
+			LazyLoad
+		},
 		data() {
 			return {
 				modal: false,
 				selected: null,
-				listPost: [
-					{
-						user: 'HieuNH',
-						ideas: `While satire and parody play on humorous attacks, this first level of “fake news” does not require immediate attention due to its widely acknowledged entertainment value. However, this next level of fake news, fabrication, requires a different response due to its lack of facticity and intent to deceive.
-
-This type of information has no factual basis; however, the stories are presented or “published in the style of news articles to create legitimacy,” and often are believed to be a trustworthy source because partisan organizations often present information with some neutrality (Tandoc, Lim & Ling, 2018, p. 143).
-
-According to the scholars, Tandoc, Lim and Ling (2018) research acknowledges that this type of information is often spread for the purpose of financial gain or now, more frequently, by artificial intelligence online sources.`,
-						url_image: ''
-					},
-					{
-						user: 'Le Win ',
-						ideas: `While satire and parody play on humorous attacks, this first level of “fake news” does not require immediate attention due to its widely acknowledged entertainment value. However, this next level of fake news, fabrication, requires a different response due to its lack of facticity and intent to deceive.
-
-This type of information has no factual basis; however, the stories are presented or “published in the style of news articles to create legitimacy,” and often are believed to be a trustworthy source because partisan organizations often present information with some neutrality (Tandoc, Lim & Ling, 2018, p. 143).
-
-According to the scholars, Tandoc, Lim and Ling (2018) research acknowledges that this type of information is often spread for the purpose of financial gain or now, more frequently, by artificial intelligence online sources.`,
-						url_image: ''
-					},
-					{
-						user: 'Vu Duck',
-						ideas: `While satire and parody play on humorous attacks, this first level of “fake news” does not require immediate attention due to its widely acknowledged entertainment value. However, this next level of fake news, fabrication, requires a different response due to its lack of facticity and intent to deceive.
-
-This type of information has no factual basis; however, the stories are presented or “published in the style of news articles to create legitimacy,” and often are believed to be a trustworthy source because partisan organizations often present information with some neutrality (Tandoc, Lim & Ling, 2018, p. 143).
-
-According to the scholars, Tandoc, Lim and Ling (2018) research acknowledges that this type of information is often spread for the purpose of financial gain or now, more frequently, by artificial intelligence online sources.`,
-						url_image: ''
-					},
-					{
-						user: 'NamNT',
-						ideas: `While satire and parody play on humorous attacks, this first level of “fake news” does not require immediate attention due to its widely acknowledged entertainment value. However, this next level of fake news, fabrication, requires a different response due to its lack of facticity and intent to deceive.
-
-This type of information has no factual basis; however, the stories are presented or “published in the style of news articles to create legitimacy,” and often are believed to be a trustworthy source because partisan organizations often present information with some neutrality (Tandoc, Lim & Ling, 2018, p. 143).
-
-According to the scholars, Tandoc, Lim and Ling (2018) research acknowledges that this type of information is often spread for the purpose of financial gain or now, more frequently, by artificial intelligence online sources.`,
-						url_image: ''
-					},
-					{
-						user: 'AbuBarkar',
-						ideas: `While satire and parody play on humorous attacks, this first level of “fake news” does not require immediate attention due to its widely acknowledged entertainment value. However, this next level of fake news, fabrication, requires a different response due to its lack of facticity and intent to deceive.
-
-This type of information has no factual basis; however, the stories are presented or “published in the style of news articles to create legitimacy,” and often are believed to be a trustworthy source because partisan organizations often present information with some neutrality (Tandoc, Lim & Ling, 2018, p. 143).
-
-According to the scholars, Tandoc, Lim and Ling (2018) research acknowledges that this type of information is often spread for the purpose of financial gain or now, more frequently, by artificial intelligence online sources.`,
-						url_image: ''
-					}
-				]
+				listCategory: [],
+				data: {
+					category_id: null,
+					contents: '',
+					files: []
+				},
+				listPost: []
 			};
+		},
+
+		methods: {
+			async getListCategory() {
+				try {
+					const res = await getCategoryTable();
+					this.listCategory = res.data.data;
+					console.log(this.listCategory);
+				} catch (error) {
+					console.log(error);
+				}
+			},
+			async handlePostIdea() {
+				let files = document.getElementById('upload-ideas').files;
+				let formData = new FormData();
+				formData.append('catgory_id', this.data.catgory_id);
+				formData.append('contents', this.data.contents);
+				for (var i = 0; i < files.length; i++) {
+					formData.append(`files[${i + 1}]`, files[i]);
+				}
+				try {
+					const res = await postIdeas(formData);
+					console.log(res);
+					let pusher = new Pusher('50ef73b1d72e2466e314', {
+						cluster: 'ap1'
+					});
+
+					let channel = pusher.subscribe('collect_idea');
+					channel.bind('idea-post', data => {
+						console.log(data);
+					});
+				} catch (error) {
+					console.log(error);
+				}
+			}
 		}
 	};
 </script>
