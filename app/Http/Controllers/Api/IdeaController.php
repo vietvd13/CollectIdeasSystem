@@ -244,4 +244,14 @@ class IdeaController extends Controller
         $this->service->delete($id);
         return $this->responseJson(200, null, trans('messages.mes.delete_success'));
     }
+
+    public function comment(Request $request) {
+        $attributes = [
+            'owner' => $request->user(),
+            'idea_id' => $request->idea_id,
+            'comment' => $request->comment
+        ];
+        $comment = $this->service->comment($attributes);
+        return $this->responseJson(200, new BaseResource($comment));
+    }
 }

@@ -8,6 +8,7 @@
 namespace Service;
 
 use App\Events\IdeaPost;
+use App\Events\IdeaComment;
 use App\Jobs\MailJob;
 use App\Models\Idea;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
@@ -53,7 +54,7 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                                 'path' => $pathFile
                             ];
                         }
-                        $attatchsFiles = $idea->files()->createMany($fileAttached);
+                        $idea->files()->createMany($fileAttached);
                     }
                     $send = [
                         "category_id" => $category->id,
@@ -88,7 +89,16 @@ class IdeaService extends BaseService implements IdeaServiceInterface
 
     public function comment(array $attributes)
     {
-
+        if($idea = $this->repository->find($attributes['idea_id'])) {
+            if ($comment = $idea->comments()->create([
+                'idea_id' => $idea->id,
+                'owner' => $attributes['owner']->id,
+                'comment' => $attributes['comment']
+            ])) {
+                event(new IdeaComment($attributes));
+            }
+            return $comment;
+        }
     }
 
     public function attatchFile(int $idea_id, $file)
