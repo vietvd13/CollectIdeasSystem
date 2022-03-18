@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $admin = User::create([
+            'department_id' => 1,
             'name' => "Admin",
             'email' => "admin@gmail.com",
             'birth' => '2000-05-27',
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
         $admin->syncRoles($adminRole);
 
         $qam = User::create([
+            'department_id' => 2,
             'name' => "QAM",
             'email' => "aqm@gmail.com",
             'birth' => '2000-05-27',
@@ -38,6 +40,7 @@ class UserSeeder extends Seeder
         $qam->syncRoles($qamRole);
 
         $qac = User::create([
+            'department_id' => 3,
             'name' => "QAC",
             'email' => "aqc@gmail.com",
             'birth' => '2000-05-27',
@@ -48,6 +51,7 @@ class UserSeeder extends Seeder
         $qac->syncRoles($qacRole);
 
         $staff = User::create([
+            'department_id' => 4,
             'name' => "STAFF",
             'email' => "staff@gmail.com",
             'birth' => '2000-05-27',

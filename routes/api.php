@@ -1,9 +1,5 @@
 <?php
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,5 +17,8 @@ Route::namespace('Api')->group(function() {
         Route::apiResource('/users','UserController');
         Route::get('roles','UserController@roles');
         Route::apiResource('category', 'CategoryController');
+        Route::apiResource('department', 'DepartmentController');
+        Route::apiResource('idea', 'IdeaController');
+        Route::post('idea/comment', 'IdeaController@comment');
     });
 });
