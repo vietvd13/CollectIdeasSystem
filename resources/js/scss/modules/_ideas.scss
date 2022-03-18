@@ -4,9 +4,70 @@
         margin-bottom: 10px;
     }
     &__content {
-        &-list {
-            .card:nth-child(n + 2) {
-                margin-top: 20px;
+        .card:nth-child(n + 2) {
+            margin-top: 20px;
+        }
+        .comment {
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+            width: 100%;
+            input {
+                background-color: #fff;
+                border: none;
+            }
+            button {
+                border-radius: 20px;
+            }
+        }
+        &-post {
+            .area-post {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                input {
+                    border-radius: 10px;
+                    border: 1px solid #ddd;
+                }
+            }
+            .area-content {
+                i {
+                    font-size: 5px;
+                }
+                &__header {
+                    display: flex;
+                    box-sizing: border-box;
+                    align-items: flex-start;
+                    margin-right: 8px;
+                    width: 100%;
+                }
+                &__footer {
+                    .footer-actions {
+                        .btn:nth-child(1):active {
+                            background: inherit;
+                            color: rgb(20, 24, 238);
+                        }
+                        .btn:nth-child(2):active {
+                            background: inherit;
+                            color: rgb(238, 20, 20);
+                        }
+                        button {
+                            text-decoration: none;
+                            font-size: 12px;
+                        }
+                        columns: #ddd;
+                        i {
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+            .post-content {
+                .attachment {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
             }
         }
     }
@@ -59,7 +120,44 @@
             border: 0;
         }
     }
-    .card-header, .card-footer {
+    .card-header,
+    .card-footer {
         background: inherit;
+    }
+}
+
+#detail-ideas {
+    .detail-ideas {
+        position: relative;
+        &__comment {
+            position: relative;
+            header {
+                border-bottom: 1px solid #ddd;
+                padding: 0px 4px 15px 16px ;
+                position: sticky;
+                flex-grow: 1;
+                overflow: hidden;
+                flex-shrink: 1;
+            }
+            .list-comment {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                position: relative;
+                flex-shrink: 0;
+                padding: 15px 16px;
+            }
+            .user-comment {
+                display: inline-block;
+                min-width:0;
+                flex-shrink: 1;
+                align-items:stretch;
+                div > span {
+                    display: inline;
+                    position: relative;
+                }
+            }
+        }
     }
 }

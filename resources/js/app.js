@@ -7,6 +7,7 @@ import i18n from '@/lang';
 import store from '@/store';
 import Bus from '@/eventBus';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import './bootstrap'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import '@/assets/font-awesome/css/all.min.css';

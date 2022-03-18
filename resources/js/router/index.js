@@ -9,6 +9,7 @@ import Dashboard from './modules/dashboard';
 import AccountManagement from './modules/account';
 import PostIdeas from './modules/UserIdeas';
 import CategoryManagement from './modules/category';
+import Department from './modules/department';
 
 export const constantRoutes = [
 	Login,
@@ -18,9 +19,11 @@ export const constantRoutes = [
 		hidden: true
 	},
 	Dashboard,
+	Department,
 	AccountManagement,
-	PostIdeas,
 	CategoryManagement,
+	PostIdeas,
+	
 	errorRoute,
 	{
 		path: '*',

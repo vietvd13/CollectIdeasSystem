@@ -1,39 +1,77 @@
 <template>
 	<div class="manage-ideas">
-		<div class="manage-ideas__header row justify-content-lg-around">
-			<div class="col-md-6 col-sm-6 col-lg-6"><h4> Discussion About The Ideas </h4></div>
-			<div class="col-md-6 col-sm-6 col-lg-6">
-				<button v-b-modal.modal-ideas class="btn btn-primary float-right"
-					>Post Ideas</button
-				>
-			</div>
-		</div>
-		<div class="manage-ideas__searching">
-			<div class="manage-ideas__searching-filter">
-				<label for="filer">Category</label>
-				<b-form-select v-model="selected">
-					<b-form-select-option :value="null"> Select the category </b-form-select-option>
-					<b-form-select-option> </b-form-select-option>
-				</b-form-select>
-			</div>
-
-			<div class="manage-ideas__searching-keyword">
-				<label for="keyword">User</label>
-				<b-input-group>
-					<b-form-input
-						:placeholder="$t('USER.SEARCH_BY.PLACEHOLDER_KEYWORD')"
-					></b-form-input>
-					<b-input-group-append>
-						<b-button variant="primary"><i class="fas fa-search"></i></b-button>
-					</b-input-group-append>
-				</b-input-group>
-			</div>
-		</div>
-		<div class="manage-ideas__content row">
-			<div class="col-md-12 col-lg-12 manage-ideas__content-post">
-				<div class="area-post">
-					<b-avatar variant="primary" text="BV"></b-avatar>
-					<b-input placeholder="What is your ideas ?"></b-input>
+		<div class="manage-ideas__content row align-items-center justify-content-center">
+			<div class="manage-ideas__content-post col-md-6">
+				<div class="card">
+					<div class="card-body area-post">
+						<b-avatar
+							variant="info"
+							src="https://placekitten.com/300/300"
+							class="mr-3"
+						></b-avatar>
+						<b-input
+							readonly
+							placeholder="What is your ideas ?"
+							v-b-modal.modal-ideas
+						></b-input>
+					</div>
+				</div>
+				<div class="area-content card">
+					<div class="card-body">
+						<div class="area-content__header">
+							<div class="area-content__header-avatar">
+								<b-avatar
+									variant="info"
+									src="https://placekitten.com/300/300"
+									class="mr-3"
+								></b-avatar>
+							</div>
+							<div class="area-content__header-text">
+								<div class="q-box">
+									<span class="q-box"><b>Hồng Nhung</b></span>
+								</div>
+								<div class="q-box">
+									<span><small>1mins</small></span>
+								</div>
+							</div>
+						</div>
+						<div class="area-content__post">
+							<div class="post-category">
+								<h3>Whose behavior shocked you today?</h3>
+							</div>
+							<div class="post-content">
+								<p
+									>A nurse was filmed helping a homeless woman deliver her baby on
+									a street in Makati, Philippines.</p
+								>
+								<div class="attachment">
+									<b>Attachment</b>
+									<a href="">Link 1</a>
+									<a href="">Link 2</a>
+								</div>
+							</div>
+						</div>
+						<div class="area-content__footer mt-2">
+							<div class="footer-overview">
+								<small>100.1K Comment</small>
+							</div>
+							<div class="footer-actions mt-2">
+								<button class="btn"><i class="fas fa-thumbs-up"></i> Thích</button>
+								<button class="btn"
+									><i class="fas fa-thumbs-down"></i> Không Thích</button
+								>
+							</div>
+						</div>
+					</div>
+					<div class="card-footer comment">
+						<b-avatar
+							variant="info"
+							src="https://placekitten.com/300/300"
+							class="mr-3"
+						></b-avatar>
+						<b-input v-b-modal.detail-ideas placeholder="Add a comment....."></b-input>
+						<button class="btn btn-primary ml-3 w-25">Add Comment</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -43,10 +81,6 @@
 				<div class="col-md-12 col-sm-12 col-lg-12">
 					<label for="">Content</label>
 					<b-form-textarea v-model="data.contents"></b-form-textarea>
-				</div>
-				<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
-					<label for="">Department</label>
-					<b-select> </b-select>
 				</div>
 				<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
 					<label for="">Category</label>
@@ -86,6 +120,83 @@
 				</div>
 			</template>
 		</b-modal>
+		<b-modal id="detail-ideas" size="xl" scrollable>
+			<div class="row detail-ideas">
+				<div class="col-md-6 col-lg-6 col-sm-12 detail-ideas__content">
+					<p class="text-justify">
+						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad unde
+						accusantium consectetur ipsum, et aliquid eveniet labore fugiat velit
+						veritatis facilis atque error harum? Eaque, est accusamus! Eius, autem
+						consectetur. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+						Nesciunt, quam magni consectetur earum consequuntur similique aperiam
+						aliquam eveniet explicabo nam natus nemo a nisi aut? Vero tenetur eaque
+						suscipit quia. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad
+						unde accusantium consectetur ipsum, et aliquid eveniet labore fugiat velit
+						veritatis facilis atque error harum? Eaque, est accusamus! Eius, autem
+						consectetur. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+						Nesciunt, quam magni consectetur earum consequuntur similique aperiam
+						aliquam eveniet explicabo nam natus nemo a nisi aut? Vero tenetur eaque
+						suscipit quia. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad
+						unde accusantium consectetur ipsum, et aliquid eveniet labore fugiat velit
+						veritatis facilis atque error harum? Eaque, est accusamus! Eius, autem
+						consectetur. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+						Nesciunt, quam magni consectetur earum consequuntur similique aperiam
+						aliquam eveniet explicabo nam natus nemo a nisi aut? Vero tenetur eaque
+						suscipit quia.
+					</p>
+					<div class="attachment">
+						<a href="">Link 1</a>
+						<a href="">Link 2</a>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-6 col-sm-12 detail-ideas__comment">
+					<header class="d-flex align-items-center">
+						<div class="user-avatar">
+							<b-avatar
+								variant="info"
+								src="https://placekitten.com/300/300"
+								class="mr-3"
+							></b-avatar>
+						</div>
+						<div class="user-infor">
+							<b>dailywbdesign</b>
+						</div>
+					</header>
+					<div class="list-comment">
+						<div class="list">
+							<div
+								class="user-avatar d-flex w-100 align-items-center justify-content-between"
+							>
+								<div class="d-flex align-items-center">
+									<b-avatar
+										variant="info"
+										src="https://placekitten.com/300/300"
+										class="mr-3"
+									>
+									</b-avatar>
+									<b>Le Win</b>
+								</div>
+								<i class="fas fa-ellipsis-h float-right"></i>
+							</div>
+							<div class="user-comment">
+								<div
+									><span>
+										Lorem ipsum dolor sit amet consectetur adipisicing elit.
+										Omnis totam ipsam odit, dolor neque dolorum repellat non,
+										distinctio dicta assumenda blanditiis nesciunt enim sunt,
+										excepturi necessitatibus ipsum doloribus molestias ab.
+									</span></div
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<template #modal-header>
+				<h3>Whose behavior shocked you today?</h3>
+			</template>
+
+		</b-modal>
 		<LazyLoad @lazyload="getListCategory()" />
 	</div>
 </template>
@@ -113,8 +224,15 @@
 				listPost: []
 			};
 		},
-
+		created() {
+			this.connect();
+		},
 		methods: {
+			connect() {
+				window.Echo.channel('collect_idea').listen('idea-post', data => {
+					console.log(data);
+				});
+			},
 			async getListCategory() {
 				try {
 					const res = await getCategoryTable();
@@ -132,17 +250,12 @@
 				for (var i = 0; i < files.length; i++) {
 					formData.append(`files[${i + 1}]`, files[i]);
 				}
+				const DATA = {
+					payload: formData
+				};
 				try {
-					const res = await postIdeas(formData);
+					const res = await postIdeas(DATA);
 					console.log(res);
-					let pusher = new Pusher('50ef73b1d72e2466e314', {
-						cluster: 'ap1'
-					});
-
-					let channel = pusher.subscribe('collect_idea');
-					channel.bind('idea-post', data => {
-						console.log(data);
-					});
 				} catch (error) {
 					console.log(error);
 				}
@@ -151,4 +264,8 @@
 	};
 </script>
 
-<style></style>
+<style scoped>
+	#detail-ideas footer#modal-footer {
+		display: none !important;
+	}
+</style>
