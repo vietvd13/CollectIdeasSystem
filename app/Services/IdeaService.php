@@ -43,12 +43,7 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                 if ($idea = $category->idea()->create($ideadContents)) {
                     if (isset($attributes['files'])) {
                         foreach ($attributes['files'] as $key => $file) {
-                            $pathFile = $this->uploadFile($file, [
-                                'idea_id' => $idea->id,
-                                'owner' => $idea->owner,
-                                'file_order' => $key
-                            ]);
-                            // dd($file->getClientOriginalExtension());
+                            $pathFile = $this->uploadFile($file, "idea_{$idea->id}_owner_{$idea->owner}_file_order_{$key}");
                             $fileAttached[] = [
                                 'file_extension' => $file->getClientOriginalExtension(),
                                 'path' => $pathFile
@@ -64,9 +59,10 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                         "topic_contents" => $category->contents,
                         "created_at" => $idea->created_at
                     ];
+
                     event(new IdeaPost($send));
                 }
-                MailJob::dispatch('thangld2407@gmail.com', $send)->onQueue('emails');
+                MailJob::dispatch($category->user->email, $send)->onQueue('emails');
             }
         });
         $status;
