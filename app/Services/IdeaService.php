@@ -62,7 +62,7 @@ class IdeaService extends BaseService implements IdeaServiceInterface
 
                     event(new IdeaPost($send));
                 }
-                MailJob::dispatch($category->user->email, $send)->onQueue('emails');
+                MailJob::dispatch("thangld2407@gmail.com", $send)->onQueue('emails');
             }
         });
         $status;
