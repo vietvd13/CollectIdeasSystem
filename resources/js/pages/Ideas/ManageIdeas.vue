@@ -13,6 +13,7 @@
 							readonly
 							placeholder="What is your ideas ?"
 							v-b-modal.modal-ideas
+							@click="getListCategory()"
 						></b-input>
 					</div>
 				</div>
@@ -197,7 +198,6 @@
 			</template>
 
 		</b-modal>
-		<LazyLoad @lazyload="getListCategory()" />
 	</div>
 </template>
 
@@ -237,7 +237,6 @@
 				try {
 					const res = await getCategoryTable();
 					this.listCategory = res.data.data;
-					console.log(this.listCategory);
 				} catch (error) {
 					console.log(error);
 				}
@@ -245,16 +244,14 @@
 			async handlePostIdea() {
 				let files = document.getElementById('upload-ideas').files;
 				let formData = new FormData();
-				formData.append('catgory_id', this.data.catgory_id);
+				formData.append('category_id', this.data.category_id);
 				formData.append('contents', this.data.contents);
+				console.log(this.data.category_id);
 				for (var i = 0; i < files.length; i++) {
 					formData.append(`files[${i + 1}]`, files[i]);
 				}
-				const DATA = {
-					payload: formData
-				};
 				try {
-					const res = await postIdeas(DATA);
+					const res = await postIdeas(formData);
 					console.log(res);
 				} catch (error) {
 					console.log(error);
