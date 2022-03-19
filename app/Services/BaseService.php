@@ -95,11 +95,11 @@ abstract class BaseService implements BaseServiceInterface {
      * @return boolean
      */
 
-    public function uploadFile($file, array $attributes = [], $path = "ideafiles")
+    public function uploadFile($file, $fileName, $path = "ideafiles")
     {
         if ($file) {
             return $file->storeAs($path,
-                "idea_file_id_{$attributes['idea_id']}_owner_{$attributes['owner']}_{$attributes['file_order']}_.{$file->getClientOriginalExtension()}"
+                "{$fileName}.{$file->getClientOriginalExtension()}"
             );
         }
     }

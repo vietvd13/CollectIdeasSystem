@@ -209,7 +209,7 @@ class UserController extends Controller
     {
        //return $request->per_page;
         $data = $this->service->paginate($request->per_page);
-        return $this->responseJson(200, UserResource::collection($data));
+        return $this->responseJson(200, new UserResource($data));
     }
 
     /**

@@ -26,6 +26,7 @@ class User extends Authenticatable
     const ROLE = 'role';
     const NEW_PASSWORD = 'new_password';
     const DEPARTMENT = 'department_id';
+    const AVATAR_PATH = 'avatar_path';
     protected $hidden = [
         User::PASSWORD
     ];
@@ -35,7 +36,8 @@ class User extends Authenticatable
         User::EMAIL,
         User::PASSWORD,
         User::BIRTH,
-        User::DEPARTMENT
+        User::DEPARTMENT,
+        User::AVATAR_PATH
     ];
     /**
      * The attributes that should be hidden for serialization.

@@ -19,7 +19,7 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $this->getRoleNames();
+        // $this->getRoleNames();
         return parent::toArray($request);
     }
 }

@@ -8,7 +8,8 @@ export default {
 		LOGIN: 'Login',
 		PAGE_NOT_FOUND: 'Page Not Found',
 		DASHBOARD: 'Dashboard',
-		ACCOUNT_MANAGEMENT: 'Account Management'
+		ACCOUNT_MANAGEMENT: 'Account Management',
+		CATEGORY_MANAGEMENT: 'Category Management'
 	},
 	NAVBAR: {
 		LANGUAGE: 'Language',
@@ -79,6 +80,7 @@ export default {
 		TITLE: 'Category Management',
 		CREATE_CATEGORY: 'Create category',
 		SELECT_TYPE: 'Select category type',
+		EDIT_CATEGORY: 'Edit category',
 		FORM: {
 			TITLE: 'Create category',
 			CATEGORY_NAME: 'Category name',
