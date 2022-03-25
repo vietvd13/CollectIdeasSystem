@@ -30,6 +30,20 @@ class IdeaService extends BaseService implements IdeaServiceInterface
         $this->categoryRepository = $categoryRepository;
     }
 
+    public function loadIdeas($category_id, $limit = null, $columns = ['*']) {
+        $ideas = $this->repository
+                ->where(['category_id' => $category_id])
+                ->with([
+                    'comments' => function ($query) {
+                        $query->select(['*'])->orderBy('created_at', 'DESC')->limit(1);
+                    }
+                ])
+                ->withCount('likes')
+                ->orderBy('created_at', 'DESC')
+                ->paginate($limit, $columns);
+        return $ideas;
+    }
+
     public function create(array $attributes)
     {
         $repository = $this->repository;
@@ -56,7 +70,7 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                         "owner" => $idea->owner,
                         "idea_content" => $idea->contents,
                         "attatched_files" => isset($fileAttached) ? $fileAttached : null,
-                        "topic_contents" => $category->contents,
+                        "topic_contents" => $category->topic_name,
                         "created_at" => $idea->created_at
                     ];
 
@@ -65,7 +79,7 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                 MailJob::dispatch($category->user->email, $send)->onQueue('emails');
             }
         });
-        $status;
+        return $status;
     }
 
     public function update(array $attributes, $id)
