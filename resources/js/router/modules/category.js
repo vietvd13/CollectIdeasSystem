@@ -19,7 +19,7 @@ const CategoryManagement = {
 			},
 			component: () =>
 				import(
-					/* webpackChunkName: "Account Management List" */ '@/pages/CategoryManagement/index'
+					/* webpackChunkName: "Category Management List" */ '@/pages/CategoryManagement/index'
 				)
 		}
 	]

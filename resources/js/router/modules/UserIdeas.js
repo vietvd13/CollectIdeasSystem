@@ -18,9 +18,7 @@ const PostIdeas = {
 				title: 'ROUTER.IDEAS'
 			},
 			component: () =>
-				import(
-					/* webpackChunkName: "Account Management List" */ '@/pages/Ideas/ManageIdeas'
-				)
+				import(/* webpackChunkName: "Ideas Management List" */ '@/pages/Ideas/ManageIdeas')
 		},
 		{
 			path: 'detail',
@@ -29,7 +27,7 @@ const PostIdeas = {
 				title: 'ROUTER.IDEAS'
 			},
 			component: () =>
-				import(/* webpackChunkName: "Account Management List" */ '@/pages/Ideas/IdeaDetail')
+				import(/* webpackChunkName: "Ideas Management List" */ '@/pages/Ideas/IdeaDetail')
 		}
 	]
 };
