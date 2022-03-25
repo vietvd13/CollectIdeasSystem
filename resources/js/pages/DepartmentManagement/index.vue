@@ -3,11 +3,11 @@
 		<div v-if="isLoading" class="loading"><i class="spinner-border" /></div>
 		<div class="account-management__header">
 			<div class="account-management__header-title">
-				<h4>{{ $t('USER.TITLE') }}</h4>
+				<h4>Department Management List</h4>
 			</div>
 			<div class="account-management__header-actions">
 				<button class="btn btn-primary" @click="handleModal()" v-b-modal.modal-1>{{
-					$t('USER.CREATE_USER')
+					$t('Create Department')
 				}}</button>
 			</div>
 		</div>
@@ -48,54 +48,37 @@
 				id="my-table"
 				class="text-center"
 				responsive
-				:per-page="perPage"
-				:current-page="currentPage"
+				:per-page="params.perPage"
+				:current-page="params.currentPage"
 				:outlined="false"
 				:fixed="false"
-				:items="listUser"
 			>
 				<b-thead>
 					<b-th>
 						<span>{{ $t('USER.TABLE.HEADING.ID') }}</span>
 					</b-th>
 					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.EMAIL') }}</span>
+						<span>Name</span>
 					</b-th>
 					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.NAME') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.ROLE') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.BIRTH') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.ACTIONS') }}</span>
+						<span>Actions</span>
 					</b-th>
 				</b-thead>
 				<b-tbody>
-					<tr v-for="(users, index) in listUser" :key="index">
-						<td>{{ users.id }}</td>
-						<td>{{ users.email }}</td>
-						<td>{{ users.name }}</td>
-						<td>{{ users.roles[0].name }}</td>
-						<td>{{ users.birth }}</td>
+					<tr v-for="(department, index) in listDepartments" :key="index">
+						<td>{{ department.id }}</td>
+						<td>{{ department.name }}</td>
+
 						<td>
-							<button @click="handleModal(users.id)" class="btn btn-warning">
+							<button @click="handleModal(department.id)" class="btn btn-warning">
 								<i class="fas fa-edit"></i>
 							</button>
-							<button @click="handleDeleteUser(users.id)" class="btn btn-danger">
+							<button @click="handleDeleteDepartment(department.id)" class="btn btn-danger">
 								<i class="fas fa-trash-alt"></i>
 							</button>
 						</td>
 					</tr>
-					<LazyLoad
-						@lazyload="
-							handleGetListUser();
-							getRole();
-						"
-					/>
+					<LazyLoad @lazyload="handleGetListDepartment()" />
 				</b-tbody>
 			</b-table-simple>
 			<b-pagination
@@ -108,44 +91,15 @@
 			<b-modal
 				id="modal-1"
 				v-model="showModal"
-				:title="action === 'CREATE' ? $t('USER.FORM.TITLE') : 'EDIT User'"
+				:title="action === 'CREATE' ? 'Create A New Department' : 'Edit Department'"
 				centered
 			>
 				<div class="row mt-2">
 					<div class="col-md-12 col-sm-12 col-lg-12">
-						<label for="">{{ $t('USER.FORM.EMAIL') }}</label>
+						<label for="">Name</label>
 						<b-form-input
-							:readonly="action === 'EDIT' ? true : false"
-							v-model="newUser.email"
+							v-model="name"
 						></b-form-input>
-					</div>
-					<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
-						<label for="">{{ $t('USER.FORM.PASSWORD') }}</label>
-						<b-form-input type="password" v-model="newUser.password"></b-form-input>
-					</div>
-					<div class="row mt-2"> </div>
-					<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
-						<label for="">{{ $t('USER.FORM.NAME') }}</label>
-						<b-form-input type="text" v-model="newUser.name"></b-form-input>
-					</div>
-					<div class="col-md-12 col-sm-12 col-lg-12">
-						<label for="">{{ $t('USER.FORM.ROLE') }}</label>
-						<b-form-select v-model="newUser.role">
-							<b-form-select-option :value="null">{{
-								$t('USER.SELECT_ROLE')
-							}}</b-form-select-option>
-							<b-form-select-option
-								v-for="(role, index) in options"
-								:key="index"
-								:value="role.id"
-							>
-								{{ role.name }}
-							</b-form-select-option>
-						</b-form-select>
-					</div>
-					<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
-						<label for="">{{ $t('USER.FORM.BIRTH') }}</label>
-						<b-form-input type="date" v-model="newUser.birth"></b-form-input>
 					</div>
 				</div>
 				<template #modal-footer>
@@ -153,7 +107,7 @@
 						<b-button
 							class="btn btn-primary"
 							v-if="action === 'CREATE'"
-							@click="handleCreateUser()"
+							@click="handleCreateDepartment()"
 						>
 							{{ $t('USER.FORM.CREATE') }}
 						</b-button>
@@ -161,7 +115,7 @@
 						<b-button
 							class="btn btn-primary"
 							v-if="action === 'EDIT'"
-							@click="handleEditUser()"
+							@click="handleUpdateDepartment()"
 						>
 							{{ $t('USER.FORM.SAVE') }}
 						</b-button>
@@ -177,34 +131,27 @@
 </template>
 
 <script>
-	import { getUserTable, postUser, deleteUser, getOneUser, editUser } from '@/api/modules/user';
-	import { getListRole } from '@/api/modules/role';
+	import { getDeparmentById, createDepartment, deleteDeparment, updateDepartment, getDepartment } from '@/api/modules/department';
 	import { MakeToast } from '@/toast/toastMessage';
-	import { validPassword, validEmail, isEmptyOrWhiteSpace } from '../../utils/validate';
+	import {  isEmptyOrWhiteSpace } from '../../utils/validate';
 	import LazyLoad from '../../layout/Lazyload.vue';
 	const paramInit = {
 		perPage: 5,
-		currentPage: 1,
-	}
+		currentPage: 1
+	};
 	export default {
-		name: 'AccountManagementList',
+		name: 'DepartmentManagementList',
 		components: {
 			LazyLoad
 		},
 		data() {
 			return {
-				params: {...paramInit},
+				params: { ...paramInit },
 				selected: null,
 				options: [],
 				isLoading: false,
-				listUser: [],
-				newUser: {
-					email: '',
-					password: '',
-					name: '',
-					role: null,
-					birth: ''
-				},
+				listDepartments: [],
+				name: '',
 				action: '',
 				showModal: false,
 				keyword: '',
@@ -213,7 +160,7 @@
 		},
 		computed: {
 			rows() {
-				return this.listUser.length;
+				return this.listDepartments.length;
 			},
 			isChangePage() {
 				return this.params.currentPage;
@@ -221,7 +168,7 @@
 		},
 		watch: {
 			isChangePage() {
-				this.handleGetListUser();
+				this.handleGetListDepartment();
 			}
 		},
 		methods: {
@@ -230,15 +177,9 @@
 				this.ids = id;
 				if (this.ids) {
 					(this.action = 'EDIT'),
-						await getOneUser(id)
+						await getDeparmentById(id)
 							.then(res => {
-								this.newUser.name = res.data.name;
-								this.newUser.email = res.data.email;
-								console.log(res.data);
-								res.data.roles.map(item => {
-									this.newUser.role = item.id;
-								});
-								this.newUser.birth = res.data.birth;
+								this.name = res.data.name;
 							})
 							.catch(err => {
 								console.log(err);
@@ -250,24 +191,12 @@
 				}
 				this.showModal = true;
 			},
-			async getRole() {
-				await getListRole()
-					.then(res => {
-						this.options = res;
-					})
-					.catch(err => {
-						console.log(err);
-					});
-			},
-			async handleGetListUser() {
-				const params = this.params
+			async handleGetListDepartment() {
 				this.isLoading = true;
-				await getUserTable(params)
+				await getDepartment()
 					.then(res => {
 						if (res.status === 200) {
-							this.listUser = res.data.map(user => {
-								return user;
-							});
+							this.listDepartments = res.data.data;
 							this.isLoading = false;
 						}
 					})
@@ -275,40 +204,19 @@
 						console.log(err);
 					});
 			},
-			async handleCreateUser() {
-				console.log(this.newUser);
+			async handleCreateDepartment() {
 				const data = {
-					name: this.newUser.name,
-					email: this.newUser.email,
-					password: this.newUser.password,
-					birth: this.newUser.birth,
-					role: this.newUser.role
+					name: this.name
 				};
 				console.log(data);
-				if (
-					isEmptyOrWhiteSpace(data.name) ||
-					isEmptyOrWhiteSpace(data.birth) ||
-					data.role === null
-				) {
+				if (isEmptyOrWhiteSpace(data.name)) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
 						content: this.$t('USER.FORM.MESSAGE.SPACE')
 					});
-				} else if (!validEmail(data.email)) {
-					MakeToast({
-						variant: 'warning',
-						title: 'Warning',
-						content: this.$t('USER.FORM.MESSAGE.EMAIL')
-					});
-				} else if (!validPassword(data.password)) {
-					MakeToast({
-						variant: 'warning',
-						title: 'Warning',
-						content: this.$t('USER.FORM.MESSAGE.PASSWORD')
-					});
 				} else {
-					await postUser(data)
+					await createDepartment(data)
 						.then(res => {
 							if (res.status === 200) {
 								MakeToast({
@@ -316,7 +224,7 @@
 									title: this.$t('TOAST.SUCCESS'),
 									content: this.$t('USER.FORM.SUCCESS')
 								});
-								this.handleGetListUser();
+								this.handleGetListDepartment();
 								this.showModal = false;
 								this.isResetDataModal();
 							}
@@ -326,33 +234,20 @@
 						});
 				}
 			},
-			async handleEditUser() {
+			async handleUpdateDepartment() {
 				this.action = 'EDIT';
 				const data = {
-					name: this.newUser.name,
-					new_password: this.newUser.password,
-					birth: this.newUser.birth,
-					role: this.newUser.role
+					name: this.name
 				};
-				if (
-					isEmptyOrWhiteSpace(data.name) ||
-					isEmptyOrWhiteSpace(data.birth) ||
-					data.role === null
-				) {
+				if (isEmptyOrWhiteSpace(data.name)) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
 						content: this.$t('USER.FORM.MESSAGE.SPACE')
 					});
-				} else if (!validPassword(data.new_password)) {
-					MakeToast({
-						variant: 'warning',
-						title: 'Warning',
-						content: this.$t('USER.FORM.MESSAGE.PASSWORD')
-					});
 				} else {
 					console.log(data);
-					await editUser(this.ids, data)
+					await updateDepartment(this.ids, data)
 						.then(res => {
 							if (res.status == 200) {
 								MakeToast({
@@ -360,7 +255,7 @@
 									title: this.$t('TOAST.SUCCESS'),
 									content: this.$t('USER.FORM.SUCCESS')
 								});
-								this.handleGetListUser();
+								this.handleGetListDepartment();
 								this.showModal = false;
 								this.isResetDataModal();
 							}
@@ -370,9 +265,9 @@
 						});
 				}
 			},
-			handleDeleteUser(id) {
+			handleDeleteDepartment(id) {
 				this.$bvModal
-					.msgBoxConfirm('Do you want to delete this user?', {
+					.msgBoxConfirm('Do you want to delete this department?', {
 						title: 'Warning',
 						size: 'sm',
 						buttonSize: 'sm',
@@ -385,7 +280,7 @@
 					})
 					.then(value => {
 						if (value === true) {
-							deleteUser(id)
+							deleteDeparment(id)
 								.then(res => {
 									if (res.status === 200) {
 										MakeToast({
@@ -393,7 +288,7 @@
 											title: this.$t('TOAST.SUCCESS'),
 											content: 'Successfully to delete this user'
 										});
-										this.handleGetListUser();
+										this.handleGetListDepartment();
 									} else {
 										MakeToast({
 											variant: 'warning',
@@ -411,36 +306,9 @@
 			},
 			isResetDataModal() {
 				console.log('RESET DATA');
-				this.newUser = {
-					email: '',
-					password: '',
-					name: '',
-					role: null,
-					birth: ''
-				};
+				this.name = ''
 			},
-			handleSearchByKeyWords() {
-				this.listUser = this.listUser.filter(item => {
-					if (item.name.toLowerCase() == this.keyword.toLowerCase()) {
-						return item;
-					} else if (this.keyword == '') {
-						this.handleGetListUser();
-					} else {
-						this.listUser = [];
-					}
-				});
-			},
-			handleSearchByRole() {
-				this.listUser = this.listUser.filter(item => {
-					if (item.roles[0].id === this.selected) {
-						return item;
-					} else if (this.selected === null) {
-						this.handleGetListUser();
-					} else {
-						console.log('No data');
-					}
-				});
-			}
+			
 		}
 	};
 </script>

@@ -9,14 +9,10 @@ class IdeaComment implements ShouldBroadcast
 {
   use Dispatchable, InteractsWithSockets, SerializesModels;
 
-  public $idea_id;
-  public $comment;
-  public $owner;
-  public function __construct($idea_id, $comment, $owner)
+  public $attributes;
+  public function __construct(array $attributes)
   {
-      $this->idea_id = $idea_id;
-      $this->comment = $comment;
-      $this->owner = $owner;
+        $this->attributes = $attributes;
   }
 
   public function broadcastOn()
