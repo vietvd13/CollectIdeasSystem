@@ -13,7 +13,10 @@
 							readonly
 							placeholder="What is your ideas ?"
 							v-b-modal.modal-ideas
-							@click="getListCategory()"
+							@click="
+								getListCategory();
+								showModal(true);
+							"
 						></b-input>
 					</div>
 				</div>
@@ -112,7 +115,7 @@
 
 			<template #modal-footer>
 				<div>
-					<b-button class="btn btn-danger" @click="modal = false">
+					<b-button class="btn btn-danger" @click="showModal(false)">
 						{{ $t('USER.FORM.CLOSE') }}
 					</b-button>
 					<b-button type="submit" class="btn btn-primary" @click="handlePostIdea()">
@@ -196,7 +199,6 @@
 			<template #modal-header>
 				<h3>Whose behavior shocked you today?</h3>
 			</template>
-
 		</b-modal>
 	</div>
 </template>
@@ -206,6 +208,8 @@
 	import LazyLoad from '../../layout/Lazyload.vue';
 	import { getCategoryTable } from '@/api/modules/category';
 	import { postIdeas } from '@/api/modules/idea';
+	import { MakeToast } from '@/toast/toastMessage';
+
 	export default {
 		name: 'Ideas',
 		components: {
@@ -213,7 +217,7 @@
 		},
 		data() {
 			return {
-				modal: false,
+				showModal: false,
 				selected: null,
 				listCategory: [],
 				data: {
@@ -230,8 +234,15 @@
 		methods: {
 			connect() {
 				window.Echo.channel('collect_idea').listen('idea-post', data => {
-					console.log(data);
+					MakeToast({
+						variant: 'warning',
+						title: 'Warning',
+						content: this.$t('USER.FORM.MESSAGE.SPACE')
+					});
 				});
+			},
+			showModal(modal) {
+				this.showModal = modal ? true : false;
 			},
 			async getListCategory() {
 				try {
