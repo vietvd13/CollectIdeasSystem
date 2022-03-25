@@ -252,4 +252,8 @@ class IdeaController extends Controller
         $comment = $this->service->comment($attributes);
         return $this->responseJson(200, new IdeaResource($comment));
     }
+
+    public function comments(Request $request) {
+        return $this->service->comments($request->idea_id, $request->per_page);
+    }
 }

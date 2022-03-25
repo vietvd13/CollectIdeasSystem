@@ -20,5 +20,6 @@ Route::namespace('Api')->group(function() {
         Route::apiResource('department', 'DepartmentController');
         Route::apiResource('idea', 'IdeaController');
         Route::post('idea/comment', 'IdeaController@comment');
+        Route::get('idea/comments/load', 'IdeaController@comments');
     });
 });

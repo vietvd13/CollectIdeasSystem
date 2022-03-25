@@ -111,6 +111,10 @@ class IdeaService extends BaseService implements IdeaServiceInterface
         }
     }
 
+    public function comments(int $idea_id, int $limit) {
+        return $this->repository->find($idea_id)->comments()->orderBy('created_at', 'ASC')->paginate($limit);
+    }
+
     public function attatchFile(int $idea_id, $file)
     {
 
