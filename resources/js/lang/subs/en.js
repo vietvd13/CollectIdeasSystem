@@ -121,7 +121,6 @@ export default {
 	},
 
 	DASHBOARD: {
-		HELLO: 'Hello',
-		CARD_IDEAS: 'Total ideas'
+		HELLO: 'Hello'
 	}
 };

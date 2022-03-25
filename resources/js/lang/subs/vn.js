@@ -120,7 +120,6 @@ export default {
 	},
 
 	DASHBOARD: {
-		HELLO: 'Xin chào',
-		CARD_IDEAS: 'Tổng số ý tưởng'
+		HELLO: 'Xin chào'
 	}
 };
