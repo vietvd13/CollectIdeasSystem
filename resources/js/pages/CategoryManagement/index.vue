@@ -90,12 +90,7 @@
 							</button>
 						</td>
 					</tr>
-					<LazyLoad
-						@lazyload="
-							handleGetListCategory();
-							getOwner();
-						"
-					/>
+					<LazyLoad @lazyload="handleGetListCategory()" />
 				</b-tbody>
 			</b-table-simple>
 			<b-pagination
