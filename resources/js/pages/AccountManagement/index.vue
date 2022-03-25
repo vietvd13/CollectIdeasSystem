@@ -48,8 +48,6 @@
 				id="my-table"
 				class="text-center"
 				responsive
-				:per-page="perPage"
-				:current-page="currentPage"
 				:outlined="false"
 				:fixed="false"
 				:items="listUser"
@@ -57,6 +55,9 @@
 				<b-thead>
 					<b-th>
 						<span>{{ $t('USER.TABLE.HEADING.ID') }}</span>
+					</b-th>
+					<b-th>
+						<span>{{ $t('USER.TABLE.HEADING.AVATARs') }}</span>
 					</b-th>
 					<b-th>
 						<span>{{ $t('USER.TABLE.HEADING.EMAIL') }}</span>
@@ -77,9 +78,12 @@
 				<b-tbody>
 					<tr v-for="(users, index) in listUser" :key="index">
 						<td>{{ users.id }}</td>
+						<td>
+							<img :src="`$storage/${users.avatar_path}`" width="100px" alt="No Image Found" />
+						</td>
 						<td>{{ users.email }}</td>
 						<td>{{ users.name }}</td>
-						<td>{{ users.roles[0].name }}</td>
+						<td>{{ users.roles.name }}</td>
 						<td>{{ users.birth }}</td>
 						<td>
 							<button @click="handleModal(users.id)" class="btn btn-warning">
@@ -147,6 +151,10 @@
 						<label for="">{{ $t('USER.FORM.BIRTH') }}</label>
 						<b-form-input type="date" v-model="newUser.birth"></b-form-input>
 					</div>
+					<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
+						<label for="">{{ $t('USER.FORM.AVATAR') }}</label>
+						<b-form-file id="upload-images" type="file" accept="image/*" v-model="newUser.avatar"></b-form-file>
+					</div>
 				</div>
 				<template #modal-footer>
 					<div>
@@ -184,8 +192,8 @@
 	import LazyLoad from '../../layout/Lazyload.vue';
 	const paramInit = {
 		perPage: 5,
-		currentPage: 1,
-	}
+		currentPage: 1
+	};
 	export default {
 		name: 'AccountManagementList',
 		components: {
@@ -193,17 +201,19 @@
 		},
 		data() {
 			return {
-				params: {...paramInit},
+				params: { ...paramInit },
 				selected: null,
 				options: [],
 				isLoading: false,
 				listUser: [],
+				listDepartments: [],
 				newUser: {
 					email: '',
 					password: '',
 					name: '',
 					role: null,
-					birth: ''
+					birth: '',
+					avatar: null,
 				},
 				action: '',
 				showModal: false,
@@ -259,15 +269,20 @@
 						console.log(err);
 					});
 			},
+			async handleGetDepartment() {
+				try {
+					const res = getDepartment();
+					this.listDepartments = res.data.data
+				} catch (error) {
+					console.log(error);
+				}	
+			},
 			async handleGetListUser() {
-				const params = this.params
 				this.isLoading = true;
-				await getUserTable(params)
+				await getUserTable()
 					.then(res => {
 						if (res.status === 200) {
-							this.listUser = res.data.map(user => {
-								return user;
-							});
+							this.listUser = res.data.data;
 							this.isLoading = false;
 						}
 					})
@@ -277,38 +292,38 @@
 			},
 			async handleCreateUser() {
 				console.log(this.newUser);
-				const data = {
-					name: this.newUser.name,
-					email: this.newUser.email,
-					password: this.newUser.password,
-					birth: this.newUser.birth,
-					role: this.newUser.role
-				};
-				console.log(data);
+				let files = document.getElementById('upload-images').files[0];
+				let formData = new FormData();
+				formData.append('avatar', files)
+				formData.append('name', this.newUser.name)
+				formData.append('email', this.newUser.email)
+				formData.append('password', this.newUser.password)
+				formData.append('birth', this.newUser.birth)
+				formData.append('role', this.newUser.role)
 				if (
-					isEmptyOrWhiteSpace(data.name) ||
-					isEmptyOrWhiteSpace(data.birth) ||
-					data.role === null
+					isEmptyOrWhiteSpace(this.newUser.name) ||
+					isEmptyOrWhiteSpace(this.newUser.birth) ||
+					this.newUser.role === null
 				) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
 						content: this.$t('USER.FORM.MESSAGE.SPACE')
 					});
-				} else if (!validEmail(data.email)) {
+				} else if (!validEmail(this.newUser.email)) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
 						content: this.$t('USER.FORM.MESSAGE.EMAIL')
 					});
-				} else if (!validPassword(data.password)) {
+				} else if (!validPassword(this.newUser.password)) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
 						content: this.$t('USER.FORM.MESSAGE.PASSWORD')
 					});
 				} else {
-					await postUser(data)
+					await postUser(formData)
 						.then(res => {
 							if (res.status === 200) {
 								MakeToast({
