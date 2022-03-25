@@ -2,24 +2,24 @@ import Layout from '@/layout';
 
 const Department = {
 	path: '/department-management',
-	name: 'DepartmetManagement',
+	name: 'DepartmentManagement',
 	meta: {
 		title: 'Department Management'
 	},
 	component: Layout,
 	redirect: {
-		name: 'DepartmetManagement'
+		name: 'DepartmentManagementIndex'
 	},
 	children: [
 		{
 			path: 'list',
-			name: 'DepartmetManagement',
+			name: 'DepartmentManagementIndex',
 			meta: {
 				title: 'Department Management'
 			},
 			component: () =>
 				import(
-					/* webpackChunkName: "Account Management List" */ '@/pages/DepartmentManagement/index'
+					/* webpackChunkName: "Department Management List" */ '@/pages/DepartmentManagement/index'
 				)
 		}
 	]
