@@ -75,13 +75,13 @@
 		<div class="chart">
 			<b-row>
 				<b-col cols="12" sm="12" md="12" lg="6" xl="6">
-					<b-card style="heigth: 500px" class="chart-total-category">
+					<b-card class="chart-total-category">
 						<canvas id="chart-total-category"></canvas>
 					</b-card>
 				</b-col>
 
 				<b-col cols="12" sm="12" md="12" lg="6" xl="6">
-					<b-card style="heigth: 500px" class="chart-total-month">
+					<b-card class="chart-total-month">
 						<canvas id="chart-total-month"></canvas>
 					</b-card>
 				</b-col>
@@ -91,7 +91,7 @@
 		<div class="chart">
 			<b-row>
 				<b-col cols="12" sm="12" md="12" lg="12" xl="12">
-					<b-card style="heigth: 500px" class="chart-list-categories">
+					<b-card class="chart-list-categories">
 						<canvas id="chart-list-categories"></canvas>
 					</b-card>
 				</b-col>
@@ -272,8 +272,6 @@
 		}
 
 		.chart {
-			height: 400px;
-
 			.chart-list-categories {
 				margin-bottom: 10px;
 			}
