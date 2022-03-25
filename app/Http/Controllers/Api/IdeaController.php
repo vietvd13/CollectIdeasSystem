@@ -9,7 +9,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IdeaRequest;
-use App\Http\Resources\BaseResource;
 use App\Http\Resources\IdeaResource;
 use App\Services\Contracts\IdeaServiceInterface;
 use Illuminate\Http\Request;
@@ -72,7 +71,7 @@ class IdeaController extends Controller
     public function index(IdeaRequest $request)
     {
         $data = $this->service->paginate($request->per_page);
-        return $this->responseJson(200, BaseResource::collection($data));
+        return $this->responseJson(200, IdeaResource::collection($data));
     }
 
     /**
@@ -101,7 +100,6 @@ class IdeaController extends Controller
     public function store(IdeaRequest $request)
     {
         try {
-
             $data = $this->service->create(array_merge($request->all(), ['owner' => $request->user()->id]));
             return $this->responseJson(200, $data);
         } catch (\Exception $e) {
@@ -149,7 +147,7 @@ class IdeaController extends Controller
     {
         try {
             $department = $this->service->find($id);
-            return $this->responseJson(200, new BaseResource($department));
+            return $this->responseJson(200, new IdeaResource($department));
         } catch (\Exception $e) {
             throw $e;
         }
@@ -208,7 +206,7 @@ class IdeaController extends Controller
     {
         $attributes = $request->except([]);
         $data = $this->service->update($attributes, $id);
-        return $this->responseJson(200, new BaseResource($data));
+        return $this->responseJson(200, new IdeaResource($data));
     }
 
     /**
@@ -252,6 +250,6 @@ class IdeaController extends Controller
             'comment' => $request->comment
         ];
         $comment = $this->service->comment($attributes);
-        return $this->responseJson(200, new BaseResource($comment));
+        return $this->responseJson(200, new IdeaResource($comment));
     }
 }
