@@ -82,6 +82,7 @@
 							<img
 								:src="`/storage/${users.avatar_path}`"
 								width="100px"
+								height="100px"
 								alt="No Image Found"
 								style="border-radius: 50%"
 							/>
@@ -158,7 +159,7 @@
 						<label for="">{{ $t('USER.FORM.DEPARTMENT') }}</label>
 						<b-form-select v-model="newUser.department_id">
 							<b-form-select-option :value="null">{{
-								$t('USER.SELECT_DEPARTMENT')
+								$t('USER.FORM.SELECT_DEPARTMENT')
 							}}</b-form-select-option>
 							<b-form-select-option
 								v-for="(department, index) in listDepartments"
@@ -219,8 +220,8 @@
 	import { validPassword, validEmail, isEmptyOrWhiteSpace } from '../../utils/validate';
 	import LazyLoad from '../../layout/Lazyload.vue';
 	const paramInit = {
-		perPage: 5,
-		currentPage: 1
+		per_page: 5,
+		page: 1
 	};
 	export default {
 		name: 'AccountManagementList',
@@ -229,7 +230,10 @@
 		},
 		data() {
 			return {
-				params: { ...paramInit },
+				params: {
+					per_page: 5,
+					page: 1
+				},
 				selected: null,
 				options: [],
 				isLoading: false,
@@ -255,7 +259,7 @@
 				return this.listUser.length;
 			},
 			isChangePage() {
-				return this.params.currentPage;
+				return this.params.page;
 			}
 		},
 		watch: {
@@ -273,7 +277,6 @@
 							.then(res => {
 								this.newUser.name = res.data.name;
 								this.newUser.email = res.data.email;
-								console.log(res.data);
 								res.data.roles.map(item => {
 									this.newUser.role = item.id;
 								});
@@ -308,7 +311,11 @@
 			},
 			async handleGetListUser() {
 				this.isLoading = true;
-				await getUserTable()
+				const params = {
+					per_page: 5,
+					page: 1
+				};
+				await getUserTable(params)
 					.then(res => {
 						if (res.status === 200) {
 							this.listUser = res.data.data;

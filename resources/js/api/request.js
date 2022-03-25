@@ -7,7 +7,9 @@ export function getOne(url) {
 export function getAll(url) {
 	return request.getRequest(url);
 }
-
+export function getAllByParams(url, params) {
+	return request.getRequest(url, params);
+}
 export function postOne(url, data) {
 	return request.postRequest(url, data);
 }

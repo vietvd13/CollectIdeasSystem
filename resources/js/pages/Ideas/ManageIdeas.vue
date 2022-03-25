@@ -1,5 +1,6 @@
 <template>
 	<div class="manage-ideas">
+		<div v-if="isLoading" class="loading"><i class="spinner-border" /></div>
 		<div class="manage-ideas__content row align-items-center justify-content-center">
 			<div class="manage-ideas__content-post col-md-6">
 				<div class="card">
@@ -13,10 +14,7 @@
 							readonly
 							placeholder="What is your ideas ?"
 							v-b-modal.modal-ideas
-							@click="
-								getListCategory();
-								showModal(true);
-							"
+							@click="getListCategory()"
 						></b-input>
 					</div>
 				</div>
@@ -41,7 +39,7 @@
 						</div>
 						<div class="area-content__post">
 							<div class="post-category">
-								<h3>Whose behavior shocked you today?</h3>
+								<h4>Whose behavior shocked you today?</h4>
 							</div>
 							<div class="post-content">
 								<p
@@ -50,36 +48,26 @@
 								>
 								<div class="attachment">
 									<b>Attachment</b>
-									<a href="">Link 1</a>
-									<a href="">Link 2</a>
+									<a href=""> <i class="fas fa-download"></i> File Name</a>
+									<a href=""> <i class="fas fa-download"></i> File Name</a>
 								</div>
 							</div>
 						</div>
 						<div class="area-content__footer mt-2">
-							<div class="footer-overview">
-								<small>100.1K Comment</small>
-							</div>
 							<div class="footer-actions mt-2">
 								<button class="btn"><i class="fas fa-thumbs-up"></i> Thích</button>
 								<button class="btn"
 									><i class="fas fa-thumbs-down"></i> Không Thích</button
 								>
+								<button @click="showModal()" class="btn"
+									><i class="far fa-comment"></i> Comment</button
+								>
 							</div>
 						</div>
-					</div>
-					<div class="card-footer comment">
-						<b-avatar
-							variant="info"
-							src="https://placekitten.com/300/300"
-							class="mr-3"
-						></b-avatar>
-						<b-input v-b-modal.detail-ideas placeholder="Add a comment....."></b-input>
-						<button class="btn btn-primary ml-3 w-25">Add Comment</button>
 					</div>
 				</div>
 			</div>
 		</div>
-
 		<b-modal id="modal-ideas" title=" Your Ideas">
 			<div class="row mt-2">
 				<div class="col-md-12 col-sm-12 col-lg-12">
@@ -115,7 +103,7 @@
 
 			<template #modal-footer>
 				<div>
-					<b-button class="btn btn-danger" @click="showModal(false)">
+					<b-button class="btn btn-danger" @click="isShowModal = false">
 						{{ $t('USER.FORM.CLOSE') }}
 					</b-button>
 					<b-button type="submit" class="btn btn-primary" @click="handlePostIdea()">
@@ -124,7 +112,7 @@
 				</div>
 			</template>
 		</b-modal>
-		<b-modal id="detail-ideas" size="xl" scrollable>
+		<b-modal v-model="isShowModal" id="detail-ideas" size="xl" scrollable>
 			<div class="row detail-ideas">
 				<div class="col-md-6 col-lg-6 col-sm-12 detail-ideas__content">
 					<p class="text-justify">
@@ -204,7 +192,6 @@
 </template>
 
 <script>
-	import Pusher from 'pusher-js'; // import Pusher
 	import LazyLoad from '../../layout/Lazyload.vue';
 	import { getCategoryTable } from '@/api/modules/category';
 	import { postIdeas } from '@/api/modules/idea';
@@ -217,7 +204,7 @@
 		},
 		data() {
 			return {
-				showModal: false,
+				isShowModal: false,
 				selected: null,
 				listCategory: [],
 				data: {
@@ -225,15 +212,21 @@
 					contents: '',
 					files: []
 				},
+				isLoading: false,
 				listPost: []
 			};
 		},
 		created() {
+			(this.isLoading = true),
+				setTimeout(() => {
+					this.isLoading = false;
+				}, 1000);
 			this.connect();
 		},
 		methods: {
 			connect() {
 				window.Echo.channel('collect_idea').listen('idea-post', data => {
+					console.log(data);
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
@@ -241,8 +234,8 @@
 					});
 				});
 			},
-			showModal(modal) {
-				this.showModal = modal ? true : false;
+			showModal() {
+				this.isShowModal = true;
 			},
 			async getListCategory() {
 				try {
@@ -257,6 +250,7 @@
 				let formData = new FormData();
 				formData.append('category_id', this.data.category_id);
 				formData.append('contents', this.data.contents);
+				formData.append('department_id', 1);
 				console.log(this.data.category_id);
 				for (var i = 0; i < files.length; i++) {
 					formData.append(`files[${i + 1}]`, files[i]);

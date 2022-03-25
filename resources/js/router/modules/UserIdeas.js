@@ -4,7 +4,7 @@ const PostIdeas = {
 	path: '/manage-post',
 	name: 'PostManagement',
 	meta: {
-		title: 'Ideas Management'
+		title: 'ROUTER.IDEAS'
 	},
 	component: Layout,
 	redirect: {
@@ -12,10 +12,10 @@ const PostIdeas = {
 	},
 	children: [
 		{
-			path: 'list',
+			path: 'list/:category',
 			name: 'PostManagementList',
 			meta: {
-				title: 'ROUTER.ACCOUNT_MANAGEMENT'
+				title: 'ROUTER.IDEAS'
 			},
 			component: () =>
 				import(
@@ -26,12 +26,10 @@ const PostIdeas = {
 			path: 'detail',
 			name: 'PostManagementDetail',
 			meta: {
-				title: 'ROUTER.ACCOUNT_MANAGEMENT'
+				title: 'ROUTER.IDEAS'
 			},
 			component: () =>
-				import(
-					/* webpackChunkName: "Account Management List" */ '@/pages/Ideas/IdeaDetail'
-				)
+				import(/* webpackChunkName: "Account Management List" */ '@/pages/Ideas/IdeaDetail')
 		}
 	]
 };

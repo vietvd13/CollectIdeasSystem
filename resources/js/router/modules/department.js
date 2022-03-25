@@ -4,18 +4,18 @@ const Department = {
 	path: '/department-management',
 	name: 'DepartmetManagement',
 	meta: {
-		title: 'Department Management'
+		title: 'ROUTER.DEPARTMENT'
 	},
 	component: Layout,
 	redirect: {
-		name: 'DepartmetManagement'
+		name: 'DepartmentManagement'
 	},
 	children: [
 		{
 			path: 'list',
-			name: 'DepartmetManagement',
+			name: 'DepartmentManagement',
 			meta: {
-				title: 'Department Management'
+				title: 'ROUTER.DEPARTMENT'
 			},
 			component: () =>
 				import(

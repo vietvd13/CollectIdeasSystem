@@ -110,5 +110,17 @@ export default {
 				OWNER: 'Người tạo'
 			}
 		}
+	},
+	DEPARTMENT: {
+		TITLE: 'Quản lý phòng ban',
+		CREATE: 'Tạo phòng ban',
+		ACTIONS: {
+			CREATE: 'Tạo một phòng ban mới',
+			EDIT: 'Sửa phòng ban'
+		},
+		TABLE: {
+			NAME: 'Tên phòng ban',
+			ACTIONS: 'Hành động'
+		}
 	}
 };

@@ -6,9 +6,13 @@
 				<h4>{{ $t('CATEGORY.TITLE') }}</h4>
 			</div>
 			<div class="category-management__header-actions">
-				<button class="btn btn-primary" @click="handleModal()" v-b-modal.modal-1>{{
-					$t('CATEGORY.CREATE_CATEGORY')
-				}}</button>
+				<button
+					v-if="isManager === 'ADMIN'"
+					class="btn btn-primary"
+					@click="handleModal()"
+					v-b-modal.modal-1
+					>{{ $t('CATEGORY.CREATE_CATEGORY') }}</button
+				>
 			</div>
 		</div>
 		<div class="category-management__searching">
@@ -79,14 +83,26 @@
 						<td>{{ Category.description }}</td>
 						<td>{{ Category.user.name }}</td>
 						<td>
-							<button @click="handleModal(Category.id)" class="btn btn-warning">
+							<button
+								v-if="isManager === 'ADMIN'"
+								@click="handleModal(Category.id)"
+								class="btn btn-warning"
+							>
 								<i class="fas fa-edit"></i>
 							</button>
 							<button
+								v-if="isManager === 'ADMIN'"
 								@click="handleDeleteCategory(Category.id)"
 								class="btn btn-danger"
 							>
 								<i class="fas fa-trash-alt"></i>
+							</button>
+							<button
+								v-else
+								class="btn btn-warning"
+								@click="handleDetailIdeas(Category.id)"
+							>
+								<i class="fas fa-info-circle"></i>
 							</button>
 						</td>
 					</tr>
@@ -216,6 +232,9 @@
 			},
 			name() {
 				return this.$store.getters.name;
+			},
+			isManager() {
+				return this.$store.getters.roles[0];
 			}
 		},
 		watch: {
@@ -224,8 +243,12 @@
 			}
 		},
 		methods: {
+			async handleDetailIdeas(item) {
+				// console.log(this.$router.push());
+				console.log(this.$router.push(`/manage-post/list/${item}`));
+				this.$router.push(`/manage-post/list/${item}`);
+			},
 			async handleModal(id) {
-				console.log(id, 'EDIT');
 				this.ids = id;
 				if (this.ids) {
 					this.action = 'EDIT';
@@ -262,7 +285,6 @@
 					});
 			},
 			async handleCreateCategory() {
-				console.log(this.newCategory);
 				const data = {
 					topic_name: this.newCategory.topic_name,
 					start_collect_date: this.newCategory.start_collect_date,
