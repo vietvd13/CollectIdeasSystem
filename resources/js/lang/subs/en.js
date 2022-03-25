@@ -54,6 +54,8 @@ export default {
 			SUCCESS: 'Create Successfully',
 			SAVE: 'SAVE',
 			CLOSE: 'Close',
+			DEPARTMENT: 'Department',
+			AVATAR: 'Avatars',
 			MESSAGE: {
 				EMAIL: 'Invalid Email',
 				SPACE: 'You must enter a valid value',
@@ -72,7 +74,8 @@ export default {
 				NAME: 'Fullname',
 				ROLE: 'Role',
 				BIRTH: 'Date of Birth',
-				ACTIONS: 'Actions'
+				ACTIONS: 'Actions',
+				AVATARS: 'User Avatar'
 			}
 		}
 	},
