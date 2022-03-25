@@ -53,9 +53,6 @@
 			>
 				<b-thead>
 					<b-th>
-						<span>{{ $t('CATEGORY.TABLE.HEADING.ID') }}</span>
-					</b-th>
-					<b-th>
 						<span>{{ $t('CATEGORY.TABLE.HEADING.NAME') }}</span>
 					</b-th>
 					<b-th>
@@ -76,12 +73,11 @@
 				</b-thead>
 				<b-tbody>
 					<tr v-for="(Category, index) in listCategory" :key="index">
-						<td>{{ Category.id }}</td>
 						<td>{{ Category.topic_name }}</td>
 						<td>{{ Category.start_collect_date }}</td>
 						<td>{{ Category.end_collect_date }}</td>
 						<td>{{ Category.description }}</td>
-						<td>{{ Category.owner }}</td>
+						<td>{{ Category.user.name }}</td>
 						<td>
 							<button @click="handleModal(Category.id)" class="btn btn-warning">
 								<i class="fas fa-edit"></i>
@@ -94,19 +90,26 @@
 							</button>
 						</td>
 					</tr>
-					<LazyLoad @lazyload="handleGetListCategory()" />
+					<LazyLoad
+						@lazyload="
+							handleGetListCategory();
+							getOwner();
+						"
+					/>
 				</b-tbody>
 			</b-table-simple>
 			<b-pagination
-				v-model="currentPage"
-				:per-page="perPage"
+				v-model="params.currentPage"
+				:per-page="params.perPage"
 				:total-rows="rows"
 				aria-controls="my-table"
 			></b-pagination>
 			<b-modal
 				id="modal-1"
 				v-model="showModal"
-				:title="action === 'CREATE' ? $t('CATEGORY.FORM.TITLE') : 'EDIT Category'"
+				:title="
+					action === 'CREATE' ? $t('CATEGORY.FORM.TITLE') : $t('CATEGORY.EDIT_CATEGORY')
+				"
 				centered
 			>
 				<div class="row mt-2">
@@ -177,6 +180,10 @@
 	import { MakeToast } from '@/toast/toastMessage';
 	import { isEmptyOrWhiteSpace } from '../../utils/validate';
 	import LazyLoad from '../../layout/Lazyload.vue';
+	const paramInit = {
+		perPage: 5,
+		currentPage: 1
+	};
 	export default {
 		name: 'CategoryManagement',
 		components: {
@@ -184,6 +191,7 @@
 		},
 		data() {
 			return {
+				params: { ...paramInit },
 				perPage: 15,
 				currentPage: 1,
 				showModal: false,
@@ -209,7 +217,10 @@
 				return this.listCategory.length;
 			},
 			isChangePage() {
-				return this.currentPage;
+				return this.params.currentPage;
+			},
+			name() {
+				return this.$store.getters.name;
 			}
 		},
 		watch: {
@@ -241,8 +252,9 @@
 				this.showModal = true;
 			},
 			async handleGetListCategory() {
+				const params = this.params;
 				this.isLoading = true;
-				await getCategoryTable()
+				await getCategoryTable(params)
 					.then(res => {
 						if (res.status === 200) {
 							console.log(res);
@@ -264,9 +276,9 @@
 				};
 				console.log(data);
 				if (
-					isEmptyOrWhiteSpace(data.name) ||
-					isEmptyOrWhiteSpace(data.start) ||
-					isEmptyOrWhiteSpace(data.end) ||
+					isEmptyOrWhiteSpace(data.topic_name) ||
+					isEmptyOrWhiteSpace(data.start_collect_date) ||
+					isEmptyOrWhiteSpace(data.end_collect_date) ||
 					isEmptyOrWhiteSpace(data.description)
 				) {
 					MakeToast({
@@ -302,9 +314,9 @@
 					description: this.newCategory.description
 				};
 				if (
-					isEmptyOrWhiteSpace(data.name) ||
-					isEmptyOrWhiteSpace(data.start) ||
-					isEmptyOrWhiteSpace(data.end) ||
+					isEmptyOrWhiteSpace(data.topic_name) ||
+					isEmptyOrWhiteSpace(data.start_collect_date) ||
+					isEmptyOrWhiteSpace(data.end_collect_date) ||
 					isEmptyOrWhiteSpace(data.description)
 				) {
 					MakeToast({
@@ -371,6 +383,17 @@
 						}
 					});
 			},
+			handleSearchByKeyWords(keysearch) {
+				this.listCategory = this.listCategory.filter(item => {
+					if (item.topic_name.toLowerCase() === this.keyword.toLowerCase()) {
+						return item;
+					} else if (this.keyword === '') {
+						this.handleGetListCategory();
+					} else {
+						console.log('No data');
+					}
+				});
+			},
 			isResetDataModal() {
 				console.log('RESET DATA');
 				this.newCategory = {
@@ -415,5 +438,13 @@
 	}
 	.category-management__searching button {
 		background: #242368;
+	}
+	.category-management table thead {
+		background: #242368;
+		color: white;
+	}
+	.category-management .page-item.active .page-link {
+		background-color: #242368;
+		border-color: #242368;
 	}
 </style>

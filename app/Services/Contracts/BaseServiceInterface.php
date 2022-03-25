@@ -82,7 +82,7 @@ interface BaseServiceInterface
      *
      * @return boolean
      */
-    public function uploadFile($file, array $attributes = []);
+    public function uploadFile($file, $fileName, $path = "ideafiles");
 
     /**
      * detatch a file

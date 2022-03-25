@@ -4,7 +4,7 @@ const CategoryManagement = {
 	path: '/category-management',
 	name: 'CategoryManagement',
 	meta: {
-		title: 'Category Management'
+		title: 'ROUTER.CATEGORY_MANAGEMENT'
 	},
 	component: Layout,
 	redirect: {
@@ -15,7 +15,7 @@ const CategoryManagement = {
 			path: 'list',
 			name: 'CategoryManagementList',
 			meta: {
-				title: 'CATEGORY'
+				title: 'ROUTER.CATEGORY_MANAGEMENT'
 			},
 			component: () =>
 				import(

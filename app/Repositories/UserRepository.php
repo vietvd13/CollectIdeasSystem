@@ -32,4 +32,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return User::class;
     }
+
+    public function paginate($limit = null, $columns = ['*'], $method = "paginate") {
+        return $this->model->with('roles')->paginate($limit, $columns);
+    }
 }

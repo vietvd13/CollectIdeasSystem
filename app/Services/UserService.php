@@ -13,6 +13,7 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserService extends BaseService implements UserServiceInterface
 {
@@ -22,6 +23,10 @@ class UserService extends BaseService implements UserServiceInterface
     public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
+    }
+
+    public function paginate($limit = null, $columns = ['*']) {
+        return $this->repository->paginate($limit, $columns);
     }
 
     public function find($id)
@@ -46,6 +51,11 @@ class UserService extends BaseService implements UserServiceInterface
             unset($attributes[User::ROLE]);
             $attributes[User::PASSWORD] = Hash::make($attributes[User::PASSWORD]);
             if ($user = $this->repository->create($attributes)) {
+                if (isset($attributes[User::AVATAR_PATH])) {
+                    $user->avatar_path = $this->uploadFile($attributes[User::AVATAR_PATH], "avatar_{$user->id}" , "public/avatars");
+                    $user->avatar_path = str_replace("public/", "", $user->avatar_path);
+                }
+                $user->save();
                 $user->syncRoles($role);
                 $user->roles =$user->getRoleNames();
                 return [
@@ -73,10 +83,15 @@ class UserService extends BaseService implements UserServiceInterface
             unset($attributes[User::NEW_PASSWORD]);
             unset($attributes[User::EMAIL]);
             if ($user = $this->repository->update($attributes, $id)) {
+                if (isset($attributes[User::AVATAR_PATH])) {
+                    $user->avatar_path = $this->uploadFile($attributes[User::AVATAR_PATH], "avatar_{$user->id}" , "public/avatars");
+                    $user->avatar_path = str_replace("public/", "", $user->avatar_path);
+                }
                 if ($role = Role::findById($attributes[User::ROLE])) {
                     $user->syncRoles($role);
                 }
-                $user->roles =$user->getRoleNames();
+                $user->roles = $user->getRoleNames();
+                $user->save();
                 return [
                     "status" => 200,
                     "data" => $user
