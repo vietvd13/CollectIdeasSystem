@@ -47,7 +47,8 @@ class IdeaRequest extends FormRequest
         }
         if(Route::getCurrentRoute()->getActionMethod() == 'store'){
             return  [
-
+                'category_id' => "required|integer",
+                'contents' => "required|string"
             ];
         }
      }

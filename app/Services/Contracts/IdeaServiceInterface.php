@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface IdeaServiceInterface extends BaseServiceInterface
 {
+    public function loadIdeas($category_id, $limit = null, $columns = ['*']);
     public function like(int $idea_id);
     public function comment(array $attributes);
     public function attatchFile(int $idea_id, $file);

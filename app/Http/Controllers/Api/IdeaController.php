@@ -70,8 +70,8 @@ class IdeaController extends Controller
      */
     public function index(IdeaRequest $request)
     {
-        $data = $this->service->paginate($request->per_page);
-        return $this->responseJson(200, IdeaResource::collection($data));
+        $data = $this->service->loadIdeas($request->category_id, $request->per_page);
+        return $data;//$this->responseJson(200, IdeaResource::collection($data));
     }
 
     /**
@@ -101,7 +101,7 @@ class IdeaController extends Controller
     {
         try {
             $data = $this->service->create(array_merge($request->all(), ['owner' => $request->user()->id]));
-            return $this->responseJson(200, $data);
+            return $this->responseJson($data['status'], $data['message']);
         } catch (\Exception $e) {
             throw $e;
         }
