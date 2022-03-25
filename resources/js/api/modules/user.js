@@ -7,11 +7,11 @@ export function postUser(data) {
 }
 
 export function getUserTable(params) {
-	return RequestApi.getAll(URL, params);
+	return RequestApi.getAllByParams(URL, params);
 }
 
 export function editUser(id, data) {
-	return RequestApi.putOne(`${URL}/${id}`, data);
+	return RequestApi.postOne(`${URL}/${id}?_method=PUT`, data);
 }
 export function getOneUser(id) {
 	return RequestApi.getOne(`${URL}/${id}`);

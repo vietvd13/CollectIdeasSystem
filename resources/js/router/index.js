@@ -19,11 +19,11 @@ export const constantRoutes = [
 		hidden: true
 	},
 	Dashboard,
-	Department,
 	AccountManagement,
+	Department,
 	CategoryManagement,
 	PostIdeas,
-	
+
 	errorRoute,
 	{
 		path: '*',
