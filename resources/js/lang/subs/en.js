@@ -111,5 +111,16 @@ export default {
 				OWNER: 'Owner'
 			}
 		}
+	},
+
+	ROLE: {
+		ADMIN: 'Admin',
+		QAM: 'Quality Assurance Manager',
+		QAC: 'Quality Assurance Coordinator',
+		STAFF: 'Staff'
+	},
+
+	DASHBOARD: {
+		HELLO: 'Hello'
 	}
 };

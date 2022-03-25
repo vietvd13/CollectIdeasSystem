@@ -13,17 +13,22 @@ class TransactionService
     protected $repository;
 
     public static function transaction($callback) {
-        $status = DB::transaction(function () use ($callback){
+        $status = DB::transaction(function () use ($callback) {
             try {
                 call_user_func($callback);
                 DB::commit();
-                return true;
+                return [
+                    'status' => 200,
+                    'message' => SUCCESS_POST_IDEA
+                ];
             } catch (\Throwable $th) {
                 DB::rollBack();
-                return $th;
+                return [
+                    'status' => 500,
+                    'message' => $th
+                ];
             }
         });
-        error_log($status);
         return $status;
     }
 }

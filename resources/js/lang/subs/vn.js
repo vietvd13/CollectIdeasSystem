@@ -110,5 +110,16 @@ export default {
 				OWNER: 'Người tạo'
 			}
 		}
+	},
+
+	ROLE: {
+		ADMIN: 'Quản trị viên',
+		QAM: 'Giám đốc đảm bảo chất lượng',
+		QAC: 'Điều phối viên Đảm bảo Chất lượng',
+		STAFF: 'Nhân Viên'
+	},
+
+	DASHBOARD: {
+		HELLO: 'Xin chào'
 	}
 };

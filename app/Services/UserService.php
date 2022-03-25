@@ -90,8 +90,8 @@ class UserService extends BaseService implements UserServiceInterface
                 if ($role = Role::findById($attributes[User::ROLE])) {
                     $user->syncRoles($role);
                 }
-                $user->roles = $user->getRoleNames();
                 $user->save();
+                $user->roles = $user->getRoleNames();
                 return [
                     "status" => 200,
                     "data" => $user
