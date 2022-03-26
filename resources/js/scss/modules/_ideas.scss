@@ -130,7 +130,14 @@
 }
 
 #detail-ideas {
+    footer {
+        display: none;
+    }
     .detail-ideas {
+        .input-group-text {
+            background: #f3f5f8;
+            border: 0;
+        }
         position: relative;
         &__comment {
             position: relative;
@@ -150,12 +157,24 @@
                 position: relative;
                 flex-shrink: 0;
                 padding: 15px 16px;
+                .list {
+                    overflow-y: scroll;
+                    max-height: 500px;
+                    padding-right: 15px;
+                    .section-comment:nth-child(n + 2) {
+                        margin-top: 20px;
+                    }
+                }
+            }
+            .write-comment {
+                width: 95%;
             }
             .user-comment {
                 display: inline-block;
                 min-width: 0;
                 flex-shrink: 1;
                 align-items: stretch;
+                margin-top: 10px;
                 div > span {
                     display: inline;
                     position: relative;
