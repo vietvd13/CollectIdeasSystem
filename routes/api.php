@@ -21,5 +21,6 @@ Route::namespace('Api')->group(function() {
         Route::apiResource('idea', 'IdeaController');
         Route::post('idea/comment', 'IdeaController@comment');
         Route::get('idea/comments/load', 'IdeaController@comments');
+        Route::post('idea/like', 'IdeaController@like');
     });
 });
