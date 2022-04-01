@@ -10,9 +10,11 @@ class IdeaComment implements ShouldBroadcast
   use Dispatchable, InteractsWithSockets, SerializesModels;
 
   public $attributes;
+  private $idea_id;
   public function __construct(array $attributes)
   {
         $this->attributes = $attributes;
+        $this->idea_id = $attributes['idea_id'];
   }
 
   public function broadcastOn()
@@ -22,6 +24,6 @@ class IdeaComment implements ShouldBroadcast
 
   public function broadcastAs()
   {
-      return 'idea-comment';
+      return "idea-comment-{$this->idea_id}";
   }
 }
