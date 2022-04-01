@@ -69,7 +69,7 @@
 					<button @click="handleModal(item.item.id)" class="btn btn-warning">
 						<i class="fas fa-edit"></i>
 					</button>
-					<button @click="handleDeleteUser(item.id)" class="btn btn-danger">
+					<button @click="handleDeleteUser(item.item.id)" class="btn btn-danger">
 						<i class="fas fa-trash-alt"></i>
 					</button>
 				</template>
@@ -456,7 +456,8 @@
 					password: '',
 					name: '',
 					role: null,
-					birth: ''
+					birth: '',
+					department_id: null
 				};
 			},
 			handleSearchByKeyWords() {

@@ -14,11 +14,10 @@
 							readonly
 							placeholder="What is your ideas ?"
 							v-b-modal.modal-ideas
-							@click="getListCategory()"
 						></b-input>
 					</div>
 				</div>
-				<div class="area-content card">
+				<div v-for="(idea, index) in listPost" :key="index" class="area-content card">
 					<div class="card-body">
 						<div class="area-content__header">
 							<div class="area-content__header-avatar">
@@ -39,13 +38,10 @@
 						</div>
 						<div class="area-content__post">
 							<div class="post-category">
-								<h4>Whose behavior shocked you today?</h4>
+								<h4></h4>
 							</div>
 							<div class="post-content">
-								<p
-									>A nurse was filmed helping a homeless woman deliver her baby on
-									a street in Makati, Philippines.</p
-								>
+								<p>{{ idea.contents }}</p>
 								<div class="attachment">
 									<b>Attachment</b>
 									<a href=""> <i class="fas fa-download"></i> File Name</a>
@@ -55,11 +51,15 @@
 						</div>
 						<div class="area-content__footer mt-2">
 							<div class="footer-actions mt-2">
-								<button class="btn"><i class="fas fa-thumbs-up"></i> Thích</button>
-								<button class="btn"
-									><i class="fas fa-thumbs-down"></i> Không Thích</button
+								<button class="btn" @click="handleLike(idea.id)"
+									><i :id="'like-' + idea.id" class="fas fa-thumbs-up"></i
+									>{{ count }} Thích</button
 								>
-								<button @click="showModal()" class="btn"
+								<button class="btn" @click="handleUnlike()"
+									><i id="unlike" class="fas fa-thumbs-down"></i> Không
+									Thích</button
+								>
+								<button @click="showModal(true)" class="btn"
 									><i class="far fa-comment"></i> Comment</button
 								>
 							</div>
@@ -68,26 +68,11 @@
 				</div>
 			</div>
 		</div>
-		<b-modal id="modal-ideas" title=" Your Ideas">
+		<b-modal v-model="isShowModalPost" id="modal-ideas" title=" Your Ideas">
 			<div class="row mt-2">
 				<div class="col-md-12 col-sm-12 col-lg-12">
 					<label for="">Content</label>
 					<b-form-textarea v-model="data.contents"></b-form-textarea>
-				</div>
-				<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
-					<label for="">Category</label>
-					<b-select v-model="data.category_id">
-						<b-form-select-option :value="null">
-							Select the category
-						</b-form-select-option>
-						<b-select-option
-							v-for="(category, index) in listCategory"
-							:key="index"
-							:value="category.id"
-						>
-							{{ category.topic_name }}
-						</b-select-option>
-					</b-select>
 				</div>
 				<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
 					<label for="">Upload your Ideas</label>
@@ -103,7 +88,7 @@
 
 			<template #modal-footer>
 				<div>
-					<b-button class="btn btn-danger" @click="isShowModal = false">
+					<b-button class="btn btn-danger" @click="showModalCreate(false)">
 						{{ $t('USER.FORM.CLOSE') }}
 					</b-button>
 					<b-button type="submit" class="btn btn-primary" @click="handlePostIdea()">
@@ -396,8 +381,8 @@
 
 <script>
 	import LazyLoad from '../../layout/Lazyload.vue';
-	import { getCategoryTable } from '@/api/modules/category';
-	import { postIdeas } from '@/api/modules/idea';
+	import { getOneUser } from '@/api/modules/user';
+	import { postIdeas, getListIdeas } from '@/api/modules/idea';
 	import { MakeToast } from '@/toast/toastMessage';
 
 	export default {
@@ -408,23 +393,24 @@
 		data() {
 			return {
 				isShowModal: false,
+				isShowModalPost: false,
 				selected: null,
-				listCategory: [],
 				data: {
 					category_id: null,
 					contents: '',
 					files: []
 				},
 				isLoading: false,
-				listPost: []
+				listPost: [],
+				id: this.$route.params.category,
+				count: 0,
+				isLike: false,
+				user: ''
 			};
 		},
 		created() {
-			(this.isLoading = true),
-				setTimeout(() => {
-					this.isLoading = false;
-				}, 1000);
 			this.connect();
+			this.handleGetListIdeas();
 		},
 		methods: {
 			connect() {
@@ -437,13 +423,36 @@
 					});
 				});
 			},
-			showModal() {
-				this.isShowModal = true;
+			showModal(e) {
+				this.isShowModal = e;
 			},
-			async getListCategory() {
+			showModalCreate(e) {
+				this.resetData();
+				this.isShowModalPost = e;
+			},
+			handleLike(id) {
+				if (this.isLike) {
+					this.isLike = false;
+					this.count -= 1;
+					document.getElementById(`like-${id}`).style.color = '#333';
+				} else {
+					this.isLike = true;
+					document.getElementById(`like-${id}`).style.color = 'green';
+					this.count += 1;
+				}
+			},
+			handleUnlike() {},
+
+			async handleGetListIdeas() {
+				this.isLoading = true;
+				const params = {
+					category_id: this.id
+				};
 				try {
-					const res = await getCategoryTable();
-					this.listCategory = res.data.data;
+					const res = await getListIdeas(params);
+
+					this.isLoading = false;
+					this.listPost = res.data;
 				} catch (error) {
 					console.log(error);
 				}
@@ -451,18 +460,28 @@
 			async handlePostIdea() {
 				let files = document.getElementById('upload-ideas').files;
 				let formData = new FormData();
-				formData.append('category_id', this.data.category_id);
+				formData.append('category_id', this.id);
 				formData.append('contents', this.data.contents);
-				console.log(this.data.category_id);
 				for (var i = 0; i < files.length; i++) {
 					formData.append(`files[${i + 1}]`, files[i]);
 				}
 				try {
 					const res = await postIdeas(formData);
-					console.log(res);
+					if (res.status == 200) {
+						MakeToast({
+							variant: 'success',
+							title: 'Success',
+							content: this.$t('USER.FORM.MESSAGE.SPACE')
+						});
+						this.handleGetListIdeas();
+						this.isShowModalPost = false;
+					}
 				} catch (error) {
 					console.log(error);
 				}
+			},
+			resetData() {
+				this.data.contents = '';
 			}
 		}
 	};

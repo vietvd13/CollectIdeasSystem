@@ -6,6 +6,6 @@ export function postIdeas(data) {
 	return RequestApi.postOne(URL, data);
 }
 
-export function getListIdeas() {
-	return RequestApi.getAll(URL);
+export function getListIdeas(PARAMS) {
+	return RequestApi.getAllByParams(URL, PARAMS);
 }
