@@ -41,6 +41,9 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                     },
                     'likes' => function ($query) use($user) {
                         $query->where('owner', $user)->select(['*']);
+                    },
+                    'user' => function ($query) {
+                        $query->select(['*']);
                     }
                 ])
                 ->withCount('likes')
