@@ -244,8 +244,6 @@
 		},
 		methods: {
 			async handleDetailIdeas(item) {
-				// console.log(this.$router.push());
-				console.log(this.$router.push(`/manage-post/list/${item}`));
 				this.$router.push(`/manage-post/list/${item}`);
 			},
 			async handleModal(id) {
