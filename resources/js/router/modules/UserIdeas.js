@@ -10,6 +10,7 @@ const PostIdeas = {
 	redirect: {
 		name: 'PostManagementList'
 	},
+	hidden: true,
 	children: [
 		{
 			path: 'list/:category',

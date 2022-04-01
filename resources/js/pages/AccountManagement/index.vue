@@ -44,76 +44,40 @@
 			</div>
 		</div>
 		<div class="account-management__content mt-3">
-			<b-table-simple
+			<b-table
 				id="my-table"
 				class="text-left"
+				:fields="vFileds"
+				:items="listUser"
 				responsive
 				:outlined="false"
 				:fixed="false"
-				:items="listUser"
 			>
-				<b-thead>
-					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.ID') }}</span>
-					</b-th>
-					<b-th class="text-center">
-						<span>{{ $t('USER.TABLE.HEADING.AVATARS') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.EMAIL') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.NAME') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.ROLE') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.BIRTH') }}</span>
-					</b-th>
-					<b-th class="text-center">
-						<span>{{ $t('USER.TABLE.HEADING.ACTIONS') }}</span>
-					</b-th>
-				</b-thead>
-				<b-tbody>
-					<tr v-for="(users, index) in listUser" :key="index">
-						<td>{{ users.id }}</td>
-						<td v-if="users.avatar_path" class="text-center">
-							<img
-								:src="`/storage/${users.avatar_path}`"
-								width="100px"
-								height="100px"
-								alt="No Image Found"
-								style="border-radius: 50%"
-							/>
-						</td>
-						<td v-else></td>
-						<td>{{ users.email }}</td>
-						<td>{{ users.name }}</td>
-						<td>{{ users.roles[0].name }}</td>
-						<td>{{ users.birth }}</td>
-						<td class="text-center">
-							<button @click="handleModal(users.id)" class="btn btn-warning">
-								<i class="fas fa-edit"></i>
-							</button>
-							<button @click="handleDeleteUser(users.id)" class="btn btn-danger">
-								<i class="fas fa-trash-alt"></i>
-							</button>
-						</td>
-					</tr>
-					<LazyLoad
-						@lazyload="
-							handleGetListUser();
-							getRole();
-							handleGetDepartment();
-						"
+				<template #cell(roles)="item">
+					{{ item.item.roles[0].name }}
+				</template>
+				<template #cell(avatar_path)="item">
+					<img
+						:src="`storage/${item.item.avatar_path}`"
+						width="100px"
+						height="100px"
+						style="border-radius: 50%"
+						alt=""
 					/>
-				</b-tbody>
-			</b-table-simple>
+				</template>
+				<template #cell(actions)="item">
+					<button @click="handleModal(item.item.id)" class="btn btn-warning">
+						<i class="fas fa-edit"></i>
+					</button>
+					<button @click="handleDeleteUser(item.id)" class="btn btn-danger">
+						<i class="fas fa-trash-alt"></i>
+					</button>
+				</template>
+			</b-table>
 			<b-pagination
 				aria-controls="my-table"
-				v-model="params.currentPage"
-				:per-page="params.perPage"
+				v-model="params.page"
+				:per-page="params.per_page"
 				:total-rows="rows"
 			></b-pagination>
 
@@ -219,10 +183,6 @@
 	import { MakeToast } from '@/toast/toastMessage';
 	import { validPassword, validEmail, isEmptyOrWhiteSpace } from '../../utils/validate';
 	import LazyLoad from '../../layout/Lazyload.vue';
-	const paramInit = {
-		per_page: 5,
-		page: 1
-	};
 	export default {
 		name: 'AccountManagementList',
 		components: {
@@ -251,12 +211,43 @@
 				action: '',
 				showModal: false,
 				keyword: '',
-				ids: 0
+				ids: 0,
+				total: 0,
+				vFileds: [
+					{
+						key: 'id',
+						label: this.$t('USER.TABLE.HEADING.ID')
+					},
+					{
+						key: 'avatar_path',
+						label: this.$t('USER.TABLE.HEADING.AVATARS')
+					},
+					{
+						key: 'email',
+						label: this.$t('USER.TABLE.HEADING.EMAIL')
+					},
+					{
+						key: 'name',
+						label: this.$t('USER.TABLE.HEADING.NAME')
+					},
+					{
+						key: 'roles',
+						label: this.$t('USER.TABLE.HEADING.ROLE')
+					},
+					{
+						key: 'birth',
+						label: this.$t('USER.TABLE.HEADING.BIRTH')
+					},
+					{
+						key: 'actions',
+						label: this.$t('USER.TABLE.HEADING.ACTIONS')
+					}
+				]
 			};
 		},
 		computed: {
 			rows() {
-				return this.listUser.length;
+				return this.total;
 			},
 			isChangePage() {
 				return this.params.page;
@@ -266,6 +257,11 @@
 			isChangePage() {
 				this.handleGetListUser();
 			}
+		},
+		created() {
+			this.handleGetListUser();
+			this.getRole();
+			this.handleGetDepartment();
 		},
 		methods: {
 			async handleModal(id) {
@@ -311,14 +307,11 @@
 			},
 			async handleGetListUser() {
 				this.isLoading = true;
-				const params = {
-					per_page: 5,
-					page: 1
-				};
-				await getUserTable(params)
+				await getUserTable(this.params)
 					.then(res => {
 						if (res.status === 200) {
 							this.listUser = res.data.data;
+							this.total = res.data.total;
 							console.log(this.listUser);
 							this.isLoading = false;
 						}

@@ -156,31 +156,234 @@
 					</header>
 					<div class="list-comment">
 						<div class="list">
-							<div
-								class="user-avatar d-flex w-100 align-items-center justify-content-between"
-							>
-								<div class="d-flex align-items-center">
-									<b-avatar
-										variant="info"
-										src="https://placekitten.com/300/300"
-										class="mr-3"
-									>
-									</b-avatar>
-									<b>Le Win</b>
-								</div>
-								<i class="fas fa-ellipsis-h float-right"></i>
-							</div>
-							<div class="user-comment">
+							<div class="section-comment">
 								<div
-									><span>
-										Lorem ipsum dolor sit amet consectetur adipisicing elit.
-										Omnis totam ipsam odit, dolor neque dolorum repellat non,
-										distinctio dicta assumenda blanditiis nesciunt enim sunt,
-										excepturi necessitatibus ipsum doloribus molestias ab.
-									</span></div
+									class="user-avatar d-flex w-100 align-items-center justify-content-between"
 								>
+									<div class="d-flex align-items-center">
+										<b-avatar
+											variant="info"
+											src="https://placekitten.com/300/300"
+											class="mr-3"
+										>
+										</b-avatar>
+										<b>Le Win</b>
+									</div>
+									<i class="fas fa-ellipsis-h float-right"></i>
+								</div>
+								<div class="user-comment">
+									<div
+										><span>
+											Lorem ipsum dolor sit amet consectetur adipisicing elit.
+											Omnis totam ipsam odit, dolor neque dolorum repellat
+											non, distinctio dicta assumenda blanditiis nesciunt enim
+											sunt, excepturi necessitatibus ipsum doloribus molestias
+											ab.
+										</span></div
+									>
+								</div>
+							</div>
+							<div class="section-comment">
+								<div
+									class="user-avatar d-flex w-100 align-items-center justify-content-between"
+								>
+									<div class="d-flex align-items-center">
+										<b-avatar
+											variant="info"
+											src="https://placekitten.com/300/300"
+											class="mr-3"
+										>
+										</b-avatar>
+										<b>Le Win</b>
+									</div>
+									<i class="fas fa-ellipsis-h float-right"></i>
+								</div>
+								<div class="user-comment">
+									<div
+										><span>
+											Lorem ipsum dolor sit amet consectetur adipisicing elit.
+											Omnis totam ipsam odit, dolor neque dolorum repellat
+											non, distinctio dicta assumenda blanditiis nesciunt enim
+											sunt, excepturi necessitatibus ipsum doloribus molestias
+											ab.
+										</span></div
+									>
+								</div>
+							</div>
+							<div class="section-comment">
+								<div
+									class="user-avatar d-flex w-100 align-items-center justify-content-between"
+								>
+									<div class="d-flex align-items-center">
+										<b-avatar
+											variant="info"
+											src="https://placekitten.com/300/300"
+											class="mr-3"
+										>
+										</b-avatar>
+										<b>Le Win</b>
+									</div>
+									<i class="fas fa-ellipsis-h float-right"></i>
+								</div>
+								<div class="user-comment">
+									<div
+										><span>
+											Lorem ipsum dolor sit amet consectetur adipisicing elit.
+											Omnis totam ipsam odit, dolor neque dolorum repellat
+											non, distinctio dicta assumenda blanditiis nesciunt enim
+											sunt, excepturi necessitatibus ipsum doloribus molestias
+											ab.
+										</span></div
+									>
+								</div>
+							</div>
+							<div class="section-comment">
+								<div
+									class="user-avatar d-flex w-100 align-items-center justify-content-between"
+								>
+									<div class="d-flex align-items-center">
+										<b-avatar
+											variant="info"
+											src="https://placekitten.com/300/300"
+											class="mr-3"
+										>
+										</b-avatar>
+										<b>Le Win</b>
+									</div>
+									<i class="fas fa-ellipsis-h float-right"></i>
+								</div>
+								<div class="user-comment">
+									<div
+										><span>
+											Lorem ipsum dolor sit amet consectetur adipisicing elit.
+											Omnis totam ipsam odit, dolor neque dolorum repellat
+											non, distinctio dicta assumenda blanditiis nesciunt enim
+											sunt, excepturi necessitatibus ipsum doloribus molestias
+											ab.
+										</span></div
+									>
+								</div>
+							</div>
+							<div class="section-comment">
+								<div
+									class="user-avatar d-flex w-100 align-items-center justify-content-between"
+								>
+									<div class="d-flex align-items-center">
+										<b-avatar
+											variant="info"
+											src="https://placekitten.com/300/300"
+											class="mr-3"
+										>
+										</b-avatar>
+										<b>Le Win</b>
+									</div>
+									<i class="fas fa-ellipsis-h float-right"></i>
+								</div>
+								<div class="user-comment">
+									<div
+										><span>
+											Lorem ipsum dolor sit amet consectetur adipisicing elit.
+											Omnis totam ipsam odit, dolor neque dolorum repellat
+											non, distinctio dicta assumenda blanditiis nesciunt enim
+											sunt, excepturi necessitatibus ipsum doloribus molestias
+											ab.
+										</span></div
+									>
+								</div>
+							</div>
+							<div class="section-comment">
+								<div
+									class="user-avatar d-flex w-100 align-items-center justify-content-between"
+								>
+									<div class="d-flex align-items-center">
+										<b-avatar
+											variant="info"
+											src="https://placekitten.com/300/300"
+											class="mr-3"
+										>
+										</b-avatar>
+										<b>Le Win</b>
+									</div>
+									<i class="fas fa-ellipsis-h float-right"></i>
+								</div>
+								<div class="user-comment">
+									<div
+										><span>
+											Lorem ipsum dolor sit amet consectetur adipisicing elit.
+											Omnis totam ipsam odit, dolor neque dolorum repellat
+											non, distinctio dicta assumenda blanditiis nesciunt enim
+											sunt, excepturi necessitatibus ipsum doloribus molestias
+											ab.
+										</span></div
+									>
+								</div>
+							</div>
+							<div class="section-comment">
+								<div
+									class="user-avatar d-flex w-100 align-items-center justify-content-between"
+								>
+									<div class="d-flex align-items-center">
+										<b-avatar
+											variant="info"
+											src="https://placekitten.com/300/300"
+											class="mr-3"
+										>
+										</b-avatar>
+										<b>Le Win</b>
+									</div>
+									<i class="fas fa-ellipsis-h float-right"></i>
+								</div>
+								<div class="user-comment">
+									<div
+										><span>
+											Lorem ipsum dolor sit amet consectetur adipisicing elit.
+											Omnis totam ipsam odit, dolor neque dolorum repellat
+											non, distinctio dicta assumenda blanditiis nesciunt enim
+											sunt, excepturi necessitatibus ipsum doloribus molestias
+											ab.
+										</span></div
+									>
+								</div>
+							</div>
+							<div class="section-comment">
+								<div
+									class="user-avatar d-flex w-100 align-items-center justify-content-between"
+								>
+									<div class="d-flex align-items-center">
+										<b-avatar
+											variant="info"
+											src="https://placekitten.com/300/300"
+											class="mr-3"
+										>
+										</b-avatar>
+										<b>Le Win</b>
+									</div>
+									<i class="fas fa-ellipsis-h float-right"></i>
+								</div>
+								<div class="user-comment">
+									<div
+										><span>
+											Lorem ipsum dolor sit amet consectetur adipisicing elit.
+											Omnis totam ipsam odit, dolor neque dolorum repellat
+											non, distinctio dicta assumenda blanditiis nesciunt enim
+											sunt, excepturi necessitatibus ipsum doloribus molestias
+											ab.
+										</span></div
+									>
+								</div>
 							</div>
 						</div>
+					</div>
+					<div class="write-comment">
+						<b-input-group>
+							<b-form-input
+								type="text"
+								placeholder="Add your comment....."
+							></b-form-input>
+							<b-input-group-append is-text>
+								<i class="fal fa-paper-plane"></i>
+							</b-input-group-append>
+						</b-input-group>
 					</div>
 				</div>
 			</div>
@@ -250,7 +453,6 @@
 				let formData = new FormData();
 				formData.append('category_id', this.data.category_id);
 				formData.append('contents', this.data.contents);
-				formData.append('department_id', 1);
 				console.log(this.data.category_id);
 				for (var i = 0; i < files.length; i++) {
 					formData.append(`files[${i + 1}]`, files[i]);
