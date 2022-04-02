@@ -1,6 +1,8 @@
 <template>
 	<div class="manage-ideas">
-		<div v-if="isLoading" class="loading"><i class="spinner-border" /></div>
+		<div v-if="isLoading" class="loading">
+			<i class="spinner-border" />
+		</div>
 		<div class="manage-ideas__content row align-items-center justify-content-center">
 			<div class="manage-ideas__content-post col-12 col-sm-12 col-md-10 col-lg-10 col-xl-6">
 				<div class="card">
@@ -9,12 +11,12 @@
 							variant="info"
 							src="https://placekitten.com/300/300"
 							class="mr-3"
-						></b-avatar>
+						/>
 						<b-input
 							readonly
 							:placeholder="$t('IDEA.PLACEHOLDER_INPUT_IDEAD', { name: fullname })"
 							v-b-modal.modal-ideas
-						></b-input>
+						/>
 					</div>
 				</div>
 				<div v-for="(idea, index) in listPost" :key="index" class="area-content card">
@@ -64,7 +66,14 @@
 							<b-row>
 								<b-col cols="6" sm="6" md="4" lg="4" xl="4">
 									<div class="d-flex flex-column justify-content-center">
-										<div class="btn-react" @click="handleLike(idea.id)">
+										<div
+											:class="{
+												'btn-react': true,
+												'btn-react-active':
+													handleStatusReact(idea['likes']) === 1
+											}"
+											@click="handleLike(idea.id, index)"
+										>
 											<i class="far fa-thumbs-up" />
 											<span>{{ $t('IDEA.BUTTON_LIKE') }}</span>
 										</div>
@@ -72,7 +81,14 @@
 								</b-col>
 								<b-col cols="6" sm="6" md="4" lg="4" xl="4">
 									<div class="d-flex flex-column justify-content-center">
-										<div class="btn-react" @click="handleUnlike(idea.id)">
+										<div
+											:class="{
+												'btn-react': true,
+												'btn-react-active':
+													handleStatusReact(idea['likes']) === 0
+											}"
+											@click="handleUnlike(idea.id, index)"
+										>
 											<i class="far fa-thumbs-down" />
 											<span>{{ $t('IDEA.BUTTON_UNLIKE') }}</span>
 										</div>
@@ -80,7 +96,10 @@
 								</b-col>
 								<b-col cols="12" sm="12" md="4" lg="4" xl="4">
 									<div class="d-flex flex-column justify-content-center">
-										<div @click="showModal(true, idea.id)" class="btn-react">
+										<div
+											@click="showModal(true, idea.id)"
+											:class="{ 'btn-react': true }"
+										>
 											<i class="far fa-comment" />
 											<span>{{ $t('IDEA.BUTTON_COMMENT') }}</span>
 										</div>
@@ -93,13 +112,13 @@
 			</div>
 		</div>
 
-		<b-modal v-model="isShowModalPost" id="modal-ideas" title="Your Ideas">
+		<b-modal v-model="isShowModalPost" id="modal-ideas" title="Your Ideas" size="lg">
 			<div class="row mt-2">
 				<div class="col-md-12 col-sm-12 col-lg-12">
 					<label for="">Content</label>
-					<b-form-textarea v-model="data.contents"></b-form-textarea>
+					<b-form-textarea v-model="data.contents" rows="8" />
 				</div>
-				<div class="col-md-12 col-sm-12 col-lg-12 mt-2">
+				<div class="col-md-12 col-sm-12 col-lg-12 mt-3">
 					<label for="">Upload your Ideas</label>
 
 					<b-form-file
@@ -145,7 +164,7 @@
 										: ''
 								"
 								class="mr-3"
-							></b-avatar>
+							/>
 						</div>
 						<div class="user-infor">
 							<b>{{ modalData['user']['name'] }}</b>
@@ -165,30 +184,26 @@
 										<b-avatar
 											src="https://placekitten.com/300/300"
 											class="mr-3"
-										>
-										</b-avatar>
+										/>
 										<b>{{ item['owner'] }}</b>
 									</div>
-									<i class="fas fa-ellipsis-h float-right"></i>
+									<i class="fas fa-ellipsis-h float-right" />
 								</div>
 								<div class="user-comment">
-									<div
-										><span>
+									<div>
+										<span>
 											{{ item['comment'] }}
-										</span></div
-									>
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="write-comment">
 						<b-input-group>
-							<b-form-input
-								type="text"
-								placeholder="Add your comment....."
-							></b-form-input>
+							<b-form-input type="text" placeholder="Add your comment....." />
 							<b-input-group-append is-text>
-								<i class="fal fa-paper-plane"></i>
+								<i class="fal fa-paper-plane" />
 							</b-input-group-append>
 						</b-input-group>
 					</div>
@@ -270,6 +285,14 @@
 			this.handleGetListIdeas();
 		},
 		methods: {
+			handleStatusReact(likes) {
+				if (likes.length > 0) {
+					if (likes[0].status === 0) return 0;
+					if (likes[0].status === 1) return 1;
+				}
+
+				return -1;
+			},
 			setLocalMoment() {
 				const LANGUAGE = this.$store.getters.language;
 
@@ -300,18 +323,59 @@
 				this.resetData();
 				this.isShowModalPost = e;
 			},
-			handleLike(id) {
-				console.log(id);
-				this.handleActionReact(id, 1);
+			handleLike(id, index) {
+				this.handleActionReact(id, 1, index);
 			},
-			handleUnlike(id) {
-				console.log(id);
-				this.handleActionReact(id, 0);
+			handleUnlike(id, index) {
+				this.handleActionReact(id, 0, index);
+			},
+			handleUpdateListPost(status, index) {
+				const item = this.listPost[index].likes;
+
+				if (item.length > 0) {
+					switch (status) {
+						case 'like': {
+							this.listPost[index].likes[0].status = 1;
+
+							break;
+						}
+
+						case 'dislike': {
+							this.listPost[index].likes[0].status = 0;
+
+							break;
+						}
+
+						default: {
+							this.listPost[index].likes[0].status = -1;
+						}
+					}
+				} else {
+					switch (status) {
+						case 'like': {
+							this.listPost[index].likes.push({ status: 1 });
+
+							break;
+						}
+
+						case 'dislike': {
+							this.listPost[index].likes.push({ status: 0 });
+
+							break;
+						}
+
+						default: {
+							this.listPost[index].likes.push({ status: -1 });
+						}
+					}
+				}
+
+				this.listPost = JSON.parse(JSON.stringify(this.listPost));
 			},
 			findIdeadById(array, id) {
 				return array.find(x => x.id === id);
 			},
-			async handleActionReact(id, status) {
+			async handleActionReact(id, status, index) {
 				const DATA = {
 					idea_id: id,
 					type: status
@@ -319,7 +383,7 @@
 
 				try {
 					const res = await reactIdea(DATA);
-					console.log(res);
+					this.handleUpdateListPost(res['message'], index);
 				} catch (error) {
 					console.log(error);
 				}
@@ -389,5 +453,11 @@
 			color: $white;
 			border-radius: 0.5rem;
 		}
+	}
+
+	.btn-react-active {
+		background-color: $astronaut;
+		color: $white;
+		border-radius: 0.5rem;
 	}
 </style>
