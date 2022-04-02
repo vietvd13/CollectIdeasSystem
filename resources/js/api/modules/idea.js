@@ -13,3 +13,7 @@ export function getListIdeas(PARAMS) {
 export function reactIdea(data) {
 	return RequestApi.postOne(`${URL}/like`, data);
 }
+
+export function commentIdea(data) {
+	return RequestApi.postOne(`${URL}/comment`, data);
+}
