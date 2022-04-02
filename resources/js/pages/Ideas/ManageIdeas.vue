@@ -142,7 +142,15 @@
 			</template>
 		</b-modal>
 
-		<b-modal v-model="isShowModal" id="detail-ideas" size="xl" scrollable hide-header centered>
+		<b-modal
+			v-model="isShowModal"
+			id="detail-ideas"
+			@hidden="disconnectComment()"
+			size="xl"
+			scrollable
+			hide-header
+			centered
+		>
 			<div class="row detail-ideas">
 				<div class="col-md-6 col-lg-6 col-sm-12 detail-ideas__content">
 					<p class="text-justify">
@@ -185,7 +193,7 @@
 											src="https://placekitten.com/300/300"
 											class="mr-3"
 										/>
-										<b>{{ item['owner'] }}</b>
+										<b>{{ item['owner']['name'] }}</b>
 									</div>
 									<i class="fas fa-ellipsis-h float-right" />
 								</div>
@@ -201,8 +209,15 @@
 					</div>
 					<div class="write-comment">
 						<b-input-group>
-							<b-form-input type="text" placeholder="Add your comment....." />
-							<b-input-group-append is-text>
+							<b-form-input
+								v-model="comment"
+								type="text"
+								placeholder="Add your comment....."
+							/>
+							<b-input-group-append
+								is-text
+								@click="onClickSendComment(modalData['id'])"
+							>
 								<i class="fal fa-paper-plane" />
 							</b-input-group-append>
 						</b-input-group>
@@ -215,7 +230,7 @@
 
 <script>
 	import LazyLoad from '../../layout/Lazyload.vue';
-	import { postIdeas, getListIdeas, reactIdea } from '@/api/modules/idea';
+	import { postIdeas, getListIdeas, reactIdea, commentIdea } from '@/api/modules/idea';
 	import { MakeToast } from '@/toast/toastMessage';
 	import moment from 'moment';
 
@@ -263,7 +278,8 @@
 						created_at: '',
 						updated_at: ''
 					}
-				}
+				},
+				comment: ''
 			};
 		},
 		computed: {
@@ -285,6 +301,22 @@
 			this.handleGetListIdeas();
 		},
 		methods: {
+			async onClickSendComment(id) {
+				const DATA = {
+					idea_id: id,
+					comment: this.comment
+				};
+
+				try {
+					const res = await commentIdea(DATA);
+
+					// console.log(res);
+				} catch (error) {
+					console.log(error);
+				}
+
+				this.comment = '';
+			},
 			handleStatusReact(likes) {
 				if (likes.length > 0) {
 					if (likes[0].status === 0) return 0;
@@ -315,9 +347,36 @@
 					});
 				});
 			},
+			resetDataModal() {
+				let data = {
+					category_id: null,
+					contents: '',
+					files: []
+				};
+
+				this.data = data;
+			},
 			showModal(e, id) {
+				this.connectComment(id);
 				this.modalData = this.findIdeadById(this.listPost, id);
 				this.isShowModal = e;
+			},
+			connectComment(id) {
+				window.Echo.channel('collect_idea').listen(`.idea-comment-${id}`, data => {
+					const newComment = {
+						id: data['attributes']['comment']['id'],
+						idea_id: data['attributes']['comment']['idea_id'],
+						comment: data['attributes']['comment']['comment'],
+						created_at: data['attributes']['comment']['created_at'],
+						updated_at: data['attributes']['comment']['updated_at'],
+						owner: data['attributes']['owner']
+					};
+
+					this.modalData['comments'].push(newComment);
+				});
+			},
+			disconnectComment(id) {
+				window.Echo.channel('collect_idea').stopListening(`.idea-comment-${id}`);
 			},
 			showModalCreate(e) {
 				this.resetData();
