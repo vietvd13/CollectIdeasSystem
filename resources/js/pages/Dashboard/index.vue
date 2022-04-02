@@ -1,6 +1,21 @@
 <template>
 	<div class="wapper">
 		<div class="user-idea-count">
+			<div class="row">
+				<div class="col-lg-4">
+					<b-form-select v-model="selected" class="mb-3">
+						<b-form-select-option :value="null"
+							>Please select an category</b-form-select-option
+						>
+						<b-form-select-option
+							v-for="(category, index) in categories"
+							:key="index"
+							:value="category.id"
+							>{{ category.topic_name }}</b-form-select-option
+						>
+					</b-form-select>
+				</div>
+			</div>
 			<b-row>
 				<b-col cols="12" sm="12" md="6" lg="3" xl="3">
 					<b-card>
@@ -102,7 +117,7 @@
 
 <script>
 	import Chart from 'chart.js';
-
+	import { getCategoryDashboard } from '@/api/modules/dashboard';
 	export default {
 		name: 'Dashboard',
 		mounted() {
@@ -112,10 +127,24 @@
 		},
 		data() {
 			return {
-				selected: null
+				selected: null,
+				categories: []
 			};
 		},
+		created() {
+			this.getListCategoryDashboard();
+		},
 		methods: {
+			getListCategoryDashboard() {
+				getCategoryDashboard()
+					.then(res => {
+						this.categories = res;
+						console.log(this.categories);
+					})
+					.catch(err => {
+						console.log(error);
+					});
+			},
 			initChartCategories() {
 				var ctx = document.getElementById('chart-list-categories').getContext('2d');
 				new Chart(ctx, {
