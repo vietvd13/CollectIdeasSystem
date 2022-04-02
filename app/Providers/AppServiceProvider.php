@@ -20,10 +20,12 @@ use Service\CategoryService;
 use App\Services\Contracts\CategoryServiceInterface;
 use App\Repositories\Contracts\DepartmentRepositoryInterface;
 use App\Repositories\Contracts\IdeaRepositoryInterface;
+use App\Services\Contracts\DasboardServiceInterface;
 use App\Services\Contracts\DepartmentServiceInterface;
 use App\Services\Contracts\IdeaServiceInterface;
 use Repository\DepartmentRepository;
 use Repository\IdeaRepository;
+use Service\DasboardService;
 use Service\DepartmentService;
 use Service\IdeaService;
 
@@ -47,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryServiceInterface::class, CategoryService::class);
         $this->app->bind(IdeaRepositoryInterface::class, IdeaRepository::class);
         $this->app->bind(IdeaServiceInterface::class, IdeaService::class);
+        $this->app->bind(DasboardServiceInterface::class, DasboardService::class);
     }
 
     /**

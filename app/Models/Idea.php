@@ -44,6 +44,10 @@ class Idea extends Model
         return $this->hasMany('App\Models\IdeaLike', 'idea_id', 'id');
     }
 
+    public function user() {
+        return $this->hasOne('App\Models\User', 'id', 'owner');
+    }
+
     // public function category() {
     //     return $this->hasOne('App\Models\Category', 'category_id', 'id');
     // }

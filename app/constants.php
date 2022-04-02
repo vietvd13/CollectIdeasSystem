@@ -10,3 +10,5 @@ define("ERROR_UNAUTHENTICATE", "message.error.unauthenticate");
 define("ERROR_USER_NOT_FOUND", "message.error.user_not_found");
 define("ERROR_ROLE_NOT_FOUND", "message.error.role_not_found");
 define("SUCCESS_POST_IDEA", 'message.success.idea');
+define("LIKE", 1);
+define("DISLIKE", 0);
