@@ -155,7 +155,7 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                 $attributes['comment'] = $comment;
                 event(new IdeaComment($attributes));
             }
-            return $comment;
+            return $attributes;
         }
     }
 

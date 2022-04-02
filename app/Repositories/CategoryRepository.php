@@ -38,5 +38,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         return $this->model->with('user')->paginate($limit, $columns);
     }
 
-
+    public function categoryByOwner($owner_id) {
+        return $this->model->where('owner', $owner_id)->get(['*']);
+    }
 }
