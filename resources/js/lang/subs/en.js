@@ -137,6 +137,16 @@ export default {
 		STAFF: 'Staff'
 	},
 
+	IDEA: {
+		PLACEHOLDER_INPUT_IDEAD: '{name}, what are you thinking?',
+		TITLE_NEW_IDEA: 'Idea',
+		MESSAGE_NEW_IDEA: 'The system has just added a new idea',
+
+		BUTTON_LIKE: 'Like',
+		BUTTON_UNLIKE: 'Dislike',
+		BUTTON_COMMENT: 'Comment'
+	},
+
 	DASHBOARD: {
 		HELLO: 'Hello'
 	}

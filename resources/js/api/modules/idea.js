@@ -9,3 +9,7 @@ export function postIdeas(data) {
 export function getListIdeas(PARAMS) {
 	return RequestApi.getAllByParams(URL, PARAMS);
 }
+
+export function reactIdea(data) {
+	return RequestApi.postOne(`${URL}/like`, data);
+}
