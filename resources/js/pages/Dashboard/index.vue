@@ -75,13 +75,13 @@
 		<div class="chart">
 			<b-row>
 				<b-col cols="12" sm="12" md="12" lg="6" xl="6">
-					<b-card class="chart-total-category">
+					<b-card class="chart-total-category mb-3">
 						<canvas id="chart-total-category"></canvas>
 					</b-card>
 				</b-col>
 
 				<b-col cols="12" sm="12" md="12" lg="6" xl="6">
-					<b-card class="chart-total-month">
+					<b-card class="chart-total-month mb-3">
 						<canvas id="chart-total-month"></canvas>
 					</b-card>
 				</b-col>
@@ -109,6 +109,11 @@
 			this.initChartTotalMonth();
 			this.initChartTotalCategory();
 			this.initChartCategories();
+		},
+		data() {
+			return {
+				selected: null
+			};
 		},
 		methods: {
 			initChartCategories() {
@@ -172,21 +177,24 @@
 				var data = {
 					datasets: [
 						{
-							data: [20, 10],
+							data: [1, 10, 8, 2, 4, 9],
 							backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)']
 						}
 					],
 
-					labels: ['Like', 'Dislike']
+					labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sunday']
 				};
 
 				new Chart(ctx, {
-					type: 'pie',
+					type: 'line',
 					data: data,
 					options: {
-						title: {
-							display: true,
-							text: 'Total Likes and Dislikes in the month'
+						scales: {
+							yAxes: [
+								{
+									stacked: true
+								}
+							]
 						}
 					}
 				});
@@ -195,52 +203,30 @@
 				var ctx = document.getElementById('chart-total-category').getContext('2d');
 
 				new Chart(ctx, {
-					type: 'radar',
+					type: 'doughnut',
 					data: {
-						labels: [
-							'Category 1',
-							'Category 2',
-							'Category 3',
-							'Category 4',
-							'Category 5',
-							'Category 6'
-						],
 						datasets: [
 							{
-								label: 'Like',
 								fill: true,
-								data: [40, 50, 100, 55, 12, 88],
+								data: [40, 50, 100],
 								fill: true,
-								backgroundColor: 'rgba(54, 162, 235, 0.2)',
+								backgroundColor: [
+									'rgba(54, 162, 235, 0.2)',
+									'rgba(153, 102, 255, 0.2)',
+									'rgba(255, 99, 132, 0.2)'
+								],
 								borderColor: 'rgb(54, 162, 235)',
-								pointBackgroundColor: 'rgb(54, 162, 235)',
+								pointBackgroundColor: [
+									'rgb(255, 112, 67)',
+									'rgb(102, 187, 106)',
+									'rgb(149, 117, 205)'
+								],
 								pointBorderColor: '#fff',
 								pointHoverBackgroundColor: '#fff',
 								pointHoverBorderColor: 'rgb(54, 162, 235)'
-							},
-							{
-								label: 'Dislike',
-								fill: true,
-								data: [10, 4, 6, 2, 7, 20],
-								backgroundColor: 'rgba(255, 99, 132, 0.2)',
-								borderColor: 'rgb(255, 99, 132)',
-								pointBackgroundColor: 'rgb(255, 99, 132)',
-								pointBorderColor: '#fff',
-								pointHoverBackgroundColor: '#fff',
-								pointHoverBorderColor: 'rgb(255, 99, 132)'
 							}
-						]
-					},
-					options: {
-						title: {
-							display: true,
-							text: 'Total likes and dislikes by category'
-						},
-						scale: {
-							angleLines: {
-								display: false
-							}
-						}
+						],
+						labels: ['Cate1', 'Cate2', 'Cate2']
 					}
 				});
 			}
