@@ -9,7 +9,6 @@ namespace Service;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\IdeaRepositoryInterface;
 use App\Services\Contracts\DasboardServiceInterface;
-use Illuminate\Http\Client\Request;
 class DasboardService extends BaseService implements DasboardServiceInterface
 {
 
@@ -22,13 +21,32 @@ class DasboardService extends BaseService implements DasboardServiceInterface
     }
 
     public function chartDonut($request) {
-        // Staff/manager: Xem 3 bài viết có lượt like và comment nhiều nhất, trả cho t tổng số lượt like,comment của 3 bài post đó
-        // Admin: những chủ đề được mọi người quan tâm đóng góp ý kiến nhiều nhất(3 cái ) trả ra chủ đề và tổng bài viết trong chủ đề đó.
-        // $this->ideaRepository->model->where('category_id' => $request->category_id)
+        $userDepartment = $request->user()->department_id;
+        if ($request->user()->getRoleNames() == ROLES['ADMIN']) {
+            $data = $this->ideaRepository->dataChartDonut($request->category_id, $request->limit, $userDepartment);
+            return $data;
+        } else {
+            $data = $this->categoryRepository->dataChartDonut($request->limit, $userDepartment);
+            return $data;
+        }
     }
 
-    public function chartWave() {
+    public function chartCollumns($request) {
+        $userDepartment = $request->user()->department_id;
+        $data = $this->categoryRepository->dataChartDonut($request->limit, $userDepartment);
+        return $data;
+    }
 
+    public function total($request) {
+        $userDepartment = $request->user()->department_id;
+        $total = $this->ideaRepository->total($userDepartment);
+        return [
+            'total_category' => $this->categoryRepository->countInDepartment($userDepartment),
+            'total_idea' => $this->ideaRepository->countInDepartment($userDepartment),
+            'total_likes' => $total['total_like'],
+            'total_dislike' => $total['total_dislike'],
+            'total_comment' => $total['total_comment']
+        ];
     }
 
     public function categoryByOwner($owner_id) {

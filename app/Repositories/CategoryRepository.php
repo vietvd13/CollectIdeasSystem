@@ -41,4 +41,18 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     public function categoryByOwner($owner_id) {
         return $this->model->where('owner', $owner_id)->get(['*']);
     }
+
+    public function dataChartDonut(int $limit, int $department_id) {
+        $data = $this->model->whereHas('user', function ($query) use($department_id) {
+            return $query->where(['department_id' => $department_id])->select(['*']);
+        })
+        ->withCount('idea')->orderBy('idea_count', 'desc')->limit($limit)->get(['*']);
+        return $data;
+    }
+
+    public function countInDepartment(int $department_id) {
+        return $this->model->whereHas('user', function ($query) use($department_id) {
+            return $query->where(['department_id' => $department_id])->select(['*']);
+        })->count();
+    }
 }

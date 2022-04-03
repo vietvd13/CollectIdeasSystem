@@ -11,4 +11,5 @@ interface DasboardServiceInterface extends BaseServiceInterface
 {
     public function categoryByOwner($request);
     public function chartDonut($request);
+    public function total($request);
 }

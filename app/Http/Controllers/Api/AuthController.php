@@ -9,10 +9,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
-use App\Http\Resources\BaseResource;
 use App\Http\Resources\AuthResource;
 use App\Services\Contracts\AuthServiceInterface;
-use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
