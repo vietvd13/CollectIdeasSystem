@@ -254,7 +254,7 @@ class IdeaController extends Controller
     }
 
     public function comments(Request $request) {
-        return $this->service->comments($request->idea_id, $request->type);
+        return $this->service->comments($request->idea_id, $request->limit);
     }
 
     public function like(Request $request) {
