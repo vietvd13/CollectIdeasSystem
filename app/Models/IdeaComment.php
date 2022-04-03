@@ -16,4 +16,8 @@ class IdeaComment extends Model
         'owner',
         'comment'
     ];
+
+    public function user() {
+        return $this->hasOne('App\Models\User', 'id', 'owner');
+    }
 }
