@@ -106,25 +106,6 @@
 									</div>
 								</b-col>
 							</b-row>
-
-							<b-row v-if="idea['comments'].length > 0">
-								<b-col>
-									<div>
-										<div
-											class="user-avatar d-flex w-100 align-items-center justify-content-between"
-										>
-											<div class="d-flex align-items-center">
-												<b-avatar
-													src="https://placekitten.com/300/300"
-													class="mr-3"
-												/>
-												<b>{{ idea['comments'] }}</b>
-											</div>
-											<i class="fas fa-ellipsis-h float-right" />
-										</div>
-									</div>
-								</b-col>
-							</b-row>
 						</template>
 					</b-card>
 				</div>
@@ -382,7 +363,6 @@
 			},
 			connectComment(id) {
 				window.Echo.channel('collect_idea').listen(`.idea-comment-${id}`, data => {
-					console.log('NEw');
 					const newComment = {
 						id: data['attributes']['comment']['id'],
 						idea_id: data['attributes']['comment']['idea_id'],
