@@ -300,6 +300,9 @@
 			this.connect();
 			this.handleGetListIdeas();
 		},
+		destroyed() {
+			window.Echo.channel('collect_idea').stopListening('.idea-post');
+		},
 		methods: {
 			async onClickSendComment(id) {
 				const DATA = {
