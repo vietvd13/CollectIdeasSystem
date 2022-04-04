@@ -112,6 +112,19 @@
 			</div>
 		</div>
 
+		<b-row>
+			<b-col>
+				<div style="margin-top: 30px; text-align: center">
+					<b-pagination
+						v-model="pagination.page"
+						:total-rows="pagination.total"
+						:per-page="pagination.per_page"
+						align="center"
+					/>
+				</div>
+			</b-col>
+		</b-row>
+
 		<b-modal v-model="isShowModalPost" id="modal-ideas" title="Your Ideas" size="lg">
 			<div class="row mt-2">
 				<div class="col-md-12 col-sm-12 col-lg-12">
@@ -190,10 +203,15 @@
 								>
 									<div class="d-flex align-items-center">
 										<b-avatar
-											src="https://placekitten.com/300/300"
+											variant="info"
+											:src="
+												item['user']['avatar_path']
+													? `/storage/${item['user']['avatar_path']}`
+													: ''
+											"
 											class="mr-3"
 										/>
-										<b>{{ item['owner']['name'] }}</b>
+										<b>{{ item.user['name'] }}</b>
 									</div>
 									<i class="fas fa-ellipsis-h float-right" />
 								</div>
@@ -230,7 +248,13 @@
 
 <script>
 	import LazyLoad from '../../layout/Lazyload.vue';
-	import { postIdeas, getListIdeas, reactIdea, commentIdea } from '@/api/modules/idea';
+	import {
+		postIdeas,
+		getListIdeas,
+		reactIdea,
+		commentIdea,
+		getListComments
+	} from '@/api/modules/idea';
 	import { MakeToast } from '@/toast/toastMessage';
 	import moment from 'moment';
 
@@ -279,7 +303,13 @@
 						updated_at: ''
 					}
 				},
-				comment: ''
+				comment: '',
+				pagination: {
+					page: 1,
+					per_page: 10,
+					total: 0
+				},
+				isPostComment: false
 			};
 		},
 		computed: {
@@ -288,11 +318,17 @@
 			},
 			fullname() {
 				return this.$store.getters.name;
+			},
+			pageChange() {
+				return this.pagination.page;
 			}
 		},
 		watch: {
 			language() {
 				this.setLocalMoment();
+			},
+			pageChange() {
+				this.handleGetListIdeas();
 			}
 		},
 		created() {
@@ -359,10 +395,22 @@
 
 				this.data = data;
 			},
-			showModal(e, id) {
+			async showModal(e, id) {
 				this.connectComment(id);
 				this.modalData = this.findIdeadById(this.listPost, id);
+				await this.getListCommet(id);
 				this.isShowModal = e;
+			},
+			async getListCommet(id) {
+				const URL = `/comments/load?idea_id=${id}&limit=10000`;
+
+				try {
+					const res = await getListComments(URL);
+
+					this.modalData.comments = res['data'];
+				} catch (err) {
+					console.log(err);
+				}
 			},
 			connectComment(id) {
 				window.Echo.channel('collect_idea').listen(`.idea-comment-${id}`, data => {
@@ -372,8 +420,10 @@
 						comment: data['attributes']['comment']['comment'],
 						created_at: data['attributes']['comment']['created_at'],
 						updated_at: data['attributes']['comment']['updated_at'],
-						owner: data['attributes']['owner']
+						user: data['attributes']['owner']
 					};
+
+					console.log(newComment);
 
 					this.modalData['comments'].push(newComment);
 				});
@@ -453,13 +503,17 @@
 			async handleGetListIdeas() {
 				this.isLoading = true;
 				const params = {
-					category_id: this.id
+					category_id: this.id,
+					page: this.pagination.page,
+					per_page: this.pagination.per_page
 				};
 				try {
 					const res = await getListIdeas(params);
 
 					this.isLoading = false;
 					this.listPost = res.data;
+					this.pagination.page = res.current_page;
+					this.pagination.total = res.total;
 				} catch (error) {
 					console.log(error);
 				}

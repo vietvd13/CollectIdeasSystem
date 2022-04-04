@@ -18,6 +18,6 @@ export function commentIdea(data) {
 	return RequestApi.postOne(`${URL}/comment`, data);
 }
 
-export function commentscomments() {
-	return RequestApi.getAll(`${URL}/comments/load`);
+export function getListComments(params) {
+	return RequestApi.getAll(`${URL}${params}`);
 }
