@@ -17,3 +17,7 @@ export function reactIdea(data) {
 export function commentIdea(data) {
 	return RequestApi.postOne(`${URL}/comment`, data);
 }
+
+export function getListComments(params) {
+	return RequestApi.getAll(`${URL}${params}`);
+}

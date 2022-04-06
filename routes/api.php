@@ -23,5 +23,7 @@ Route::namespace('Api')->group(function() {
         Route::get('idea/comments/load', 'IdeaController@comments');
         Route::post('idea/like', 'IdeaController@like');
         Route::get('dasboard/category', 'DasboardController@categoriesByOwner');
+        Route::get('dasboard/chart-donut', 'DasboardController@chartDonut');
+        Route::get('dasboard/total', 'DasboardController@total');
     });
 });

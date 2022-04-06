@@ -17,6 +17,10 @@ class DasboardController extends Controller
     }
 
     public function chartDonut(Request $request) {
-        return $this->service->chartDonut($request->category_id);
+        return $this->service->chartDonut($request);
+    }
+
+    public function total(Request $request) {
+        return $this->service->total($request);
     }
 }

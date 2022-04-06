@@ -20,15 +20,6 @@ const PostIdeas = {
 			},
 			component: () =>
 				import(/* webpackChunkName: "Ideas Management List" */ '@/pages/Ideas/ManageIdeas')
-		},
-		{
-			path: 'detail',
-			name: 'PostManagementDetail',
-			meta: {
-				title: 'ROUTER.IDEAS'
-			},
-			component: () =>
-				import(/* webpackChunkName: "Ideas Management List" */ '@/pages/Ideas/IdeaDetail')
 		}
 	]
 };

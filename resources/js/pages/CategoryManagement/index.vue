@@ -7,7 +7,7 @@
 			</div>
 			<div class="category-management__header-actions">
 				<button
-					v-if="isManager === 'ADMIN'"
+					v-if="isManager === 'ADMIN' || isManager === 'QAC'"
 					class="btn btn-primary"
 					@click="handleModal()"
 					v-b-modal.modal-1
@@ -84,14 +84,14 @@
 						<td>{{ Category.user.name }}</td>
 						<td>
 							<button
-								v-if="isManager === 'ADMIN'"
+								v-if="isManager === 'ADMIN' || isManager === 'QAC'"
 								@click="handleModal(Category.id)"
 								class="btn btn-warning"
 							>
 								<i class="fas fa-edit"></i>
 							</button>
 							<button
-								v-if="isManager === 'ADMIN'"
+								v-if="isManager === 'ADMIN' || isManager === 'QAC'"
 								@click="handleDeleteCategory(Category.id)"
 								class="btn btn-danger"
 							>
