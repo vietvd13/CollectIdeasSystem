@@ -9,7 +9,9 @@ export default {
 		PAGE_NOT_FOUND: 'Page Not Found',
 		DASHBOARD: 'Dashboard',
 		ACCOUNT_MANAGEMENT: 'Account Management',
-		CATEGORY_MANAGEMENT: 'Category Management'
+		CATEGORY_MANAGEMENT: 'Category Management',
+		DEPARTMENT: 'Department Manegement',
+		IDEAS: 'Ideas Management'
 	},
 	NAVBAR: {
 		LANGUAGE: 'Language',
@@ -54,11 +56,14 @@ export default {
 			SUCCESS: 'Create Successfully',
 			SAVE: 'SAVE',
 			CLOSE: 'Close',
+			DEPARTMENT: 'Department',
+			AVATAR: 'Avatars',
 			MESSAGE: {
 				EMAIL: 'Invalid Email',
 				SPACE: 'You must enter a valid value',
 				PASSWORD: 'Invalid Password! Password must be at least 8 characters'
-			}
+			},
+			SELECT_DEPARTMENT: 'Select Department'
 		},
 		SEARCH_BY: {
 			KEYWORD: 'Keyword',
@@ -72,7 +77,8 @@ export default {
 				NAME: 'Fullname',
 				ROLE: 'Role',
 				BIRTH: 'Date of Birth',
-				ACTIONS: 'Actions'
+				ACTIONS: 'Actions',
+				AVATARS: 'User Avatar'
 			}
 		}
 	},
@@ -112,12 +118,33 @@ export default {
 			}
 		}
 	},
-
+	DEPARTMENT: {
+		TITLE: 'Department Management',
+		CREATE: 'Create Department',
+		ACTIONS: {
+			CREATE: 'Create a new departmetn',
+			EDIT: 'Edit this department'
+		},
+		TABLE: {
+			NAME: 'Name',
+			ACTIONS: 'Actions'
+		}
+	},
 	ROLE: {
 		ADMIN: 'Admin',
 		QAM: 'Quality Assurance Manager',
 		QAC: 'Quality Assurance Coordinator',
 		STAFF: 'Staff'
+	},
+
+	IDEA: {
+		PLACEHOLDER_INPUT_IDEAD: '{name}, what are you thinking?',
+		TITLE_NEW_IDEA: 'Idea',
+		MESSAGE_NEW_IDEA: 'The system has just added a new idea',
+
+		BUTTON_LIKE: 'Like',
+		BUTTON_UNLIKE: 'Dislike',
+		BUTTON_COMMENT: 'Comment'
 	},
 
 	DASHBOARD: {

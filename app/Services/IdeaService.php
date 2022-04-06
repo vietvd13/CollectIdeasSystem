@@ -9,6 +9,7 @@ namespace Service;
 
 use App\Events\IdeaPost;
 use App\Events\IdeaComment;
+use App\Events\IdeaLiked;
 use App\Jobs\MailJob;
 use App\Models\Idea;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
@@ -17,6 +18,7 @@ use App\Services\Contracts\IdeaServiceInterface;
 use Service\BaseService;
 use Service\TransactionService;
 use Service\UploadService;
+use App\Models\User;
 use Redis;
 class IdeaService extends BaseService implements IdeaServiceInterface
 {
@@ -30,12 +32,18 @@ class IdeaService extends BaseService implements IdeaServiceInterface
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function loadIdeas($category_id, $limit = null, $columns = ['*']) {
+    public function loadIdeas($category_id, $user, $limit = null, $columns = ['*']) {
         $ideas = $this->repository
                 ->where(['category_id' => $category_id])
                 ->with([
                     'comments' => function ($query) {
                         $query->select(['*'])->orderBy('created_at', 'DESC')->limit(1);
+                    },
+                    'likes' => function ($query) use($user) {
+                        $query->where('owner', $user)->select(['*']);
+                    },
+                    'user' => function ($query) {
+                        $query->select(['*']);
                     }
                 ])
                 ->withCount('likes')
@@ -92,9 +100,48 @@ class IdeaService extends BaseService implements IdeaServiceInterface
 
     }
 
-    public function like(int $idea_id)
+    public function like(int $idea_id, int $owner_id, int $status)
     {
-
+        $idea = $this->repository->find($idea_id);
+        if ($idea) {
+            $action = null;
+            if ($liked = $idea->likes()->where(['owner' => $owner_id])->first()) {
+                if ($liked->status != $status) {
+                    $liked->status = $status;
+                    $liked->save();
+                    $action = ($status == 1) ? 'like' : 'dislike';
+                } else if($liked->status ==  $status) {
+                    $idea->likes()->where('owner', $owner_id)->delete();
+                    $action = ($status == 1) ? 'unlike' : 'undislike';
+                }
+            } else {
+                $liked = $idea->likes()->create([
+                    'idea_id' => $idea_id,
+                    'status' => $status,
+                    'owner' => $owner_id,
+                ]);
+                $action = ($status == 1) ? 'like' : 'dislike';
+            }
+            $payLoad = [
+                'owner' =>  User::find($owner_id),
+                'idea_id' => $idea_id,
+                'action' => $action,
+                'status' => $status,
+                'total_like' => $idea->likes()->where('status', 1)->count(),
+                'total_dislike' => $idea->likes()->where('status', 0)->count()
+            ];
+            event(new IdeaLiked($payLoad));
+            return [
+                'code' => 200,
+                'message' =>  $action,
+                'total_like' => $idea->likes()->where('status', 1)->count(),
+                'total_dislike' => $idea->likes()->where('status', 0)->count()
+            ];
+        }
+        return [
+            'code' => 404,
+            'message' =>  'Idea not found'
+        ];
     }
 
     public function comment(array $attributes)
@@ -105,14 +152,17 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                 'owner' => $attributes['owner']->id,
                 'comment' => $attributes['comment']
             ])) {
+                $attributes['comment'] = $comment;
                 event(new IdeaComment($attributes));
             }
-            return $comment;
+            return $attributes;
         }
     }
 
     public function comments(int $idea_id, int $limit) {
-        return $this->repository->find($idea_id)->comments()->orderBy('created_at', 'ASC')->paginate($limit);
+        return $this->repository->find($idea_id)->comments()
+        ->with('user')
+        ->orderBy('created_at', 'ASC')->paginate($limit);
     }
 
     public function attatchFile(int $idea_id, $file)

@@ -4,30 +4,22 @@ const PostIdeas = {
 	path: '/manage-post',
 	name: 'PostManagement',
 	meta: {
-		title: 'Ideas Management'
+		title: 'ROUTER.IDEAS'
 	},
 	component: Layout,
 	redirect: {
 		name: 'PostManagementList'
 	},
+	hidden: true,
 	children: [
 		{
-			path: 'list',
+			path: 'list/:category',
 			name: 'PostManagementList',
 			meta: {
-				title: 'ROUTER.ACCOUNT_MANAGEMENT'
+				title: 'ROUTER.IDEAS'
 			},
 			component: () =>
 				import(/* webpackChunkName: "Ideas Management List" */ '@/pages/Ideas/ManageIdeas')
-		},
-		{
-			path: 'detail',
-			name: 'PostManagementDetail',
-			meta: {
-				title: 'ROUTER.ACCOUNT_MANAGEMENT'
-			},
-			component: () =>
-				import(/* webpackChunkName: "Ideas Management List" */ '@/pages/Ideas/IdeaDetail')
 		}
 	]
 };

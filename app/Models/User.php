@@ -58,6 +58,6 @@ class User extends Authenticatable
     }
 
     public function department() {
-        return $this->hasOne('App\Models\Department', 'department_id', 'id');
+        return $this->hasOne('App\Models\Department', 'id', 'department_id');
     }
 }

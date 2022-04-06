@@ -8,7 +8,10 @@ export default {
 		LOGIN: 'Đăng nhập',
 		PAGE_NOT_FOUND: 'Trang không tồn tại',
 		DASHBOARD: 'Dashboard',
-		ACCOUNT_MANAGEMENT: 'Quản lý người dùng'
+		ACCOUNT_MANAGEMENT: 'Quản lý người dùng',
+		CATEGORY_MANAGEMENT: 'Quản lý danh mục',
+		DEPARTMENT: 'Quản lý phòng ban',
+		IDEAS: 'Quản lý ý tưởng'
 	},
 	NAVBAR: {
 		LANGUAGE: 'Ngôn ngữ',
@@ -109,6 +112,18 @@ export default {
 				ACTIONS: 'Hành động',
 				OWNER: 'Người tạo'
 			}
+		}
+	},
+	DEPARTMENT: {
+		TITLE: 'Quản lý phòng ban',
+		CREATE: 'Tạo phòng ban',
+		ACTIONS: {
+			CREATE: 'Tạo một phòng ban mới',
+			EDIT: 'Sửa phòng ban'
+		},
+		TABLE: {
+			NAME: 'Tên phòng ban',
+			ACTIONS: 'Hành động'
 		}
 	},
 

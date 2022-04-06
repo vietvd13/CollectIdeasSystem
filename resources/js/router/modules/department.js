@@ -4,7 +4,7 @@ const Department = {
 	path: '/department-management',
 	name: 'DepartmentManagement',
 	meta: {
-		title: 'Department Management'
+		title: 'ROUTER.DEPARTMENT'
 	},
 	component: Layout,
 	redirect: {
@@ -15,7 +15,7 @@ const Department = {
 			path: 'list',
 			name: 'DepartmentManagementIndex',
 			meta: {
-				title: 'Department Management'
+				title: 'ROUTER.DEPARTMENT'
 			},
 			component: () =>
 				import(

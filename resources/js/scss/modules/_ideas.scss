@@ -1,163 +1,201 @@
 .manage-ideas {
-    padding: 20px;
-    &__header {
-        margin-bottom: 10px;
-    }
-    &__content {
-        .card:nth-child(n + 2) {
-            margin-top: 20px;
-        }
-        .comment {
-            display: flex;
-            align-items: center;
-            flex-wrap: nowrap;
-            width: 100%;
-            input {
-                background-color: #fff;
-                border: none;
-            }
-            button {
-                border-radius: 20px;
-            }
-        }
-        &-post {
-            .area-post {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                input {
-                    border-radius: 10px;
-                    border: 1px solid #ddd;
-                }
-            }
-            .area-content {
-                i {
-                    font-size: 5px;
-                }
-                &__header {
-                    display: flex;
-                    box-sizing: border-box;
-                    align-items: flex-start;
-                    margin-right: 8px;
-                    width: 100%;
-                }
-                &__footer {
-                    .footer-actions {
-                        .btn:nth-child(1):active {
-                            background: inherit;
-                            color: rgb(20, 24, 238);
-                        }
-                        .btn:nth-child(2):active {
-                            background: inherit;
-                            color: rgb(238, 20, 20);
-                        }
-                        button {
-                            text-decoration: none;
-                            font-size: 12px;
-                        }
-                        columns: #ddd;
-                        i {
-                            font-size: 15px;
-                        }
-                    }
-                }
-            }
-            .post-content {
-                .attachment {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                }
-            }
-        }
-    }
-    &__searching {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        margin-bottom: 20px;
+	padding: 20px;
+	&__header {
+		margin-bottom: 10px;
+	}
+	&__content {
+		.card:nth-child(n + 2) {
+			margin-top: 20px;
+		}
+		.comment {
+			display: flex;
+			align-items: center;
+			flex-wrap: nowrap;
+			width: 100%;
+			input {
+				background-color: #fff;
+				border: none;
+			}
+			button {
+				border-radius: 20px;
+			}
+		}
+		&-post {
+			.area-post {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				input {
+					border-radius: 10px;
+					border: 1px solid #ddd;
+				}
+			}
+			.area-content {
+				i {
+					font-size: 15px;
+				}
+				&__header {
+					display: flex;
+					box-sizing: border-box;
+					align-items: flex-start;
+					margin-right: 8px;
+					width: 100%;
+				}
+				&__footer {
+					.footer-actions {
+						.btn:nth-child(1):active {
+							background: inherit;
+							color: rgb(20, 24, 238);
+						}
+						.btn:nth-child(2):active {
+							background: inherit;
+							color: rgb(238, 20, 20);
+						}
+						.btn:nth-child(3) {
+							background: inherit;
+						}
+						button {
+							text-decoration: none;
+							font-size: 12px;
+						}
+						columns: #ddd;
+						i {
+							font-size: 15px;
+						}
+					}
+				}
+			}
+			.post-content {
+				.attachment {
+					display: flex;
+					flex-direction: column;
+					align-items: flex-start;
+				}
+			}
+		}
+	}
+	&__searching {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		margin-bottom: 20px;
 
-        &-filter {
-            width: 25%;
-            margin-right: 20px;
-            input {
-                box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
-            }
-        }
-        &-keyword {
-            width: 25%;
-            margin-left: 20px;
-            input {
-                background-color: inherit;
-                border: 1px solid #ddd;
-                &:focus {
-                    background-color: inherit;
-                }
-            }
-            button {
-                background-color: #242368;
-                &:hover {
-                    background-color: #242368;
-                }
-            }
-        }
-        @media screen and (max-width: 768px) {
-            flex-direction: column;
-            &-filter {
-                width: 100%;
-            }
-            &-keyword {
-                width: 100%;
-            }
-        }
-    }
-    .list-group {
-        height: 100%;
-        border-right: 1px solid #ddd;
-        border-top: 1px solid #ddd;
-        padding-right: 20px;
-        &-item {
-            border: 0;
-        }
-    }
-    .card-header,
-    .card-footer {
-        background: inherit;
-    }
+		&-filter {
+			width: 25%;
+			margin-right: 20px;
+			input {
+				box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+			}
+		}
+		&-keyword {
+			width: 25%;
+			margin-left: 20px;
+			input {
+				background-color: inherit;
+				border: 1px solid #ddd;
+				&:focus {
+					background-color: inherit;
+				}
+			}
+			button {
+				background-color: #242368;
+				&:hover {
+					background-color: #242368;
+				}
+			}
+		}
+		@media screen and (max-width: 768px) {
+			flex-direction: column;
+			&-filter {
+				width: 100%;
+			}
+			&-keyword {
+				width: 100%;
+			}
+		}
+	}
+	.list-group {
+		height: 100%;
+		border-right: 1px solid #ddd;
+		border-top: 1px solid #ddd;
+		padding-right: 20px;
+		&-item {
+			border: 0;
+		}
+	}
+	.card-header,
+	.card-footer {
+		background: inherit;
+	}
 }
 
 #detail-ideas {
-    .detail-ideas {
-        position: relative;
-        &__comment {
-            position: relative;
-            header {
-                border-bottom: 1px solid #ddd;
-                padding: 0px 4px 15px 16px ;
-                position: sticky;
-                flex-grow: 1;
-                overflow: hidden;
-                flex-shrink: 1;
-            }
-            .list-comment {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: flex-start;
-                position: relative;
-                flex-shrink: 0;
-                padding: 15px 16px;
-            }
-            .user-comment {
-                display: inline-block;
-                min-width:0;
-                flex-shrink: 1;
-                align-items:stretch;
-                div > span {
-                    display: inline;
-                    position: relative;
-                }
-            }
-        }
-    }
+	footer {
+		display: none;
+	}
+	.detail-ideas {
+		.input-group-text {
+			background: #f3f5f8;
+			border: 0;
+		}
+		position: relative;
+		&__comment {
+			position: relative;
+			header {
+				border-bottom: 1px solid #ddd;
+				padding: 0px 4px 15px 16px;
+				position: sticky;
+				flex-grow: 1;
+				overflow: hidden;
+				flex-shrink: 1;
+			}
+			.list-comment {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: flex-start;
+				position: relative;
+				flex-shrink: 0;
+				padding: 15px 16px;
+				.list {
+					overflow-y: auto;
+					height: 500px;
+					padding-right: 15px;
+					width: 100%;
+					.section-comment:nth-child(n + 2) {
+						margin-top: 20px;
+					}
+				}
+			}
+			.write-comment {
+				width: 100%;
+			}
+			.user-comment {
+				display: inline-block;
+				min-width: 0;
+				flex-shrink: 1;
+				align-items: stretch;
+				margin-top: 10px;
+				div > span {
+					display: inline;
+					position: relative;
+				}
+			}
+		}
+	}
+}
+
+.ideas {
+	padding: 20px;
+	&__header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		&-actions {
+			button {
+				background: #242368;
+			}
+		}
+	}
 }

@@ -10,5 +10,6 @@ namespace App\Repositories\Contracts;
 
 interface CategoryRepositoryInterface extends BaseRepositoryInterface
 {
-
+    public function dataChartDonut(int $limit, int $department_id);
 }
+

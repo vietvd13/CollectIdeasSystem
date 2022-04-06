@@ -3,11 +3,11 @@
 		<div v-if="isLoading" class="loading"><i class="spinner-border" /></div>
 		<div class="account-management__header">
 			<div class="account-management__header-title">
-				<h4>Department Management List</h4>
+				<h4>{{ $t('DEPARTMENT.TITLE') }}</h4>
 			</div>
 			<div class="account-management__header-actions">
 				<button class="btn btn-primary" @click="handleModal()" v-b-modal.modal-1>{{
-					$t('Create Department')
+					$t('DEPARTMENT.CREATE')
 				}}</button>
 			</div>
 		</div>
@@ -58,10 +58,10 @@
 						<span>{{ $t('USER.TABLE.HEADING.ID') }}</span>
 					</b-th>
 					<b-th>
-						<span>Name</span>
+						<span>{{ $t('DEPARTMENT.TABLE.NAME') }}</span>
 					</b-th>
 					<b-th>
-						<span>Actions</span>
+						<span>{{ $t('DEPARTMENT.TABLE.ACTIONS') }}</span>
 					</b-th>
 				</b-thead>
 				<b-tbody>
@@ -73,7 +73,10 @@
 							<button @click="handleModal(department.id)" class="btn btn-warning">
 								<i class="fas fa-edit"></i>
 							</button>
-							<button @click="handleDeleteDepartment(department.id)" class="btn btn-danger">
+							<button
+								@click="handleDeleteDepartment(department.id)"
+								class="btn btn-danger"
+							>
 								<i class="fas fa-trash-alt"></i>
 							</button>
 						</td>
@@ -91,15 +94,17 @@
 			<b-modal
 				id="modal-1"
 				v-model="showModal"
-				:title="action === 'CREATE' ? 'Create A New Department' : 'Edit Department'"
+				:title="
+					action === 'CREATE'
+						? $t('DEPARTMENT.ACTIONS.CREATE')
+						: $t('DEPARTMENT.ACTIONS.EDIT')
+				"
 				centered
 			>
 				<div class="row mt-2">
 					<div class="col-md-12 col-sm-12 col-lg-12">
 						<label for="">Name</label>
-						<b-form-input
-							v-model="name"
-						></b-form-input>
+						<b-form-input v-model="name"></b-form-input>
 					</div>
 				</div>
 				<template #modal-footer>
@@ -131,9 +136,15 @@
 </template>
 
 <script>
-	import { getDeparmentById, createDepartment, deleteDeparment, updateDepartment, getDepartment } from '@/api/modules/department';
+	import {
+		getDeparmentById,
+		createDepartment,
+		deleteDeparment,
+		updateDepartment,
+		getDepartment
+	} from '@/api/modules/department';
 	import { MakeToast } from '@/toast/toastMessage';
-	import {  isEmptyOrWhiteSpace } from '../../utils/validate';
+	import { isEmptyOrWhiteSpace } from '../../utils/validate';
 	import LazyLoad from '../../layout/Lazyload.vue';
 	const paramInit = {
 		perPage: 5,
@@ -306,9 +317,8 @@
 			},
 			isResetDataModal() {
 				console.log('RESET DATA');
-				this.name = ''
-			},
-			
+				this.name = '';
+			}
 		}
 	};
 </script>
