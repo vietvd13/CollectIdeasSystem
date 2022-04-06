@@ -10,7 +10,8 @@ export default {
 		DASHBOARD: 'Dashboard',
 		ACCOUNT_MANAGEMENT: 'Quản lý người dùng',
 		CATEGORY_MANAGEMENT: 'Quản lý danh mục',
-		DEPARTMENT: 'Quản lý phòng ban'
+		DEPARTMENT: 'Quản lý phòng ban',
+		IDEAS: 'Quản lý ý tưởng'
 	},
 	NAVBAR: {
 		LANGUAGE: 'Ngôn ngữ',

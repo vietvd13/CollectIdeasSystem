@@ -70,7 +70,7 @@ class IdeaController extends Controller
      */
     public function index(IdeaRequest $request)
     {
-        $data = $this->service->loadIdeas($request->category_id, $request->per_page);
+        $data = $this->service->loadIdeas($request->category_id, $request->user()->id, $request->per_page);
         return $data;//$this->responseJson(200, IdeaResource::collection($data));
     }
 
@@ -254,6 +254,10 @@ class IdeaController extends Controller
     }
 
     public function comments(Request $request) {
-        return $this->service->comments($request->idea_id, $request->per_page);
+        return $this->service->comments($request->idea_id, $request->type);
+    }
+
+    public function like(Request $request) {
+        return $this->service->like($request->idea_id, $request->user()->id, $request->type);
     }
 }

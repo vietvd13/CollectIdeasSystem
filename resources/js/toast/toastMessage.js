@@ -7,7 +7,7 @@ export const MakeToast = ({
 	variant = null,
 	title,
 	content,
-	toaster = 'b-toaster-bottom-right',
+	toaster = 'b-toaster-top-center',
 	autoHideDelay = 1500
 }) => {
 	const vm = new Vue();

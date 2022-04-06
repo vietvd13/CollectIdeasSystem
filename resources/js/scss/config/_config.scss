@@ -19,21 +19,39 @@ select:-webkit-autofill:focus {
 
 	transition: background-color 5000s ease-in-out 0s;
 }
+/* width */
+::-webkit-scrollbar {
+	width: 5px;
+}
 
-.loading{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    background:#ffffffba;
-    i{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 4rem;
-        height: 4rem;
-    }
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+.loading {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	z-index: 10;
+	top: 0;
+	left: 0;
+	background: #ffffffba;
+	i {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 4rem;
+		height: 4rem;
+	}
 }

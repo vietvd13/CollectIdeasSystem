@@ -11,11 +11,11 @@ class IdeaLiked implements ShouldBroadcast
 
   public $idea_id;
   public $total_likes;
-
-  public function __construct($idea_id, $total_likes)
+  public $payload;
+  public function __construct(array $payload)
   {
-      $this->idea_id = $idea_id;
-      $this->total_likes = $total_likes;
+    $this->payload = $payload;
+    $this->idea_id = $payload['idea_id'];
   }
 
   public function broadcastOn()
@@ -25,6 +25,6 @@ class IdeaLiked implements ShouldBroadcast
 
   public function broadcastAs()
   {
-      return 'idea-like';
+      return "idea-like-{$this->idea_id}";
   }
 }
