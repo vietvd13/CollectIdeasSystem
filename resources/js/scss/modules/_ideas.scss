@@ -134,6 +134,16 @@
 		display: none;
 	}
 	.detail-ideas {
+		&__content {
+			::-webkit-scrollbar {
+				width: 0px;
+			}
+			p {
+				height: 600px;
+				white-space: no-wrap;
+				overflow-y: scroll;
+			}
+		}
 		.input-group-text {
 			background: #f3f5f8;
 			border: 0;

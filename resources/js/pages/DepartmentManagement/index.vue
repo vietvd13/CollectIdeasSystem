@@ -12,21 +12,6 @@
 			</div>
 		</div>
 		<div class="account-management__searching">
-			<div class="account-management__searching-filter">
-				<label for="filer">{{ $t('USER.SEARCH_BY.ROLE') }}</label>
-				<b-form-select v-model="selected" @change="handleSearchByRole()">
-					<b-form-select-option :value="null">{{
-						$t('USER.SELECT_ROLE')
-					}}</b-form-select-option>
-					<b-form-select-option
-						v-for="(role, index) in options"
-						:key="index"
-						:value="role.id"
-						>{{ role.name }}</b-form-select-option
-					>
-				</b-form-select>
-			</div>
-
 			<div class="account-management__searching-keyword">
 				<label for="keyword">{{ $t('USER.SEARCH_BY.KEYWORD') }}</label>
 				<b-input-group>
