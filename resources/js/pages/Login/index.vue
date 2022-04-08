@@ -19,6 +19,7 @@
 								<div class="item-input">
 									<b-form-input
 										v-model="User.account"
+										id="input-account"
 										type="text"
 										:placeholder="$t('LOGIN.PLACEHOLDER_ACCOUNT')"
 										spellcheck="false"
@@ -32,6 +33,7 @@
 									<b-input-group>
 										<b-form-input
 											v-model="User.password"
+											id="input-password"
 											:type="showPassword ? 'text' : 'password'"
 											:placeholder="$t('LOGIN.PLACEHOLDER_PASSWORD')"
 											spellcheck="false"
