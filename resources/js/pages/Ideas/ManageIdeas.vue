@@ -64,6 +64,14 @@
 
 						<template #footer>
 							<b-row>
+								<b-col style="border: 1px solid #">
+									<b>
+										{{ idea.likes_count }}
+										<i class="fas fa-thumbs-up" style="color: #0571ed"></i>
+									</b>
+								</b-col>
+							</b-row>
+							<b-row class="mt-2">
 								<b-col cols="6" sm="6" md="4" lg="4" xl="4">
 									<div class="d-flex flex-column justify-content-center">
 										<div
@@ -231,6 +239,7 @@
 								v-model="comment"
 								type="text"
 								placeholder="Add your comment....."
+								@keyup.enter="onClickSendComment(modalData['id'])"
 							/>
 							<b-input-group-append
 								is-text
@@ -306,7 +315,7 @@
 				comment: '',
 				pagination: {
 					page: 1,
-					per_page: 10,
+					per_page: 5,
 					total: 0
 				},
 				isPostComment: false
@@ -378,12 +387,14 @@
 			},
 			connect() {
 				window.Echo.channel('collect_idea').listen('.idea-post', data => {
-					console.log(data);
 					MakeToast({
 						variant: 'success',
 						title: this.$t('IDEA.TITLE_NEW_IDEA'),
 						content: this.$t('IDEA.MESSAGE_NEW_IDEA')
 					});
+					this.listPost.push(data.payload);
+					this.handleGetListIdeas();
+					console.log(this.listPost, 'POST');
 				});
 			},
 			resetDataModal() {
@@ -437,9 +448,11 @@
 			},
 			handleLike(id, index) {
 				this.handleActionReact(id, 1, index);
+				this.handleGetListIdeas();
 			},
 			handleUnlike(id, index) {
 				this.handleActionReact(id, 0, index);
+				this.handleGetListIdeas();
 			},
 			handleUpdateListPost(status, index) {
 				const item = this.listPost[index].likes;
@@ -509,7 +522,6 @@
 				};
 				try {
 					const res = await getListIdeas(params);
-
 					this.isLoading = false;
 					this.listPost = res.data;
 					this.pagination.page = res.current_page;
