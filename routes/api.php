@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::namespace('Api')->group(function() {
     Route::post('/auth/login','AuthController@login');
+    Route::get('dasboard/export/category', 'DasboardController@exportCategory');
+    Route::get('idea/download', 'DasboardController@downloadAttatchFiles');
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/auth/user','AuthController@user');
         Route::apiResource('/users','UserController');
@@ -25,5 +27,7 @@ Route::namespace('Api')->group(function() {
         Route::get('dasboard/category', 'DasboardController@categoriesByOwner');
         Route::get('dasboard/chart-donut', 'DasboardController@chartDonut');
         Route::get('dasboard/total', 'DasboardController@total');
+
+        // Route::get('dasboard/export/category', 'DasboardController@total');
     });
 });

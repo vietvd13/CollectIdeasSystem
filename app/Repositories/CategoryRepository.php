@@ -55,4 +55,8 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
             return $query->where(['department_id' => $department_id])->select(['*']);
         })->count();
     }
+
+    public function ideaInCategory(int $category_id) {
+        return $this->model->where('id', $category_id)->first()->idea;
+    }
 }
