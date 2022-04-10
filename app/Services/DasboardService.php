@@ -80,6 +80,7 @@ class DasboardService extends BaseService implements DasboardServiceInterface
                 env('APP_URL') . "/api/idea/download?idea_id=" . $idea->id
             ];
             $csvContents[] = $row;
+            $row = [];
         }
 
         return Excel::download(new IdeaExport($csvContents), "category.xlsx");
