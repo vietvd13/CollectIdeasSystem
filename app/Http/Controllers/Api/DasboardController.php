@@ -23,4 +23,12 @@ class DasboardController extends Controller
     public function total(Request $request) {
         return $this->service->total($request);
     }
+
+    public function exportCategory(Request $request) {
+        return $this->service->exportCategory($request->category_id);
+    }
+
+    public function downloadAttatchFiles(Request $request) {
+        return $this->service->downloadAttatchFiles($request->idea_id);
+    }
 }
