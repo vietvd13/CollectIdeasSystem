@@ -50,8 +50,8 @@
 			<b-table-simple
 				class="text-center"
 				responsive
-				:per-page="perPage"
-				:current-page="currentPage"
+				:per-page="params.per_page"
+				:current-page="params.page"
 				:outlined="false"
 				:fixed="false"
 			>
@@ -86,7 +86,7 @@
 							<button
 								v-if="isManager !== 'STAFF'"
 								@click="handleModal(Category.id)"
-								class="btn btn-warning"
+								class="btn btn-primary"
 							>
 								<i class="fas fa-edit"></i>
 							</button>
@@ -100,14 +100,17 @@
 							<button class="btn btn-warning" @click="handleDetailIdeas(Category.id)">
 								<i class="fas fa-info-circle"></i>
 							</button>
+							<button class="btn btn-info" @click="handleExportCSV(Category.id)">
+								<i class="fas fa-download"></i>
+							</button>
 						</td>
 					</tr>
 					<LazyLoad @lazyload="handleGetListCategory()" />
 				</b-tbody>
 			</b-table-simple>
 			<b-pagination
-				v-model="params.currentPage"
-				:per-page="params.perPage"
+				v-model="params.page"
+				:per-page="params.per_page"
 				:total-rows="rows"
 				aria-controls="my-table"
 			></b-pagination>
@@ -187,10 +190,6 @@
 	import { MakeToast } from '@/toast/toastMessage';
 	import { isEmptyOrWhiteSpace } from '../../utils/validate';
 	import LazyLoad from '../../layout/Lazyload.vue';
-	const paramInit = {
-		perPage: 5,
-		currentPage: 1
-	};
 	export default {
 		name: 'CategoryManagement',
 		components: {
@@ -198,9 +197,7 @@
 		},
 		data() {
 			return {
-				params: { ...paramInit },
-				perPage: 15,
-				currentPage: 1,
+				params: { per_page: 5, page: 1 },
 				showModal: false,
 				selected: null,
 				isLoading: false,
@@ -224,7 +221,7 @@
 				return this.listCategory.length;
 			},
 			isChangePage() {
-				return this.params.currentPage;
+				return this.params.page;
 			},
 			name() {
 				return this.$store.getters.name;
@@ -264,9 +261,8 @@
 				this.showModal = true;
 			},
 			async handleGetListCategory() {
-				const params = this.params;
 				this.isLoading = true;
-				await getCategoryTable(params)
+				await getCategoryTable(this.params)
 					.then(res => {
 						if (res.status === 200) {
 							console.log(res);
@@ -414,6 +410,9 @@
 					end_collect_date: '',
 					description: ''
 				};
+			},
+			handleExportCSV(category_id) {
+				console.log(category_id);
 			}
 		}
 	};
