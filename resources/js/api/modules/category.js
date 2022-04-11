@@ -7,7 +7,7 @@ export function postCategory(data) {
 }
 
 export function getCategoryTable(params) {
-	return RequestApi.getAll(URL, params);
+	return RequestApi.getAllByParams(URL, params);
 }
 
 export function editCategory(id, data) {
