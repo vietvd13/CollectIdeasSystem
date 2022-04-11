@@ -50,8 +50,8 @@
 			<b-table-simple
 				class="text-center"
 				responsive
-				:per-page="perPage"
-				:current-page="currentPage"
+				:per-page="params.page"
+				:current-page="params.per_page"
 				:outlined="false"
 				:fixed="false"
 			>
@@ -110,8 +110,8 @@
 				</b-tbody>
 			</b-table-simple>
 			<b-pagination
-				v-model="params.currentPage"
-				:per-page="params.perPage"
+				v-model="params.page"
+				:per-page="params.per_page"
 				:total-rows="rows"
 				aria-controls="my-table"
 			></b-pagination>
@@ -202,9 +202,11 @@
 		},
 		data() {
 			return {
-				params: { ...paramInit },
-				perPage: 15,
-				currentPage: 1,
+				params: {
+					per_page: 5,
+					page: 1
+				},
+
 				showModal: false,
 				selected: null,
 				isLoading: false,
@@ -228,7 +230,7 @@
 				return this.listCategory.length;
 			},
 			isChangePage() {
-				return this.params.currentPage;
+				return this.params.page;
 			},
 			name() {
 				return this.$store.getters.name;
@@ -268,9 +270,9 @@
 				this.showModal = true;
 			},
 			async handleGetListCategory() {
-				const params = this.params;
+				// const params = this.params;
 				this.isLoading = true;
-				await getCategoryTable(params)
+				await getCategoryTable(this.params)
 					.then(res => {
 						if (res.status === 200) {
 							console.log(res);
