@@ -148,6 +148,6 @@ export default {
 	},
 
 	DASHBOARD: {
-		HELLO: 'Hello'
+		OPTIONS: 'Select an category'
 	}
 };

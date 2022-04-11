@@ -276,6 +276,7 @@
 								res.data.roles.map(item => {
 									this.newUser.role = item.id;
 								});
+								this.newUser.department_id = res.data.department_id;
 								this.newUser.birth = res.data.birth;
 							})
 							.catch(err => {
