@@ -144,7 +144,66 @@ export default {
 
 		BUTTON_LIKE: 'Like',
 		BUTTON_UNLIKE: 'Dislike',
-		BUTTON_COMMENT: 'Comment'
+		BUTTON_COMMENT: 'Comment',
+		UPLOAD: {
+			CONTENT: 'Content',
+			ACTIONS: 'Upload your Ideas'
+		},
+		LICENSE: {
+			TEXT: 'License',
+			CONFIRM: '	I accept the terms and use.',
+			CONTENT_CAT: `
+			This Software Development Agreement (the “Agreement” or “Software
+				Development Agreement”) states the terms and conditions that govern the
+				contractual agreement between having his principal place of business at 200
+				Clock Tower Pl Carmel, California(CA), 93923, (the “Developer”), and having
+				its principal place of business at 200 Gainsborough Cir Folsom,
+				California(CA), 95630 (the “Client”) who agrees to be bound by this
+				Agreement. WHEREAS, the Client has conceptualized [QUICK DESCRIPTION OF
+				SOFTWARE] (the “Software”), which is described in further detail on Exhibit
+				A, and the Developer is a contractor with whom the Client has come to an
+				agreement to develop the Software. NOW, THEREFORE, In consideration of the
+				mutual covenants and promises made by the parties to this Software
+				Development Agreement, the Developer and the Client (individually, each a
+				“Party” and collectively, the “Parties”) covenant and agree as follows:`,
+			DEVELOP_DUTIES: "1. Developer's duties",
+			THE_CLIENT: `						The Client hereby engages the Developer and the Developer hereby agrees to
+				be engaged by the Client to develop the Software in accordance with the
+				specifications attached hereto as Exhibit A (the “Specifications”).`,
+			THE_DEVELOPER_SHALL: `	The Developer shall complete the development of the Software
+				according to the milestones described on the form attached hereto as
+				Exhibit B. In accordance with such milestones, the final product
+				shall be delivered to the Client by May 12 (the “Delivery Date”)..`,
+			FOR_A_PERIODL: `For a period of 20 days after delivery of the final product, the
+				Developer shall provide the Client attention to answer any questions
+				or assist solving any problems with regard to the operation of the
+				Software up to 90 of hours free of charge and billed to the Client
+				at a rate of $40 per hour for any assistance thereafter. The
+				Developer agrees to respond to any reasonable request for assistance
+				made by the Client regarding the Software within 30 days of the
+				request.`,
+			EXPRESSLY_PROVIDER: `	Except as expressly provided in this Software Development Agreement,
+				the Client shall not be obligated under this Agreement to provide
+				any other support or assistance to the Developer.`,
+			TERMINATE: `								The Client may terminate this Software Development Agreement at any
+				time upon material breach of the terms herein and failure to cure
+				such a breach within 20 days of notification of such a breach.`,
+			DELIVERY_DATE: `								The Developer shall provide to the Client after the Delivery Date, a
+				cumulative 2 days of training with respect to the operation of the
+				Soft`,
+			DELYVERY: '2. Delivery',
+			SOFTWARE_AS_DELIVERY: `								If the Software as delivered does not conform with the
+				Specifications, the Client shall within 30 days of the Delivery Date
+				notify the Developer in writing of the ways in which it does not
+				conform with the Specifications. The Developer agrees that upon
+				receiving such notice, it shall make reasonable efforts to correct
+				any non-conformity.`,
+			ACCEPTANCE_DATE: `								The Client shall provide to the Developer written notice of its
+				finding that the Software conforms to the Specifications within 20
+				days of the Delivery Date (the “Acceptance Date”) unless it finds
+				that the Software does not conform to the Specifications as
+				described in Section 2(A) herein.`
+		}
 	},
 
 	DASHBOARD: {
