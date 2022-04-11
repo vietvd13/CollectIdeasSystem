@@ -411,8 +411,8 @@
 					description: ''
 				};
 			},
-			handleExportCSV(category_id) {
-				console.log(category_id);
+			handleExportCSV(id) {
+				http: window.open(`/api/dasboard/export/category?category_id=${id}`);
 			}
 		}
 	};
