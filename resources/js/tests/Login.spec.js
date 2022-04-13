@@ -21,7 +21,7 @@ describe('TEST SCREEN LOGIN', () => {
 		wrapper.destroy();
 	});
 
-	test('Check form input account and password', async () => {
+	test('CHECK FORM INPUT ACCOUNT AND PASSWORD', async () => {
 		const localVue = createLocalVue();
 		const wrapper = mount(Login, {
 			localVue,
@@ -50,7 +50,7 @@ describe('TEST SCREEN LOGIN', () => {
 		wrapper.destroy();
 	});
 
-	test('Check toggle show password', async () => {
+	test('CHECK TOGGLE SHOW PASSWORD', async () => {
 		const localVue = createLocalVue();
 		const wrapper = mount(Login, {
 			localVue,
@@ -62,6 +62,57 @@ describe('TEST SCREEN LOGIN', () => {
 
 		const IconShowPassword = wrapper.find('.fa-eye');
 		expect(IconShowPassword.exists()).toBe(false);
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION DOLOGIN()', async () => {
+		const doLogin = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Login, {
+			localVue,
+			router,
+			store,
+			methods: {
+				doLogin
+			}
+		});
+
+		await wrapper.setData({
+			User: {
+				account: 'admin@gmail.com',
+				password: 'password'
+			}
+		});
+
+		const ZoneButtonLogin = wrapper.find('.login-form-content__footer');
+		const ButtonLogin = ZoneButtonLogin.find('button');
+
+		expect(ButtonLogin.exists()).toBe(true);
+		await ButtonLogin.trigger('click');
+		expect(doLogin).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST DATA INIT', () => {
+		const localVue = createLocalVue();
+		const wrapper = mount(Login, {
+			localVue,
+			router,
+			store
+		});
+
+		expect(JSON.stringify(wrapper.vm.User)).toEqual(
+			JSON.stringify({
+				account: '',
+				password: ''
+			})
+		);
+
+		expect(wrapper.vm.showPassword).toBe(false);
+		expect(wrapper.vm.isProcess).toBe(false);
 
 		wrapper.destroy();
 	});
