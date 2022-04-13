@@ -77,7 +77,7 @@ class DasboardService extends BaseService implements DasboardServiceInterface
                 $cate->topic_name,
                 $idea->id,
                 $idea->contents,
-                env('APP_URL') . "/api/idea/download?idea_id=" . $idea->id
+                env('APP_URL') . "api/idea/download?idea_id=" . $idea->id
             ];
             $csvContents[] = $row;
             $row = [];
