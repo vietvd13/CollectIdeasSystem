@@ -136,11 +136,11 @@
 		<b-modal v-model="isShowModalPost" id="modal-ideas" title="Your Ideas" size="lg">
 			<div class="row mt-2">
 				<div class="col-md-12 col-sm-12 col-lg-12">
-					<label for="">Content</label>
+					<label for="">{{ $t('IDEA.UPLOAD.CONTENT') }}</label>
 					<b-form-textarea v-model="data.contents" rows="8" />
 				</div>
 				<div class="col-md-12 col-sm-12 col-lg-12 mt-3">
-					<label for="">Upload your Ideas</label>
+					<label for="">{{ $t('IDEA.UPLOAD.ACTIONS') }}</label>
 
 					<b-form-file
 						multiple="multiple"
@@ -150,6 +150,20 @@
 					></b-form-file>
 				</div>
 			</div>
+			<b-row class="mt-2">
+				<b-col>
+					<b-form-checkbox
+						id="checkbox-liences"
+						v-model="liences"
+						name="checkbox-liences"
+						:value="true"
+						:unchecked-value="false"
+					>
+						{{ $t('IDEA.LICENSE.CONFIRM') }}.
+						<b-link v-b-modal.modal-liences>{{ $t('IDEA.LICENSE.TEXT') }}</b-link>
+					</b-form-checkbox>
+				</b-col>
+			</b-row>
 
 			<template #modal-footer>
 				<div>
@@ -252,6 +266,81 @@
 				</div>
 			</div>
 		</b-modal>
+		<b-modal id="modal-liences" title="Liences" size="lg">
+			<b-row>
+				<b-col cols="12">
+					<p class="text-justify">
+						{{ $t('IDEA.LICENSE.CONTENT_CAT') }}
+					</p>
+				</b-col>
+
+				<b-col cols="12">
+					<h5>{{ $t('IDEA.LICENSE.DEVELOP_DUTIES') }}</h5>
+				</b-col>
+
+				<b-col cols="12">
+					<p>
+						{{ $t('IDEA.LICENSE.THE_CLIENT') }}
+					</p>
+
+					<ol>
+						<li>
+							<p>
+								{{ $t('IDEA.LICENSE.THE_DEVELOPER_SHALL') }}
+							</p>
+						</li>
+
+						<li>
+							<p>
+								{{ $t('IDEA.LICENSE.FOR_A_PERIODL') }}
+							</p>
+						</li>
+
+						<li>
+							<p>
+								{{ $t('IDEA.LICENSE.EXPRESSLY_PROVIDER') }}
+							</p>
+						</li>
+
+						<li>
+							<p>
+								{{ $t('IDEA.LICENSE.TERMINATE') }}
+							</p>
+						</li>
+
+						<li>
+							<p>
+								{{ $t('IDEA.LICENSE.DELIVERY_DATE') }}
+							</p>
+						</li>
+					</ol>
+				</b-col>
+
+				<b-col cols="12">
+					<h5> {{ $t('IDEA.LICENSE.DELYVERY') }} </h5>
+				</b-col>
+
+				<b-col cols="12">
+					<p>
+						{{ $t('IDEA.LICENSE.DELIVERY_DATE') }}
+					</p>
+
+					<ol>
+						<li>
+							<p>
+								{{ $t('IDEA.LICENSE.SOFTWARE_AS_DELIVERY') }}
+							</p>
+						</li>
+
+						<li>
+							<p>
+								{{ $t('IDEA.LICENSE.ACCEPTANCE_DATE') }}
+							</p>
+						</li>
+					</ol>
+				</b-col>
+			</b-row>
+		</b-modal>
 	</div>
 </template>
 
@@ -266,6 +355,7 @@
 	} from '@/api/modules/idea';
 	import { MakeToast } from '@/toast/toastMessage';
 	import moment from 'moment';
+	import { isEmptyOrWhiteSpace } from '../../utils/validate';
 
 	export default {
 		name: 'Ideas',
@@ -279,6 +369,7 @@
 				isShowModal: false,
 				isShowModalPost: false,
 				selected: null,
+				liences: false,
 				data: {
 					category_id: null,
 					contents: '',
@@ -318,7 +409,8 @@
 					per_page: 5,
 					total: 0
 				},
-				isPostComment: false
+				isPostComment: false,
+				likes_count: 0
 			};
 		},
 		computed: {
@@ -330,6 +422,9 @@
 			},
 			pageChange() {
 				return this.pagination.page;
+			},
+			totalLike() {
+				return this.like_count;
 			}
 		},
 		watch: {
@@ -448,25 +543,23 @@
 			},
 			handleLike(id, index) {
 				this.handleActionReact(id, 1, index);
-				this.handleGetListIdeas();
 			},
 			handleUnlike(id, index) {
 				this.handleActionReact(id, 0, index);
-				this.handleGetListIdeas();
 			},
-			handleUpdateListPost(status, index) {
+			handleUpdateListPost(status, index, total) {
 				const item = this.listPost[index].likes;
-
 				if (item.length > 0) {
 					switch (status) {
 						case 'like': {
 							this.listPost[index].likes[0].status = 1;
-
+							this.likes_count = total;
 							break;
 						}
 
 						case 'dislike': {
 							this.listPost[index].likes[0].status = 0;
+							console.log('Dislike');
 
 							break;
 						}
@@ -508,7 +601,7 @@
 
 				try {
 					const res = await reactIdea(DATA);
-					this.handleUpdateListPost(res['message'], index);
+					this.handleUpdateListPost(res['message'], index, res['total_like']);
 				} catch (error) {
 					console.log(error);
 				}
@@ -539,10 +632,26 @@
 					formData.append(`files[${i + 1}]`, files[i]);
 				}
 				try {
-					const res = await postIdeas(formData);
-					if (res.status == 200) {
-						this.handleGetListIdeas();
-						this.isShowModalPost = false;
+					if (isEmptyOrWhiteSpace(this.data.contents)) {
+						MakeToast({
+							variant: 'warning',
+							title: 'Contents',
+							content: 'You do not empty this fields'
+						});
+					} else {
+						if (this.liences) {
+							const res = await postIdeas(formData);
+							if (res.status == 200) {
+								this.handleGetListIdeas();
+								this.isShowModalPost = false;
+							}
+						} else {
+							MakeToast({
+								variant: 'warning',
+								title: 'Liences',
+								content: 'You must be accept the liences'
+							});
+						}
 					}
 				} catch (error) {
 					console.log(error);

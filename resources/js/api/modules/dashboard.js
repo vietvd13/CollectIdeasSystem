@@ -12,3 +12,7 @@ export function getTotal() {
 export function getChartDonut(params) {
 	return RequestApi.getAllByParams(`${URL}/chart-donut`, params);
 }
+
+export function downloadFile(params) {
+	return RequestApi.getAllByParams(`${URL}/export/category`, params);
+}
