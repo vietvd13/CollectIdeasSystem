@@ -30,8 +30,8 @@ class UserSeeder extends Seeder
 
         $qam = User::create([
             'department_id' => 2,
-            'name' => "QAM",
-            'email' => "aqm@gmail.com",
+            'name' => "Quality Assurance Manager",
+            'email' => "qam@gmail.com",
             'birth' => '2000-05-27',
             'password' => Hash::make('password')
         ]);
@@ -41,8 +41,8 @@ class UserSeeder extends Seeder
 
         $qac = User::create([
             'department_id' => 3,
-            'name' => "QAC",
-            'email' => "aqc@gmail.com",
+            'name' => "Quality Assurance Coordinator",
+            'email' => "qac@gmail.com",
             'birth' => '2000-05-27',
             'password' => Hash::make('password')
         ]);
