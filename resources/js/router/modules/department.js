@@ -4,7 +4,8 @@ const Department = {
 	path: '/department-management',
 	name: 'DepartmentManagement',
 	meta: {
-		title: 'ROUTER.DEPARTMENT'
+		title: 'ROUTER.DEPARTMENT',
+		roles: ['ADMIN', 'QAM']
 	},
 	component: Layout,
 	redirect: {

@@ -11,7 +11,7 @@
 				</div>
 
 				<div class="display-page-not-found__control">
-					<b-button class="btn-go-to-home">
+					<b-button class="btn-go-to-home" @click="goToHome()">
 						<i class="fas fa-home-lg"></i>
 						{{ $t('PAGE_NOT_FOUND.GO_TO_HOME') }}
 					</b-button>
@@ -30,6 +30,11 @@
 			return {
 				ImagePageNotFound
 			};
+		},
+		methods: {
+			goToHome() {
+				this.$router.push('/');
+			}
 		}
 	};
 </script>
