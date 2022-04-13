@@ -4,7 +4,8 @@ const Dashboard = {
 	path: '/dashboard',
 	name: 'Dashboard',
 	meta: {
-		title: 'ROUTER.DASHBOARD'
+		title: 'ROUTER.DASHBOARD',
+		roles: ['ADMIN', 'QAM']
 	},
 	component: Layout,
 	redirect: {

@@ -4,7 +4,8 @@ const AccountManagement = {
 	path: '/account-management',
 	name: 'AccountManagement',
 	meta: {
-		title: 'ROUTER.ACCOUNT_MANAGEMENT'
+		title: 'ROUTER.ACCOUNT_MANAGEMENT',
+		roles: ['ADMIN']
 	},
 	component: Layout,
 	redirect: {

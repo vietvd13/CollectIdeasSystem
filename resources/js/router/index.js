@@ -15,15 +15,11 @@ export const constantRoutes = [
 	Login,
 	{
 		path: '/',
-		redirect: { name: 'Dashboard' },
+		redirect: { name: 'CategoryManagementList' },
 		hidden: true
 	},
-	Dashboard,
-	AccountManagement,
-	Department,
 	CategoryManagement,
 	PostIdeas,
-
 	errorRoute,
 	{
 		path: '*',
@@ -32,7 +28,7 @@ export const constantRoutes = [
 	}
 ];
 
-export const asyncRoutes = [];
+export const asyncRoutes = [AccountManagement, Department, Dashboard];
 
 const createRouter = () =>
 	new VueRouter({
