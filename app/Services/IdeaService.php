@@ -153,12 +153,12 @@ class IdeaService extends BaseService implements IdeaServiceInterface
         ->orderBy('created_at', 'ASC')->paginate($limit);
     }
 
-    private function mailToQacUserInDepartment($department_id, $mailContents) {
+    private function mailToQacUserInDepartment($department_id, $send) {
         $users = User::whereHas("roles", function($query) {
             $query->whereIn("name", [ROLES['QAC']]);
         })->where('department_id', $department_id)->get(['*']);
         foreach ($users as $key => $users) {
-            MailJob::dispatch($users->email, $mailContents)->onQueue('emails');
+            MailJob::dispatch($users->email, $send)->onQueue('emails');
         }
     }
 }
