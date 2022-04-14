@@ -19,6 +19,7 @@
 								<div class="item-input">
 									<b-form-input
 										v-model="User.account"
+										id="input-account"
 										type="text"
 										:placeholder="$t('LOGIN.PLACEHOLDER_ACCOUNT')"
 										spellcheck="false"
@@ -32,6 +33,7 @@
 									<b-input-group>
 										<b-form-input
 											v-model="User.password"
+											id="input-password"
 											:type="showPassword ? 'text' : 'password'"
 											:placeholder="$t('LOGIN.PLACEHOLDER_PASSWORD')"
 											spellcheck="false"
@@ -111,22 +113,22 @@
 							.then(() => {
 								const ROLES = this.$store.getters.roles;
 
-								const accessRoutes = this.$store.dispatch(
+								this.$store.dispatch(
 									'permission/generateRoutes',
 									{
 										roles: ROLES,
 										permissions: []
 									}
-								);
+								).then((res) => {
+									setRoutes(res);
+									this.$router.push('/');
 
-								setRoutes(accessRoutes);
-								this.$router.push('/');
-
-								MakeToast({
-									variant: 'success',
-									title: this.$t('TOAST.SUCCESS'),
-									content: this.$t('LOGIN.LOGIN_SUCCESS')
-								});
+									MakeToast({
+										variant: 'success',
+										title: this.$t('TOAST.SUCCESS'),
+										content: this.$t('LOGIN.LOGIN_SUCCESS')
+									});
+								})
 							})
 							.catch(() => {
 								MakeToast({

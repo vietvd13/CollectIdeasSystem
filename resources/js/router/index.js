@@ -15,15 +15,17 @@ export const constantRoutes = [
 	Login,
 	{
 		path: '/',
-		redirect: { name: 'Dashboard' },
+		redirect: { name: 'CategoryManagementList' },
 		hidden: true
 	},
-	Dashboard,
+	CategoryManagement,
+	PostIdeas
+];
+
+export const asyncRoutes = [
 	AccountManagement,
 	Department,
-	CategoryManagement,
-	PostIdeas,
-
+	Dashboard,
 	errorRoute,
 	{
 		path: '*',
@@ -31,8 +33,6 @@ export const constantRoutes = [
 		redirect: { name: 'PageNotFound' }
 	}
 ];
-
-export const asyncRoutes = [];
 
 const createRouter = () =>
 	new VueRouter({
