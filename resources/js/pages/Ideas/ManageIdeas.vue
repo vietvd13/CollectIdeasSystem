@@ -36,15 +36,6 @@
 										</b>
 									</span>
 								</div>
-								<div class="q-box" :key="rerender">
-									<span>
-										<small>
-											{{
-												moment(idea['created_at']).startOf('hour').fromNow()
-											}}
-										</small>
-									</span>
-								</div>
 							</div>
 						</div>
 
@@ -354,7 +345,6 @@
 		getListComments
 	} from '@/api/modules/idea';
 	import { MakeToast } from '@/toast/toastMessage';
-	import moment from 'moment';
 	import { isEmptyOrWhiteSpace } from '../../utils/validate';
 
 	export default {
@@ -364,7 +354,6 @@
 		},
 		data() {
 			return {
-				moment,
 				rerender: 1,
 				isShowModal: false,
 				isShowModalPost: false,
@@ -428,15 +417,11 @@
 			}
 		},
 		watch: {
-			language() {
-				this.setLocalMoment();
-			},
 			pageChange() {
 				this.handleGetListIdeas();
 			}
 		},
 		created() {
-			this.setLocalMoment();
 			this.connect();
 			this.handleGetListIdeas();
 		},
@@ -467,18 +452,6 @@
 				}
 
 				return -1;
-			},
-			setLocalMoment() {
-				const LANGUAGE = this.$store.getters.language;
-
-				if (LANGUAGE === 'en') {
-					moment.locale('en');
-				}
-				if (LANGUAGE === 'vn') {
-					moment.locale('vi');
-				}
-
-				this.rerender += 1;
 			},
 			connect() {
 				window.Echo.channel('collect_idea').listen('.idea-post', data => {
