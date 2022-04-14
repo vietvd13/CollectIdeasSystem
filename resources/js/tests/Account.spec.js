@@ -2,8 +2,9 @@ import store from '@/store';
 import router from '@/router';
 import { mount, createLocalVue } from '@vue/test-utils';
 import Account from '@/pages/AccountManagement';
+import { validEmail, validPassword } from '@/utils/validate';
 
-describe('TEST SCREEN ACCOUNT', () => {
+describe('TEST FUNCTION IN SCREEN ACCOUNT', () => {
 	test('TEST RENDER COMPONENT ACCOUNT MANAGEMENT', async () => {
 		const localVue = createLocalVue();
 		const wrapper = mount(Account, {
@@ -222,6 +223,83 @@ describe('TEST SCREEN ACCOUNT', () => {
 
 		await wrapper.vm.handleSearchByRole();
 		expect(handleSearchByRole).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION VALIDATE EMAIL', async () => {
+		expect(validEmail('vuducviet0131@gmail.com')).toBe(true);
+		expect(validEmail('vietvd@gmail.com')).toBe(true);
+		expect(validEmail('vietvd@gmail')).toBe(false);
+		expect(validEmail('vietvd@gmail')).toBe(false);
+		expect(validEmail('vietvd')).toBe(false);
+		expect(validEmail('@gmail.com')).toBe(false);
+		expect(validEmail('.com')).toBe(false);
+		expect(validEmail('&&^%$$##@.com')).toBe(false);
+	});
+
+	test('TEST FUNCTION VALIDATE PASSSWORD', async () => {
+		expect(validPassword('password')).toBe(true);
+		expect(validPassword('vietvd1310')).toBe(true);
+		expect(validPassword('viet asd qwe qwe qwe qwe qwe qwe qwe qwe')).toBe(false);
+		expect(validPassword('!@#$%^&*()')).toBe(true);
+		expect(validPassword('         ')).toBe(false);
+	});
+
+	test('TEST FUNCTION DATA RENDER HEADER TABLE', async () => {
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		const HEADER = [
+			{
+				key: 'id',
+				label: 'USER.TABLE.HEADING.ID'
+			},
+			{
+				key: 'avatar_path',
+				label: 'USER.TABLE.HEADING.AVATARS'
+			},
+			{
+				key: 'email',
+				label: 'USER.TABLE.HEADING.EMAIL'
+			},
+			{
+				key: 'name',
+				label: 'USER.TABLE.HEADING.NAME'
+			},
+			{
+				key: 'roles',
+				label: 'USER.TABLE.HEADING.ROLE'
+			},
+			{
+				key: 'birth',
+				label: 'USER.TABLE.HEADING.BIRTH'
+			},
+			{
+				key: 'actions',
+				label: 'USER.TABLE.HEADING.ACTIONS'
+			}
+		];
+
+		expect(JSON.stringify(wrapper.vm.vFileds)).toEqual(JSON.stringify(HEADER));
+
+		wrapper.destroy();
+	});
+
+	test('TEST HOOK COMPUTED', async () => {
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		expect(wrapper.vm.rows).toEqual(0);
+		expect(wrapper.vm.isChangePage).toEqual(1);
 
 		wrapper.destroy();
 	});

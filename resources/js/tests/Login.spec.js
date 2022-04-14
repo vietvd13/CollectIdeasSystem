@@ -2,8 +2,9 @@ import store from '@/store';
 import router from '@/router';
 import { mount, createLocalVue } from '@vue/test-utils';
 import Login from '@/pages/Login';
+import { validEmail, validPassword } from '@/utils/validate';
 
-describe('TEST SCREEN LOGIN', () => {
+describe('TEST FUNCTION IN SCREEN LOGIN', () => {
 	test('Check Logo is exits', async () => {
 		const localVue = createLocalVue();
 		const wrapper = mount(Login, {
@@ -115,5 +116,51 @@ describe('TEST SCREEN LOGIN', () => {
 		expect(wrapper.vm.isProcess).toBe(false);
 
 		wrapper.destroy();
+	});
+
+	test('TEST RENDER COMPONENT', async () => {
+		const localVue = createLocalVue();
+		const wrapper = mount(Login, {
+			localVue,
+			router,
+			store
+		});
+
+		const PAGE = wrapper.find('.page-login');
+		expect(PAGE.exists()).toBe(true);
+
+		const CONTENT = PAGE.find('.login-form-content');
+		expect(CONTENT.exists()).toBe(true);
+
+		const LOGO = CONTENT.find('.login-form-content__logo');
+		const HEADER = CONTENT.find('.login-form-content__header');
+		const BODY = CONTENT.find('.login-form-content__body');
+		const FOOTER = CONTENT.find('.login-form-content__footer');
+
+		expect(LOGO.exists()).toBe(true);
+		expect(HEADER.exists()).toBe(true);
+		expect(BODY.exists()).toBe(true);
+		expect(FOOTER.exists()).toBe(true);
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION VALIDATE EMAIL', async () => {
+		expect(validEmail('vuducviet0131@gmail.com')).toBe(true);
+		expect(validEmail('vietvd@gmail.com')).toBe(true);
+		expect(validEmail('vietvd@gmail')).toBe(false);
+		expect(validEmail('vietvd@gmail')).toBe(false);
+		expect(validEmail('vietvd')).toBe(false);
+		expect(validEmail('@gmail.com')).toBe(false);
+		expect(validEmail('.com')).toBe(false);
+		expect(validEmail('&&^%$$##@.com')).toBe(false);
+	});
+
+	test('TEST FUNCTION VALIDATE PASSSWORD', async () => {
+		expect(validPassword('password')).toBe(true);
+		expect(validPassword('vietvd1310')).toBe(true);
+		expect(validPassword('viet asd qwe qwe qwe qwe qwe qwe qwe qwe')).toBe(false);
+		expect(validPassword('!@#$%^&*()')).toBe(true);
+		expect(validPassword('         ')).toBe(false);
 	});
 });
