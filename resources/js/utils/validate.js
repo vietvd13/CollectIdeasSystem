@@ -10,6 +10,6 @@ export function validPassword(password) {
 }
 
 export function isEmptyOrWhiteSpace(value) {
-    const re = /^\s*$/;
-    return re.test(value);
-  }
+	const re = /^\s*$/;
+	return re.test(value);
+}

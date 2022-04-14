@@ -10,7 +10,7 @@
 		"production": "mix --production",
 		"postinstall": "npm run prod",
 		"prepare": "husky install",
-		"test": "jest --runInBand --detectOpenHandles"
+		"test": "jest --runInBand --detectOpenHandles --silent"
 	},
 	"lint-staged": {
 		"**/*": "prettier --write --ignore-unknown"
