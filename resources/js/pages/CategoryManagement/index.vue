@@ -50,8 +50,8 @@
 			<b-table-simple
 				class="text-center"
 				responsive
-				:per-page="params.page"
-				:current-page="params.per_page"
+				:per-page="params.per_page"
+				:current-page="params.page"
 				:outlined="false"
 				:fixed="false"
 			>
@@ -86,7 +86,7 @@
 							<button
 								v-if="isManager !== 'STAFF'"
 								@click="handleModal(Category.id)"
-								class="btn btn-warning"
+								class="btn btn-primary"
 							>
 								<i class="fas fa-edit"></i>
 							</button>
@@ -99,6 +99,9 @@
 							</button>
 							<button class="btn btn-warning" @click="handleDetailIdeas(Category.id)">
 								<i class="fas fa-info-circle"></i>
+							</button>
+							<button class="btn btn-info" @click="handleExportCSV(Category.id)">
+								<i class="fas fa-download"></i>
 							</button>
 						</td>
 					</tr>
@@ -187,10 +190,6 @@
 	import { MakeToast } from '@/toast/toastMessage';
 	import { isEmptyOrWhiteSpace } from '../../utils/validate';
 	import LazyLoad from '../../layout/Lazyload.vue';
-	const paramInit = {
-		perPage: 5,
-		currentPage: 1
-	};
 	export default {
 		name: 'CategoryManagement',
 		components: {
@@ -198,11 +197,7 @@
 		},
 		data() {
 			return {
-				params: {
-					per_page: 5,
-					page: 1
-				},
-
+				params: { per_page: 5, page: 1 },
 				showModal: false,
 				selected: null,
 				isLoading: false,
@@ -240,6 +235,9 @@
 				this.handleGetListCategory();
 			}
 		},
+		created() {
+			this.handleGetListCategory();
+		},
 		methods: {
 			async handleDetailIdeas(item) {
 				this.$router.push(`/manage-post/list/${item}`);
@@ -266,7 +264,6 @@
 				this.showModal = true;
 			},
 			async handleGetListCategory() {
-				// const params = this.params;
 				this.isLoading = true;
 				await getCategoryTable(this.params)
 					.then(res => {
@@ -416,6 +413,9 @@
 					end_collect_date: '',
 					description: ''
 				};
+			},
+			handleExportCSV(id) {
+				http: window.open(`/api/dasboard/export/category?category_id=${id}`);
 			}
 		}
 	};

@@ -154,6 +154,7 @@
 							class="btn btn-primary"
 							v-if="action === 'CREATE'"
 							@click="handleCreateUser()"
+							:disabled="isProcess"
 						>
 							{{ $t('USER.FORM.CREATE') }}
 						</b-button>
@@ -162,6 +163,7 @@
 							class="btn btn-primary"
 							v-if="action === 'EDIT'"
 							@click="handleEditUser()"
+							:disabled="isProcess"
 						>
 							{{ $t('USER.FORM.SAVE') }}
 						</b-button>
@@ -194,6 +196,7 @@
 					per_page: 5,
 					page: 1
 				},
+				isProcess: false,
 				selected: null,
 				options: [],
 				isLoading: false,
@@ -322,6 +325,7 @@
 					});
 			},
 			async handleCreateUser() {
+				this.isProcess = true;
 				console.log(this.newUser);
 				let files = document.getElementById('upload-images').files[0];
 				let formData = new FormData();
@@ -342,18 +346,21 @@
 						title: 'Warning',
 						content: this.$t('USER.FORM.MESSAGE.SPACE')
 					});
+					this.isProcess = false;
 				} else if (!validEmail(this.newUser.email)) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
 						content: this.$t('USER.FORM.MESSAGE.EMAIL')
 					});
+					this.isProcess = false;
 				} else if (!validPassword(this.newUser.password)) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
 						content: this.$t('USER.FORM.MESSAGE.PASSWORD')
 					});
+					this.isProcess = false;
 				} else {
 					await postUser(formData)
 						.then(res => {
@@ -365,6 +372,7 @@
 								});
 								this.handleGetListUser();
 								this.showModal = false;
+								this.isProcess = false;
 								this.isResetDataModal();
 							}
 						})
