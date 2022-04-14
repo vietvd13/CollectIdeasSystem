@@ -65,7 +65,7 @@ class AuthTest extends TestCase
 
     public function testAuthLoginBySuperQamAccount() {
         $response = $this->post('/api/auth/login', [
-            'email' => "aqm@gmail.com",
+            'email' => "qam@gmail.com",
             'password' => 'password'
         ]);
         $response->assertJson([
@@ -75,7 +75,7 @@ class AuthTest extends TestCase
 
     public function testAuthLoginBySuperQacAccount() {
         $response = $this->post('/api/auth/login', [
-            'email' => "aqc@gmail.com",
+            'email' => "qac@gmail.com",
             'password' => 'password'
         ]);
         $response->assertJson([
