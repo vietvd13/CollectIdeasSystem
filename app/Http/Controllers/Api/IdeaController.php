@@ -12,7 +12,7 @@ use App\Http\Requests\IdeaRequest;
 use App\Http\Resources\IdeaResource;
 use App\Services\Contracts\IdeaServiceInterface;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\IdeaListResource;
 class IdeaController extends Controller
 {
 
