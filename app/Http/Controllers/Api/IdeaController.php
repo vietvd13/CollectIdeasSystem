@@ -71,7 +71,7 @@ class IdeaController extends Controller
     public function index(IdeaRequest $request)
     {
         $data = $this->service->loadIdeas($request->category_id, $request->user()->id, $request->per_page);
-        return $data;//$this->responseJson(200, IdeaResource::collection($data));
+        return $this->responseJson(200, IdeaListResource::collection($data));
     }
 
     /**
