@@ -303,4 +303,164 @@ describe('TEST FUNCTION IN SCREEN ACCOUNT', () => {
 
 		wrapper.destroy();
 	});
+
+	test('TEST FUNCTION handleSearchByRole', async () => {
+		const handleSearchByRole = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		handleSearchByRole();
+		expect(handleSearchByRole).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleSearchByKeyWords', async () => {
+		const handleSearchByKeyWords = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		handleSearchByKeyWords();
+		expect(handleSearchByKeyWords).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION isResetDataModal', async () => {
+		const isResetDataModal = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		isResetDataModal();
+		expect(isResetDataModal).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleDeleteUser', async () => {
+		const handleDeleteUser = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		handleDeleteUser();
+		expect(handleDeleteUser).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleEditUser', async () => {
+		const handleEditUser = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		handleEditUser();
+		expect(handleEditUser).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleCreateUser', async () => {
+		const handleCreateUser = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		handleCreateUser();
+		expect(handleCreateUser).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleGetListUser', async () => {
+		const handleGetListUser = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		handleGetListUser();
+		expect(handleGetListUser).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleGetDepartment', async () => {
+		const handleGetDepartment = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		handleGetDepartment();
+		expect(handleGetDepartment).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION getRole', async () => {
+		const getRole = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		getRole();
+		expect(getRole).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleModal', async () => {
+		const handleModal = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Account, {
+			localVue,
+			router,
+			store
+		});
+
+		handleModal();
+		expect(handleModal).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
 });

@@ -183,4 +183,148 @@ describe('TEST FUNCTION IN SCREEN CATEGORY', () => {
 
 		wrapper.destroy();
 	});
+
+	test('TEST FUNCTION handleExportCSV', async () => {
+		const handleExportCSV = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(CategoryManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleExportCSV();
+		expect(handleExportCSV).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION isResetDataModal', async () => {
+		const isResetDataModal = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(CategoryManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		isResetDataModal();
+		expect(isResetDataModal).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleSearchByKeyWords', async () => {
+		const handleSearchByKeyWords = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(CategoryManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleSearchByKeyWords();
+		expect(handleSearchByKeyWords).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleDeleteCategory', async () => {
+		const handleDeleteCategory = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(CategoryManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleDeleteCategory();
+		expect(handleDeleteCategory).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleEditCategory', async () => {
+		const handleEditCategory = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(CategoryManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleEditCategory();
+		expect(handleEditCategory).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleCreateCategory', async () => {
+		const handleCreateCategory = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(CategoryManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleCreateCategory();
+		expect(handleCreateCategory).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleGetListCategory', async () => {
+		const handleGetListCategory = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(CategoryManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleGetListCategory();
+		expect(handleGetListCategory).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleModal', async () => {
+		const handleModal = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(CategoryManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleModal();
+		expect(handleModal).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleDetailIdeas', async () => {
+		const handleDetailIdeas = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(CategoryManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleDetailIdeas();
+		expect(handleDetailIdeas).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
 });

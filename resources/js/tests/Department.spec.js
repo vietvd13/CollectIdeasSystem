@@ -2,7 +2,6 @@ import store from '@/store';
 import router from '@/router';
 import { mount, createLocalVue } from '@vue/test-utils';
 import DepartmentManagement from '../pages/DepartmentManagement';
-import { isEmptyOrWhiteSpace } from '@/utils/validate';
 
 describe('TEST FUNCTION IN SCREEN CATEGORY', () => {
 	test('TEST RENDER COMPONENT TEMPLATE', async () => {
@@ -184,6 +183,102 @@ describe('TEST FUNCTION IN SCREEN CATEGORY', () => {
 		const BUTTON = ZONE_BUTTON.find('button');
 		expect(BUTTON.exists()).toBe(true);
 		expect(BUTTON.text()).toBe('DEPARTMENT.CREATE');
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION isResetDataModal', async () => {
+		const isResetDataModal = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(DepartmentManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		isResetDataModal();
+		expect(isResetDataModal).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleDeleteDepartment', async () => {
+		const handleDeleteDepartment = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(DepartmentManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleDeleteDepartment();
+		expect(handleDeleteDepartment).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleUpdateDepartment', async () => {
+		const handleUpdateDepartment = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(DepartmentManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleUpdateDepartment();
+		expect(handleUpdateDepartment).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleCreateDepartment', async () => {
+		const handleCreateDepartment = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(DepartmentManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleCreateDepartment();
+		expect(handleCreateDepartment).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleGetListDepartment', async () => {
+		const handleGetListDepartment = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(DepartmentManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleGetListDepartment();
+		expect(handleGetListDepartment).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleModal', async () => {
+		const handleModal = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(DepartmentManagement, {
+			localVue,
+			router,
+			store
+		});
+
+		handleModal();
+		expect(handleModal).toHaveBeenCalled();
 
 		wrapper.destroy();
 	});

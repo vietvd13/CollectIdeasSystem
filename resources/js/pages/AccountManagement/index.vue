@@ -268,7 +268,6 @@
 		},
 		methods: {
 			async handleModal(id) {
-				console.log(id, 'EDIT');
 				this.ids = id;
 				if (this.ids) {
 					(this.action = 'EDIT'),
@@ -288,7 +287,6 @@
 				} else {
 					this.isResetDataModal();
 					this.action = 'CREATE';
-					console.log('CREATE');
 				}
 				this.showModal = true;
 			},
@@ -316,7 +314,6 @@
 						if (res.status === 200) {
 							this.listUser = res.data.data;
 							this.total = res.data.total;
-							console.log(this.listUser);
 							this.isLoading = false;
 						}
 					})
@@ -326,7 +323,6 @@
 			},
 			async handleCreateUser() {
 				this.isProcess = true;
-				console.log(this.newUser);
 				let files = document.getElementById('upload-images').files[0];
 				let formData = new FormData();
 				formData.append('avatar_path', files);
@@ -459,7 +455,6 @@
 					});
 			},
 			isResetDataModal() {
-				console.log('RESET DATA');
 				this.newUser = {
 					email: '',
 					password: '',

@@ -437,8 +437,6 @@
 
 				try {
 					const res = await commentIdea(DATA);
-
-					// console.log(res);
 				} catch (error) {
 					console.log(error);
 				}
@@ -462,7 +460,6 @@
 					});
 					this.listPost.push(data.payload);
 					this.handleGetListIdeas();
-					console.log(this.listPost, 'POST');
 				});
 			},
 			resetDataModal() {
@@ -502,8 +499,6 @@
 						user: data['attributes']['owner']
 					};
 
-					console.log(newComment);
-
 					this.modalData['comments'].push(newComment);
 				});
 			},
@@ -532,7 +527,6 @@
 
 						case 'dislike': {
 							this.listPost[index].likes[0].status = 0;
-							console.log('Dislike');
 
 							break;
 						}
