@@ -640,8 +640,8 @@
 					const res = await getListIdeas(params);
 					this.isLoading = false;
 					this.listPost = res.data;
-					this.pagination.page = res.current_page;
-					this.pagination.total = res.total;
+					this.pagination.page = res.meta.current_page;
+					this.pagination.total = res.meta.total;
 				} catch (error) {
 					console.log(error);
 				}
