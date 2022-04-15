@@ -100,7 +100,11 @@
 							<button class="btn btn-warning" @click="handleDetailIdeas(Category.id)">
 								<i class="fas fa-info-circle"></i>
 							</button>
-							<button class="btn btn-info" @click="handleExportCSV(Category.id)">
+							<button
+								v-if="isManager === 'QAM'"
+								class="btn btn-info"
+								@click="handleExportCSV(Category.id)"
+							>
 								<i class="fas fa-download"></i>
 							</button>
 						</td>

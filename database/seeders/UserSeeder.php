@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
 
         $staff = User::create([
             'department_id' => 4,
-            'name' => "STAFF",
+            'name' => "Staff",
             'email' => "staff@gmail.com",
             'birth' => '2000-05-27',
             'password' => Hash::make('password')
