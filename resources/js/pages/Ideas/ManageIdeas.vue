@@ -60,6 +60,11 @@
 										{{ idea.likes_count }}
 										<i class="fas fa-thumbs-up" style="color: #0571ed"></i>
 									</b>
+
+									<b>
+										{{ idea.dislike_count }}
+										<i class="fas fa-thumbs-down" style="color: #0571ed"></i>
+									</b>
 								</b-col>
 							</b-row>
 							<b-row class="mt-2">
@@ -515,13 +520,16 @@
 			handleUnlike(id, index) {
 				this.handleActionReact(id, 0, index);
 			},
-			handleUpdateListPost(status, index, total) {
+			handleUpdateListPost(status, index, new_total_like, new_total_dislike) {
 				const item = this.listPost[index].likes;
+
+				this.listPost[index]['likes_count'] = new_total_like;
+				this.listPost[index]['dislike_count'] = new_total_dislike;
+
 				if (item.length > 0) {
 					switch (status) {
 						case 'like': {
 							this.listPost[index].likes[0].status = 1;
-							this.likes_count = total;
 							break;
 						}
 
@@ -568,7 +576,13 @@
 
 				try {
 					const res = await reactIdea(DATA);
-					this.handleUpdateListPost(res['message'], index, res['total_like']);
+
+					this.handleUpdateListPost(
+						res['message'],
+						index,
+						res['total_like'],
+						res['total_dislike']
+					);
 				} catch (error) {
 					console.log(error);
 				}
