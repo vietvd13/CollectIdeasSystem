@@ -6,8 +6,8 @@ export function createDepartment(data) {
 	return RequestApi.postOne(URL, data);
 }
 
-export function getDepartment() {
-	return RequestApi.getAll(URL);
+export function getDepartment(params) {
+	return RequestApi.getAllByParams(URL, params);
 }
 
 export function updateDepartment(id, data) {
