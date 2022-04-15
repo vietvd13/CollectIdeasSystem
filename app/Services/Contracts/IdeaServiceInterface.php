@@ -16,6 +16,4 @@ interface IdeaServiceInterface extends BaseServiceInterface
     public function like(int $idea_id, int $owner_id, int $status);
     public function comment(array $attributes);
     public function comments(int $idea_id, int $limit);
-    public function attatchFile(int $idea_id, $file);
-    public function detatchFile(int $idea_id, $file_id);
 }
