@@ -17,7 +17,6 @@ use App\Repositories\Contracts\IdeaRepositoryInterface;
 use App\Services\Contracts\IdeaServiceInterface;
 use Service\BaseService;
 use Service\TransactionService;
-use Service\UploadService;
 use App\Models\User;
 use Redis;
 class IdeaService extends BaseService implements IdeaServiceInterface
@@ -81,23 +80,12 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                         "topic_contents" => $category->topic_name,
                         "created_at" => $idea->created_at
                     ];
-
                     event(new IdeaPost($send));
+                    $this->mailToQacUserInDepartment($category->user->department_id, $send);
                 }
-                MailJob::dispatch($category->user->email, $send)->onQueue('emails');
             }
         });
         return $status;
-    }
-
-    public function update(array $attributes, $id)
-    {
-
-    }
-
-    public function delete($id)
-    {
-
     }
 
     public function like(int $idea_id, int $owner_id, int $status)
@@ -165,13 +153,12 @@ class IdeaService extends BaseService implements IdeaServiceInterface
         ->orderBy('created_at', 'ASC')->paginate($limit);
     }
 
-    public function attatchFile(int $idea_id, $file)
-    {
-
-    }
-
-    public function detatchFile(int $idea_id, $file_id)
-    {
-
+    private function mailToQacUserInDepartment($department_id, $send) {
+        $users = User::whereHas("roles", function($query) {
+            $query->whereIn("name", [ROLES['QAC']]);
+        })->where('department_id', $department_id)->get(['*']);
+        foreach ($users as $key => $users) {
+            MailJob::dispatch($users->email, $send)->onQueue('emails');
+        }
     }
 }

@@ -230,6 +230,9 @@
 				this.handleGetListCategory();
 			}
 		},
+		created() {
+			this.handleGetListCategory();
+		},
 		methods: {
 			async handleDetailIdeas(item) {
 				this.$router.push(`/manage-post/list/${item}`);

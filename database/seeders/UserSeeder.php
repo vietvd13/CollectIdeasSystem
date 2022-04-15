@@ -60,5 +60,40 @@ class UserSeeder extends Seeder
 
         $staffRole = Role::findByName(ROLES['STAFF']);
         $staff->syncRoles($staffRole);
+
+
+        $qac = User::create([
+            'department_id' => 1,
+            'name' => "Quality Assurance Coordinator",
+            'email' => "namntgch18325@fpt.edu.vn",
+            'birth' => '2000-05-27',
+            'password' => Hash::make('password')
+        ]);
+
+        $qacRole = Role::findByName(ROLES['QAC']);
+        $qac->syncRoles($qacRole);
+
+        $qac = User::create([
+            'department_id' => 1,
+            'name' => "Quality Assurance Coordinator",
+            'email' => "namnt2705@gmail.com",
+            'birth' => '2000-05-27',
+            'password' => Hash::make('password')
+        ]);
+
+        $qacRole = Role::findByName(ROLES['QAC']);
+        $qac->syncRoles($qacRole);
+
+
+        $qac = User::create([
+            'department_id' => 1,
+            'name' => "Quality Assurance Coordinator",
+            'email' => "hoichepvan@gmail.com",
+            'birth' => '2000-05-27',
+            'password' => Hash::make('password')
+        ]);
+
+        $qacRole = Role::findByName(ROLES['QAC']);
+        $qac->syncRoles($qacRole);
     }
 }
