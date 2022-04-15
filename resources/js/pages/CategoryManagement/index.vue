@@ -105,7 +105,6 @@
 							</button>
 						</td>
 					</tr>
-					<LazyLoad @lazyload="handleGetListCategory()" />
 				</b-tbody>
 			</b-table-simple>
 			<b-pagination
@@ -189,12 +188,8 @@
 	} from '@/api/modules/category';
 	import { MakeToast } from '@/toast/toastMessage';
 	import { isEmptyOrWhiteSpace } from '../../utils/validate';
-	import LazyLoad from '../../layout/Lazyload.vue';
 	export default {
 		name: 'CategoryManagement',
-		components: {
-			LazyLoad
-		},
 		data() {
 			return {
 				params: { per_page: 5, page: 1 },
@@ -234,6 +229,9 @@
 			isChangePage() {
 				this.handleGetListCategory();
 			}
+		},
+		created() {
+			this.handleGetListCategory();
 		},
 		methods: {
 			async handleDetailIdeas(item) {

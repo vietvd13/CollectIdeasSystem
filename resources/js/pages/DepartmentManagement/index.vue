@@ -66,7 +66,6 @@
 							</button>
 						</td>
 					</tr>
-					<LazyLoad @lazyload="handleGetListDepartment()" />
 				</b-tbody>
 			</b-table-simple>
 			<b-pagination
@@ -130,16 +129,12 @@
 	} from '@/api/modules/department';
 	import { MakeToast } from '@/toast/toastMessage';
 	import { isEmptyOrWhiteSpace } from '../../utils/validate';
-	import LazyLoad from '../../layout/Lazyload.vue';
 	const paramInit = {
 		perPage: 5,
 		currentPage: 1
 	};
 	export default {
 		name: 'DepartmentManagementList',
-		components: {
-			LazyLoad
-		},
 		data() {
 			return {
 				params: { ...paramInit },
