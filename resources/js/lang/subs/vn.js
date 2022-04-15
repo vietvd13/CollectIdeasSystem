@@ -94,7 +94,8 @@ export default {
 			SAVE: 'Lưu',
 			CLOSE: 'Đóng',
 			MESSAGE: {
-				SPACE: 'Bạn không được để trống giá trị'
+				SPACE: 'Bạn không được để trống giá trị',
+				DATE: 'Bạn phải điền ngày kết thúc lớn hơn ngày bắt đầu '
 			}
 		},
 		SEARCH_BY: {

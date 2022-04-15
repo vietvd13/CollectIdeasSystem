@@ -553,8 +553,8 @@
 				window.Echo.channel('collect_idea').stopListening(`.idea-comment-${id}`);
 			},
 			showModalCreate(e) {
-				this.resetData();
 				this.isShowModalPost = e;
+				this.resetData();
 			},
 			handleLike(id, index) {
 				this.handleActionReact(id, 1, index);
@@ -640,8 +640,8 @@
 					const res = await getListIdeas(params);
 					this.isLoading = false;
 					this.listPost = res.data;
-					this.pagination.page = res.current_page;
-					this.pagination.total = res.total;
+					this.pagination.page = res.meta.current_page;
+					this.pagination.total = res.meta.total;
 				} catch (error) {
 					console.log(error);
 				}
@@ -667,6 +667,7 @@
 							if (res.status == 200) {
 								this.handleGetListIdeas();
 								this.isShowModalPost = false;
+								this.resetData();
 							}
 						} else {
 							MakeToast({
@@ -682,6 +683,7 @@
 			},
 			resetData() {
 				this.data.contents = '';
+				this.liences = false;
 			}
 		}
 	};
