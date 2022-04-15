@@ -1,6 +1,6 @@
 body {
-    width: 100%;
-    font-family: $font-roboto;
+	width: 100%;
+	font-family: $font-roboto;
 }
 
 input:-webkit-autofill,
@@ -12,46 +12,46 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-    -webkit-text-fill-color: $mirage;
+	-webkit-text-fill-color: $mirage;
 
-    box-shadow: 0 0 0px 1000px athens-gray inset;
-    -webkit-box-shadow: 0 0 0px 1000px athens-gray inset;
+	box-shadow: 0 0 0px 1000px athens-gray inset;
+	-webkit-box-shadow: 0 0 0px 1000px athens-gray inset;
 
-    transition: background-color 5000s ease-in-out 0s;
+	transition: background-color 5000s ease-in-out 0s;
 }
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
+	width: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+	background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
+	background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+	background: #555;
 }
 .loading {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    background: #ffffffba;
-    i {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 4rem;
-        height: 4rem;
-    }
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	z-index: 10;
+	top: 0;
+	left: 0;
+	background: #ffffffba;
+	i {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 4rem;
+		height: 4rem;
+	}
 }

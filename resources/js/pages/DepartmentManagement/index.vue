@@ -29,50 +29,29 @@
 			</div>
 		</div>
 		<div class="account-management__content mt-3">
-			<b-table-simple
+			<b-table
 				id="my-table"
 				class="text-center"
 				responsive
-				:per-page="params.perPage"
-				:current-page="params.currentPage"
+				:fields="vFields"
+				:items="listDepartments"
 				:outlined="false"
 				:fixed="false"
 			>
-				<b-thead>
-					<b-th>
-						<span>{{ $t('USER.TABLE.HEADING.ID') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('DEPARTMENT.TABLE.NAME') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('DEPARTMENT.TABLE.ACTIONS') }}</span>
-					</b-th>
-				</b-thead>
-				<b-tbody>
-					<tr v-for="(department, index) in listDepartments" :key="index">
-						<td>{{ department.id }}</td>
-						<td>{{ department.name }}</td>
-
-						<td>
-							<button @click="handleModal(department.id)" class="btn btn-warning">
-								<i class="fas fa-edit"></i>
-							</button>
-							<button
-								@click="handleDeleteDepartment(department.id)"
-								class="btn btn-danger"
-							>
-								<i class="fas fa-trash-alt"></i>
-							</button>
-						</td>
-					</tr>
-				</b-tbody>
-			</b-table-simple>
+				<template #cell(actions)="item">
+					<button @click="handleModal(item.item.id)" class="btn btn-warning">
+						<i class="fas fa-edit"></i>
+					</button>
+					<button @click="handleDeleteDepartment(item.id)" class="btn btn-danger">
+						<i class="fas fa-trash-alt"></i>
+					</button>
+				</template>
+			</b-table>
 			<b-pagination
 				aria-controls="my-table"
-				v-model="params.currentPage"
-				:per-page="params.perPage"
-				:total-rows="rows"
+				v-model="params.page"
+				:per-page="params.per_page"
+				:total-rows="totals"
 			></b-pagination>
 
 			<b-modal
@@ -129,15 +108,11 @@
 	} from '@/api/modules/department';
 	import { MakeToast } from '@/toast/toastMessage';
 	import { isEmptyOrWhiteSpace } from '../../utils/validate';
-	const paramInit = {
-		perPage: 5,
-		currentPage: 1
-	};
 	export default {
 		name: 'DepartmentManagementList',
 		data() {
 			return {
-				params: { ...paramInit },
+				params: { per_page: 5, page: 1 },
 				selected: null,
 				options: [],
 				isLoading: false,
@@ -146,21 +121,36 @@
 				action: '',
 				showModal: false,
 				keyword: '',
-				ids: 0
+				ids: 0,
+				totals: 0,
+				vFields: [
+					{
+						key: 'id',
+						label: this.$t('USER.TABLE.HEADING.ID')
+					},
+					{
+						key: 'name',
+						label: this.$t('DEPARTMENT.TABLE.NAME')
+					},
+					{
+						key: 'actions',
+						label: this.$t('DEPARTMENT.TABLE.ACTIONS')
+					}
+				]
 			};
 		},
 		computed: {
-			rows() {
-				return this.listDepartments.length;
-			},
 			isChangePage() {
-				return this.params.currentPage;
+				return this.params.page;
 			}
 		},
 		watch: {
 			isChangePage() {
 				this.handleGetListDepartment();
 			}
+		},
+		created() {
+			this.handleGetListDepartment();
 		},
 		methods: {
 			async handleModal(id) {
@@ -180,12 +170,13 @@
 				}
 				this.showModal = true;
 			},
-			async handleGetListDepartment() {
+			handleGetListDepartment() {
 				this.isLoading = true;
-				await getDepartment()
+				getDepartment(this.params)
 					.then(res => {
 						if (res.status === 200) {
 							this.listDepartments = res.data.data;
+							this.totals = res.data.total;
 							this.isLoading = false;
 						}
 					})
