@@ -47,74 +47,48 @@
 			</div>
 		</div>
 		<div class="category-management__content mt-3">
-			<b-table-simple
+			<b-table
 				class="text-center"
 				responsive
-				:per-page="params.per_page"
-				:current-page="params.page"
+				:fields="vFields"
+				:items="listCategory"
 				:outlined="false"
 				:fixed="false"
 			>
-				<b-thead>
-					<b-th>
-						<span>{{ $t('CATEGORY.TABLE.HEADING.NAME') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('CATEGORY.TABLE.HEADING.START') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('CATEGORY.TABLE.HEADING.END') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('CATEGORY.TABLE.HEADING.DESCRIPTION') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('CATEGORY.TABLE.HEADING.OWNER') }}</span>
-					</b-th>
-					<b-th>
-						<span>{{ $t('CATEGORY.TABLE.HEADING.ACTIONS') }}</span>
-					</b-th>
-				</b-thead>
-				<b-tbody>
-					<tr v-for="(Category, index) in listCategory" :key="index">
-						<td>{{ Category.topic_name }}</td>
-						<td>{{ Category.start_collect_date }}</td>
-						<td>{{ Category.end_collect_date }}</td>
-						<td>{{ Category.description }}</td>
-						<td>{{ Category.user.name }}</td>
-						<td>
-							<button
-								v-if="isManager !== 'STAFF'"
-								@click="handleModal(Category.id)"
-								class="btn btn-primary"
-							>
-								<i class="fas fa-edit"></i>
-							</button>
-							<button
-								v-if="isManager !== 'STAFF'"
-								@click="handleDeleteCategory(Category.id)"
-								class="btn btn-danger"
-							>
-								<i class="fas fa-trash-alt"></i>
-							</button>
-							<button class="btn btn-warning" @click="handleDetailIdeas(Category.id)">
-								<i class="fas fa-info-circle"></i>
-							</button>
-							<button
-								v-if="isManager === 'QAM'"
-								class="btn btn-info"
-								@click="handleExportCSV(Category.id)"
-							>
-								<i class="fas fa-download"></i>
-							</button>
-						</td>
-					</tr>
-				</b-tbody>
-			</b-table-simple>
+				<template #cell(actions)="item">
+					<button
+						v-if="isManager !== 'STAFF'"
+						@click="handleModal(item.item.id)"
+						class="btn btn-primary"
+					>
+						<i class="fas fa-edit"></i>
+					</button>
+					<button
+						v-if="isManager !== 'STAFF'"
+						@click="handleDeleteCategory(item.item.id)"
+						class="btn btn-danger"
+					>
+						<i class="fas fa-trash-alt"></i>
+					</button>
+					<button class="btn btn-warning" @click="handleDetailIdeas(item.item.id)">
+						<i class="fas fa-info-circle"></i>
+					</button>
+					<button
+						v-if="isManager === 'QAM'"
+						class="btn btn-info"
+						@click="handleExportCSV(item.item.id)"
+					>
+						<i class="fas fa-download"></i>
+					</button>
+				</template>
+				<template #cell(owner)="item">
+					{{ item.item.user.name }}
+				</template>
+			</b-table>
 			<b-pagination
 				v-model="params.page"
 				:per-page="params.per_page"
-				:total-rows="rows"
+				:total-rows="totals"
 				aria-controls="my-table"
 			></b-pagination>
 			<b-modal
@@ -212,13 +186,33 @@
 				options: [],
 				action: '',
 				keyword: '',
-				ids: 0
+				ids: 0,
+				totals: 0,
+				vFields: [
+					{
+						key: 'topic_name',
+						label: this.$t('CATEGORY.TABLE.HEADING.NAME')
+					},
+					{
+						key: 'start_collect_date',
+						label: this.$t('CATEGORY.TABLE.HEADING.START')
+					},
+					{
+						key: 'description',
+						label: this.$t('CATEGORY.TABLE.HEADING.DESCRIPTION')
+					},
+					{
+						key: 'owner',
+						label: this.$t('CATEGORY.TABLE.HEADING.OWNER')
+					},
+					{
+						key: 'actions',
+						label: this.$t('CATEGORY.TABLE.HEADING.ACTIONS')
+					}
+				]
 			};
 		},
 		computed: {
-			rows() {
-				return this.listCategory.length;
-			},
 			isChangePage() {
 				return this.params.page;
 			},
@@ -267,6 +261,7 @@
 					.then(res => {
 						if (res.status === 200) {
 							this.listCategory = res.data.data;
+							this.totals = res.data.total;
 							this.isLoading = false;
 						}
 					})
@@ -292,6 +287,12 @@
 						variant: 'warning',
 						title: 'Warning',
 						content: this.$t('CATEGORY.FORM.MESSAGE.SPACE')
+					});
+				} else if (data.start_collect_date < data.end_collect_date) {
+					MakeToast({
+						variant: 'warning',
+						title: 'Warning',
+						content: this.$t('CATEGORY.FORM.MESSAGE.DATE')
 					});
 				} else {
 					await postCategory(data)

@@ -98,7 +98,8 @@ export default {
 			SAVE: 'SAVE',
 			CLOSE: 'Close',
 			MESSAGE: {
-				SPACE: 'You must enter a valid value'
+				SPACE: 'You must enter a valid value',
+				DATE: 'You must enter start date < end date '
 			}
 		},
 		SEARCH_BY: {

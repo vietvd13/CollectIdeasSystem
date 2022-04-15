@@ -553,8 +553,8 @@
 				window.Echo.channel('collect_idea').stopListening(`.idea-comment-${id}`);
 			},
 			showModalCreate(e) {
-				this.resetData();
 				this.isShowModalPost = e;
+				this.resetData();
 			},
 			handleLike(id, index) {
 				this.handleActionReact(id, 1, index);
@@ -667,6 +667,7 @@
 							if (res.status == 200) {
 								this.handleGetListIdeas();
 								this.isShowModalPost = false;
+								this.resetData();
 							}
 						} else {
 							MakeToast({
@@ -682,6 +683,7 @@
 			},
 			resetData() {
 				this.data.contents = '';
+				this.liences = false;
 			}
 		}
 	};
