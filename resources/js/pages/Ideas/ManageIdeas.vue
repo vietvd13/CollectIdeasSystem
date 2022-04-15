@@ -116,18 +116,16 @@
 			</div>
 		</div>
 
-		<b-row>
-			<b-col>
-				<div style="margin-top: 30px">
-					<b-pagination
-						v-model="pagination.page"
-						:total-rows="pagination.total"
-						:per-page="pagination.per_page"
-						align="center"
-					/>
-				</div>
-			</b-col>
-		</b-row>
+		<div
+			style="display: flex; text-align: center; justify-content: center; margin-top: 30px"
+			v-if="pagination.total > 5"
+		>
+			<b-pagination
+				v-model="pagination.page"
+				:total-rows="pagination.total"
+				:per-page="pagination.per_page"
+			/>
+		</div>
 
 		<b-modal v-model="isShowModalPost" id="modal-ideas" title="Your Ideas" size="lg">
 			<div class="row mt-2">
