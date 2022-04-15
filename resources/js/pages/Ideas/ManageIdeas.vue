@@ -213,7 +213,7 @@
 						<div class="list">
 							<div
 								class="section-comment"
-								v-for="(item, index) in modalData['comments']"
+								v-for="(item, index) in handleListComment(modalData['comments'])"
 								:key="`comment-no-${index + 1}`"
 							>
 								<div
@@ -480,7 +480,7 @@
 				this.data = data;
 			},
 			async showModal(e, id) {
-				this.connectComment(id);
+				await this.connectComment(id);
 				this.modalData = this.findIdeadById(this.listPost, id);
 				await this.getListCommet(id);
 				this.isShowModal = e;
@@ -495,6 +495,47 @@
 				} catch (err) {
 					console.log(err);
 				}
+			},
+			handleListComment(list) {
+				const len = list.length;
+				let idx = 0;
+
+				while (idx < len) {
+					list[idx]['user']['avatar_path'] = list[idx]['user']['avatar_path']
+						? list[idx]['user']['avatar_path']
+						: '';
+					const checkPrivate = this.isPrivate(list[idx]['comment']);
+					list[idx]['comment'] = checkPrivate['private']
+						? checkPrivate['comment']
+						: list[idx]['comment'];
+					list[idx]['user']['name'] = checkPrivate['private']
+						? 'Anonymous'
+						: list[idx]['user']['name'];
+					list[idx]['user']['avatar_path'] = checkPrivate['private']
+						? ''
+						: list[idx]['user']['avatar_path'];
+
+					idx++;
+				}
+
+				return list;
+			},
+			isPrivate(comment) {
+				const re = /\/private (.*)/;
+
+				const result = comment.match(re);
+
+				if (result) {
+					return {
+						private: true,
+						comment: result[1]
+					};
+				}
+
+				return {
+					private: false,
+					comment: comment
+				};
 			},
 			connectComment(id) {
 				window.Echo.channel('collect_idea').listen(`.idea-comment-${id}`, data => {
