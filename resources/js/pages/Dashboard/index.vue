@@ -183,7 +183,6 @@
 						limit: this.limit
 					};
 					const res = await getChartDonut(params);
-					console.log(res);
 					return res;
 				} catch (error) {
 					console.log(error);

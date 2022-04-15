@@ -164,7 +164,6 @@
 		},
 		methods: {
 			async handleModal(id) {
-				console.log(id, 'EDIT');
 				this.ids = id;
 				if (this.ids) {
 					(this.action = 'EDIT'),
@@ -178,7 +177,6 @@
 				} else {
 					this.isResetDataModal();
 					this.action = 'CREATE';
-					console.log('CREATE');
 				}
 				this.showModal = true;
 			},
@@ -199,7 +197,6 @@
 				const data = {
 					name: this.name
 				};
-				console.log(data);
 				if (isEmptyOrWhiteSpace(data.name)) {
 					MakeToast({
 						variant: 'warning',
@@ -237,7 +234,6 @@
 						content: this.$t('USER.FORM.MESSAGE.SPACE')
 					});
 				} else {
-					console.log(data);
 					await updateDepartment(this.ids, data)
 						.then(res => {
 							if (res.status == 200) {
@@ -296,7 +292,6 @@
 					});
 			},
 			isResetDataModal() {
-				console.log('RESET DATA');
 				this.name = '';
 			}
 		}

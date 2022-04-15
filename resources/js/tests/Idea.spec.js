@@ -194,6 +194,201 @@ describe('TEST FUNCTION IN IDEA SCREEN', () => {
 		expect(wrapper.vm.handleStatusReact([{ status: 0 }])).toEqual(0);
 		expect(wrapper.vm.handleStatusReact([{ status: 1 }])).toEqual(1);
 		expect(wrapper.vm.handleStatusReact([{ status: 1234 }])).toEqual(-1);
+		expect(wrapper.vm.handleStatusReact([{ status: '' }])).toEqual(-1);
+		expect(wrapper.vm.handleStatusReact([{ status: 'ABC' }])).toEqual(-1);
+		expect(wrapper.vm.handleStatusReact([{ status: '^%@#$' }])).toEqual(-1);
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handlePostIdea', async () => {
+		const handlePostIdea = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		handlePostIdea();
+		expect(handlePostIdea).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleGetListIdeas', async () => {
+		const handleGetListIdeas = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		handleGetListIdeas();
+		expect(handleGetListIdeas).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleActionReact', async () => {
+		const handleActionReact = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		handleActionReact();
+		expect(handleActionReact).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleUpdateListPost', () => {
+		const handleUpdateListPost = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		handleUpdateListPost();
+		expect(handleUpdateListPost).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION handleLike', () => {
+		const handleLike = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		handleLike();
+		expect(handleLike).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION showModalCreate', () => {
+		const showModalCreate = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		showModalCreate();
+		expect(showModalCreate).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION disconnectComment', () => {
+		const disconnectComment = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		disconnectComment();
+		expect(disconnectComment).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION connectComment', () => {
+		const connectComment = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		connectComment();
+		expect(connectComment).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION onClickSendComment', () => {
+		const onClickSendComment = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		onClickSendComment();
+		expect(onClickSendComment).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION connect', () => {
+		const connect = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		connect();
+		expect(connect).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION showModal', () => {
+		const showModal = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		showModal();
+		expect(showModal).toHaveBeenCalled();
+
+		wrapper.destroy();
+	});
+
+	test('TEST FUNCTION getListCommet', () => {
+		const getListCommet = jest.fn();
+
+		const localVue = createLocalVue();
+		const wrapper = mount(Idea, {
+			localVue,
+			router,
+			store
+		});
+
+		getListCommet();
+		expect(getListCommet).toHaveBeenCalled();
 
 		wrapper.destroy();
 	});

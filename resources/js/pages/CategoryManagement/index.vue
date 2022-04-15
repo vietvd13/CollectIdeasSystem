@@ -251,7 +251,6 @@
 				} else {
 					this.isResetDataModal();
 					this.action = 'CREATE';
-					console.log('CREATE');
 				}
 				this.showModal = true;
 			},
@@ -260,7 +259,6 @@
 				await getCategoryTable(this.params)
 					.then(res => {
 						if (res.status === 200) {
-							console.log(res);
 							this.listCategory = res.data.data;
 							this.isLoading = false;
 						}
@@ -276,7 +274,7 @@
 					end_collect_date: this.newCategory.end_collect_date,
 					description: this.newCategory.description
 				};
-				console.log(data);
+
 				if (
 					isEmptyOrWhiteSpace(data.topic_name) ||
 					isEmptyOrWhiteSpace(data.start_collect_date) ||
@@ -397,7 +395,6 @@
 				});
 			},
 			isResetDataModal() {
-				console.log('RESET DATA');
 				this.newCategory = {
 					id: '',
 					topic_name: '',
