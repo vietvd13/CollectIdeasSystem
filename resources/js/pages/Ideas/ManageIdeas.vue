@@ -5,7 +5,7 @@
 		</div>
 		<div class="manage-ideas__content row align-items-center justify-content-center">
 			<div class="manage-ideas__content-post col-12 col-sm-12 col-md-10 col-lg-10 col-xl-6">
-				<div class="card">
+				<div class="card" v-if="getRole === 'STAFF'">
 					<div class="card-body area-post">
 						<b-avatar
 							variant="info"
@@ -118,7 +118,7 @@
 
 		<b-row>
 			<b-col>
-				<div style="margin-top: 30px; text-align: center">
+				<div style="margin-top: 30px">
 					<b-pagination
 						v-model="pagination.page"
 						:total-rows="pagination.total"
@@ -419,6 +419,9 @@
 			},
 			totalLike() {
 				return this.like_count;
+			},
+			getRole() {
+				return this.$store.getters.roles[0];
 			}
 		},
 		watch: {
