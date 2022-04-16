@@ -31,7 +31,7 @@ class IdeaService extends BaseService implements IdeaServiceInterface
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function loadIdeas($category_id, $user, $limit = null, $columns = ['*']) {
+    public function loadIdeas($orderBy, $category_id, $user, $limit = null, $columns = ['*']) {
         $ideas = $this->repository
                 ->where(['category_id' => $category_id])
                 ->with([
@@ -44,9 +44,13 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                     'user' => function ($query) {
                         $query->select(['*']);
                     }
-                ])
-                ->orderBy('created_at', 'DESC')
-                ->paginate($limit, $columns);
+                ]);
+                if ($orderBy == "newest") {
+                    $ideas = $ideas->orderBy('created_at', 'DESC');
+                } else if ($orderBy == "popular") {
+                    $ideas = $ideas->withCount('likes')->orderBy('likes_count', 'desc');
+                }
+                $ideas->paginate($limit, $columns);
         return $ideas;
     }
 
