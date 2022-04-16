@@ -13,6 +13,7 @@ use App\Http\Resources\IdeaResource;
 use App\Services\Contracts\IdeaServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Resources\IdeaListResource;
+use Illuminate\Support\Arr;
 class IdeaController extends Controller
 {
 
@@ -70,7 +71,8 @@ class IdeaController extends Controller
      */
     public function index(IdeaRequest $request)
     {
-        $data = $this->service->loadIdeas($request->category_id, $request->user()->id, $request->per_page);
+        $orderBy = Arr::get($request->all(), 'orderby', 'newest');
+        $data = $this->service->loadIdeas($orderBy, $request->category_id, $request->user()->id, $request->per_page);
         return IdeaListResource::collection($data);
     }
 
