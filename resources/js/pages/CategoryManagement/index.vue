@@ -198,6 +198,10 @@
 						label: this.$t('CATEGORY.TABLE.HEADING.START')
 					},
 					{
+						key: 'end_collect_date',
+						label: this.$t('CATEGORY.TABLE.HEADING.END')
+					},
+					{
 						key: 'description',
 						label: this.$t('CATEGORY.TABLE.HEADING.DESCRIPTION')
 					},
@@ -288,7 +292,7 @@
 						title: 'Warning',
 						content: this.$t('CATEGORY.FORM.MESSAGE.SPACE')
 					});
-				} else if (data.start_collect_date < data.end_collect_date) {
+				} else if (data.start_collect_date > data.end_collect_date) {
 					MakeToast({
 						variant: 'warning',
 						title: 'Warning',
@@ -434,7 +438,8 @@
 		float: right;
 	}
 	.category-management__searching {
-		display: flex;
+		/* display: flex; */
+		display: none;
 		/* justify-content: flex-start;
     align-items: center; */
 		margin-top: 20px;
