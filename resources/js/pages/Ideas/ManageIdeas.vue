@@ -90,7 +90,7 @@
 										</div>
 									</div>
 								</b-col>
-								<b-col cols="3" sm="12" md="3" lg="3" xl="3">
+								<b-col cols="6" sm="6" md="4" lg="4" xl="4">
 									<div class="d-flex flex-column justify-content-center">
 										<div
 											:class="{
@@ -105,7 +105,7 @@
 										</div>
 									</div>
 								</b-col>
-								<b-col cols="3" sm="12" md="3" lg="3" xl="3">
+								<b-col cols="12" sm="12" md="4" lg="4" xl="4">
 									<div class="d-flex flex-column justify-content-center">
 										<div
 											@click="showModal(true, idea.id)"
