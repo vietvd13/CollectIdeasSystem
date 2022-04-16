@@ -66,6 +66,11 @@
 										<i class="fas fa-thumbs-down" style="color: #0571ed"></i>
 									</b>
 								</b-col>
+								<b-col>
+									<button class="btn btn-info" @click="handleDowloadZip(idea.id)">
+										Dowload Zip
+									</button>
+								</b-col>
 							</b-row>
 							<b-row class="mt-2">
 								<b-col cols="6" sm="6" md="4" lg="4" xl="4">
@@ -680,6 +685,9 @@
 				} catch (error) {
 					console.log(error);
 				}
+			},
+			handleDowloadZip(id) {
+				window.open(`/api/idea/download?idea_id=${id}`);
 			},
 			resetData() {
 				this.data.contents = '';
