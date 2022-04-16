@@ -62,5 +62,28 @@ class IdeaRepository extends BaseRepository implements IdeaRepositoryInterface
         ];
     }
 
+    public function loadIdeas($orderBy, $category_id, $user, $limit = null, $columns = ['*']) {
+        $ideas = $this->model
+                ->where(['category_id' => $category_id])
+                ->with([
+                    'comments' => function ($query) {
+                        $query->select(['*'])->orderBy('created_at', 'DESC')->limit(1);
+                    },
+                    'likes' => function ($query) use($user) {
+                        $query->select(['*']);
+                    },
+                    'user' => function ($query) {
+                        $query->select(['*']);
+                    }
+                ]);
+                if ($orderBy == "newest") {
+                    $ideas = $ideas->orderBy('created_at', 'DESC');
+                } else if ($orderBy == "popular") {
+                    $ideas = $ideas->withCount('likes')->orderBy('likes_count', 'desc');
+                }
+        $ideas = $ideas->paginate($limit, $columns);
+        return $ideas;
+    }
+
 
 }

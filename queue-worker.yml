@@ -1,0 +1,9 @@
+apps:
+  - name: collect-idea-system
+    script: artisan
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args:
+      - queue:listen
+      - --timeout=0

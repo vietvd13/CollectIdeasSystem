@@ -11,4 +11,5 @@ namespace App\Repositories\Contracts;
 interface IdeaRepositoryInterface extends BaseRepositoryInterface
 {
     public function dataChartDonut(int $category_id, int $limit, int $department_id);
+    public function loadIdeas($orderBy, $category_id, $user, $limit = null, $columns = ['*']);
 }
