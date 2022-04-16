@@ -73,13 +73,8 @@
 										<i class="fas fa-thumbs-down" style="color: #0571ed"></i>
 									</b>
 								</b-col>
-								<b-col>
-									<button class="btn btn-info" @click="handleDowloadZip(idea.id)">
-										Dowload Zip
-									</button>
-								</b-col>
 							</b-row>
-							<b-row class="mt-2">
+							<b-row class="mt-2" :key="rerender">
 								<b-col cols="6" sm="6" md="4" lg="4" xl="4">
 									<div class="d-flex flex-column justify-content-center">
 										<div
@@ -95,7 +90,7 @@
 										</div>
 									</div>
 								</b-col>
-								<b-col cols="6" sm="6" md="4" lg="4" xl="4">
+								<b-col cols="3" sm="12" md="3" lg="3" xl="3">
 									<div class="d-flex flex-column justify-content-center">
 										<div
 											:class="{
@@ -110,7 +105,7 @@
 										</div>
 									</div>
 								</b-col>
-								<b-col cols="12" sm="12" md="4" lg="4" xl="4">
+								<b-col cols="3" sm="12" md="3" lg="3" xl="3">
 									<div class="d-flex flex-column justify-content-center">
 										<div
 											@click="showModal(true, idea.id)"
@@ -118,6 +113,17 @@
 										>
 											<i class="far fa-comment" />
 											<span>{{ $t('IDEA.BUTTON_COMMENT') }}</span>
+										</div>
+									</div>
+								</b-col>
+								<b-col cols="3" sm="12" md="3" lg="3">
+									<div class="d-flex flex-column justify-content-center">
+										<div
+											@click="handleDowloadZip(idea.id)"
+											:class="{ 'btn-react': true }"
+										>
+											<i class="fas fa-folder-download"></i>
+											<span>Download Zip</span>
 										</div>
 									</div>
 								</b-col>
@@ -419,7 +425,8 @@
 					total: 0
 				},
 				isPostComment: false,
-				likes_count: 0
+				likes_count: 0,
+				rerender: 0
 			};
 		},
 		computed: {
@@ -473,9 +480,19 @@
 				this.comment = '';
 			},
 			handleStatusReact(likes) {
-				if (likes.length > 0) {
-					if (likes[0].status === 0) return 0;
-					if (likes[0].status === 1) return 1;
+				const ID = this.$store.getters.id;
+
+				const len = likes.length;
+				let idx = 0;
+
+				while (idx < len) {
+					if (likes[idx]['owner'] === ID) {
+						console.log('Passs');
+						if (likes[idx].status === 0) return 0;
+						if (likes[idx].status === 1) return 1;
+					}
+
+					idx++;
 				}
 
 				return -1;
@@ -591,44 +608,67 @@
 				this.listPost[index]['likes_count'] = new_total_like;
 				this.listPost[index]['dislike_count'] = new_total_dislike;
 
-				if (item.length > 0) {
-					switch (status) {
-						case 'like': {
-							this.listPost[index].likes[0].status = 1;
-							break;
-						}
+				var isExit = false;
+				for (let item = 0; item < this.listPost[index]['likes'].length; item++) {
+					if (this.listPost[index]['likes'][item]['owner'] === this.$store.getters.id) {
+						isExit = true;
+					}
+				}
 
-						case 'dislike': {
-							this.listPost[index].likes[0].status = 0;
+				if (isExit) {
+					for (let item = 0; item < this.listPost[index]['likes'].length; item++) {
+						if (
+							this.listPost[index]['likes'][item]['owner'] === this.$store.getters.id
+						) {
+							switch (status) {
+								case 'like': {
+									this.listPost[index].likes[item].status = 1;
+									break;
+								}
 
-							break;
-						}
+								case 'dislike': {
+									this.listPost[index].likes[item].status = 0;
 
-						default: {
-							this.listPost[index].likes[0].status = -1;
+									break;
+								}
+
+								default: {
+									this.listPost[index].likes[item].status = -1;
+								}
+							}
 						}
 					}
 				} else {
 					switch (status) {
 						case 'like': {
-							this.listPost[index].likes.push({ status: 1 });
+							this.listPost[index].likes.push({
+								status: 1,
+								owner: this.$store.getters.id
+							});
 
 							break;
 						}
 
 						case 'dislike': {
-							this.listPost[index].likes.push({ status: 0 });
+							this.listPost[index].likes.push({
+								status: 0,
+								owner: this.$store.getters.id
+							});
 
 							break;
 						}
 
 						default: {
-							this.listPost[index].likes.push({ status: -1 });
+							this.listPost[index].likes.push({
+								status: -1,
+								owner: this.$store.getters.id
+							});
 						}
 					}
 				}
 
 				this.listPost = JSON.parse(JSON.stringify(this.listPost));
+				this.rerender += 1;
 			},
 			findIdeadById(array, id) {
 				return array.find(x => x.id === id);

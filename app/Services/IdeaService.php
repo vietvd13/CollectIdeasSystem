@@ -31,22 +31,8 @@ class IdeaService extends BaseService implements IdeaServiceInterface
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function loadIdeas($category_id, $user, $limit = null, $columns = ['*']) {
-        $ideas = $this->repository
-                ->where(['category_id' => $category_id])
-                ->with([
-                    'comments' => function ($query) {
-                        $query->select(['*'])->orderBy('created_at', 'DESC')->limit(1);
-                    },
-                    'likes' => function ($query) use($user) {
-                        $query->select(['*']);
-                    },
-                    'user' => function ($query) {
-                        $query->select(['*']);
-                    }
-                ])
-                ->orderBy('created_at', 'DESC')
-                ->paginate($limit, $columns);
+    public function loadIdeas($orderBy, $category_id, $user, $limit = null, $columns = ['*']) {
+        $ideas = $this->repository->loadIdeas($orderBy, $category_id, $user, $limit, $columns);
         return $ideas;
     }
 

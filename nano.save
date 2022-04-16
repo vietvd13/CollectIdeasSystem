@@ -1,0 +1,19 @@
+<VirtualHost *:80>
+    ServerAdmin admin@example.com
+    ServerName admin.localdriver.local
+    ServerAlias www.admin.localdriver.local
+    # Đây là đường dẫn đến folder project của bạn
+    DocumentRoot /var/www/localdriver/public
+ 
+    <Directory /var/www/localdriver/>
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            Order allow,deny
+            allow from all
+            Require all granted
+    </Directory>
+ 
+    LogLevel debug
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
