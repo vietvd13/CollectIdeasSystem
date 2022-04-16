@@ -450,9 +450,19 @@
 				this.comment = '';
 			},
 			handleStatusReact(likes) {
-				if (likes.length > 0) {
-					if (likes[0].status === 0) return 0;
-					if (likes[0].status === 1) return 1;
+				const ID = this.$store.getters.id;
+
+				const len = likes.length;
+				let idx = 0;
+
+				while (idx < len) {
+					if (likes[idx]['owner'] === ID) {
+						console.log('Passs');
+						if (likes[idx].status === 0) return 0;
+						if (likes[idx].status === 1) return 1;
+					}
+
+					idx++;
 				}
 
 				return -1;
