@@ -1,73 +1,74 @@
 .account-management {
-    padding: 20px;
-    &__header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        &-actions {
-            button {
-                background: #242368;
-            }
-        }
-    }
-    &__searching {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        margin-top: 20px;
+	padding: 20px;
+	&__header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		&-actions {
+			button {
+				background: #242368;
+			}
+		}
+	}
+	&__searching {
+		display: none;
+		// display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		margin-top: 20px;
 
-        &-filter {
-            width: 25%;
-            margin-right: 20px;
-            input {
-                box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
-            }
-        }
-        &-keyword {
-            width: 25%;
-            margin-left: 20px;
-            input {
-                background-color: inherit;
-                border: 1px solid #ddd;
-                &:focus {
-                    background-color: inherit;
-                }
-            }
-            button {
-                background-color: #242368;
-                &:hover {
-                    background-color: #242368;
-                }
-            }
-        }
-        @media screen and (max-width: 768px) {
-            flex-direction: column;
-            &-filter {
-                width: 100%;
-            }
-            &-keyword {
-                width: 100%;
-            }
-        }
-    }
-    &__content {
-        table {
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
-            thead {
-                background: #242368;
-                color: #fff;
-            }
-            td {
-                vertical-align: middle;
-            }
-        }
-        ul {
-            float: right;
-            .page-item.active .page-link {
-                background-color: #242368;
-                border-color: #242368;
-            }
-        }
-    }
+		&-filter {
+			width: 25%;
+			margin-right: 20px;
+			input {
+				box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+			}
+		}
+		&-keyword {
+			width: 25%;
+			margin-left: 20px;
+			input {
+				background-color: inherit;
+				border: 1px solid #ddd;
+				&:focus {
+					background-color: inherit;
+				}
+			}
+			button {
+				background-color: #242368;
+				&:hover {
+					background-color: #242368;
+				}
+			}
+		}
+		@media screen and (max-width: 768px) {
+			flex-direction: column;
+			&-filter {
+				width: 100%;
+			}
+			&-keyword {
+				width: 100%;
+			}
+		}
+	}
+	&__content {
+		table {
+			box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+			thead {
+				background: #242368;
+				color: #fff;
+			}
+			td {
+				vertical-align: middle;
+			}
+		}
+		ul {
+			float: right;
+			.page-item.active .page-link {
+				background-color: #242368;
+				border-color: #242368;
+			}
+		}
+	}
 }

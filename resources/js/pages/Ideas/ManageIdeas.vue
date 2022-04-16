@@ -66,6 +66,11 @@
 										<i class="fas fa-thumbs-down" style="color: #0571ed"></i>
 									</b>
 								</b-col>
+								<b-col>
+									<button class="btn btn-info" @click="handleDowloadZip(idea.id)">
+										Dowload Zip
+									</button>
+								</b-col>
 							</b-row>
 							<b-row class="mt-2">
 								<b-col cols="6" sm="6" md="4" lg="4" xl="4">
@@ -563,8 +568,8 @@
 				window.Echo.channel('collect_idea').stopListening(`.idea-comment-${id}`);
 			},
 			showModalCreate(e) {
-				this.resetData();
 				this.isShowModalPost = e;
+				this.resetData();
 			},
 			handleLike(id, index) {
 				this.handleActionReact(id, 1, index);
@@ -650,8 +655,8 @@
 					const res = await getListIdeas(params);
 					this.isLoading = false;
 					this.listPost = res.data;
-					this.pagination.page = res.current_page;
-					this.pagination.total = res.total;
+					this.pagination.page = res.meta.current_page;
+					this.pagination.total = res.meta.total;
 				} catch (error) {
 					console.log(error);
 				}
@@ -677,6 +682,7 @@
 							if (res.status == 200) {
 								this.handleGetListIdeas();
 								this.isShowModalPost = false;
+								this.resetData();
 							}
 						} else {
 							MakeToast({
@@ -690,8 +696,12 @@
 					console.log(error);
 				}
 			},
+			handleDowloadZip(id) {
+				window.open(`/api/idea/download?idea_id=${id}`);
+			},
 			resetData() {
 				this.data.contents = '';
+				this.liences = false;
 			}
 		}
 	};

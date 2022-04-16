@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
         $admin->syncRoles($adminRole);
 
         $qam = User::create([
-            'department_id' => 2,
+            'department_id' => 1,
             'name' => "Quality Assurance Manager",
             'email' => "qam@gmail.com",
             'birth' => '2000-05-27',
@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
         $qam->syncRoles($qamRole);
 
         $qac = User::create([
-            'department_id' => 3,
+            'department_id' => 1,
             'name' => "Quality Assurance Coordinator",
             'email' => "qac@gmail.com",
             'birth' => '2000-05-27',
@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
         $qac->syncRoles($qacRole);
 
         $staff = User::create([
-            'department_id' => 4,
+            'department_id' => 1,
             'name' => "Staff",
             'email' => "staff@gmail.com",
             'birth' => '2000-05-27',
