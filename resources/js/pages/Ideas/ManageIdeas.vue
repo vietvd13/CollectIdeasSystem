@@ -18,6 +18,13 @@
 							v-b-modal.modal-ideas
 						/>
 					</div>
+					<div class="card-body">
+						<b-form-select
+							id="orderby"
+							v-model="orderBy"
+							:options="order"
+						></b-form-select>
+					</div>
 				</div>
 				<div v-for="(idea, index) in listPost" :key="index" class="area-content card">
 					<b-card>
@@ -372,6 +379,11 @@
 				isShowModal: false,
 				isShowModalPost: false,
 				selected: null,
+				order: [
+					{ value: 'newest', text: 'Popular Ideas' },
+					{ value: 'popular', text: 'Newest Ideas' }
+				],
+				orderBy: 'newest',
 				liences: false,
 				data: {
 					category_id: null,
@@ -430,12 +442,18 @@
 			totalLike() {
 				return this.like_count;
 			},
+			orderIdeasBy() {
+				return this.orderBy;
+			},
 			getRole() {
 				return this.$store.getters.roles[0];
 			}
 		},
 		watch: {
 			pageChange() {
+				this.handleGetListIdeas();
+			},
+			orderIdeasBy() {
 				this.handleGetListIdeas();
 			}
 		},
@@ -679,7 +697,8 @@
 				const params = {
 					category_id: this.id,
 					page: this.pagination.page,
-					per_page: this.pagination.per_page
+					per_page: this.pagination.per_page,
+					orderby: this.orderBy
 				};
 				try {
 					const res = await getListIdeas(params);
