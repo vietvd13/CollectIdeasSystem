@@ -39,13 +39,12 @@ class IdeaService extends BaseService implements IdeaServiceInterface
                         $query->select(['*'])->orderBy('created_at', 'DESC')->limit(1);
                     },
                     'likes' => function ($query) use($user) {
-                        $query->where('owner', $user)->select(['*']);
+                        $query->select(['*']);
                     },
                     'user' => function ($query) {
                         $query->select(['*']);
                     }
                 ])
-                ->withCount('likes')
                 ->orderBy('created_at', 'DESC')
                 ->paginate($limit, $columns);
         return $ideas;
