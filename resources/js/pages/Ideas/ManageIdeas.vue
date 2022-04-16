@@ -72,7 +72,7 @@
 									</button>
 								</b-col>
 							</b-row>
-							<b-row class="mt-2">
+							<b-row class="mt-2" :key="rerender">
 								<b-col cols="6" sm="6" md="4" lg="4" xl="4">
 									<div class="d-flex flex-column justify-content-center">
 										<div
@@ -407,7 +407,8 @@
 					total: 0
 				},
 				isPostComment: false,
-				likes_count: 0
+				likes_count: 0,
+				rerender: 0
 			};
 		},
 		computed: {
@@ -583,44 +584,67 @@
 				this.listPost[index]['likes_count'] = new_total_like;
 				this.listPost[index]['dislike_count'] = new_total_dislike;
 
-				if (item.length > 0) {
-					switch (status) {
-						case 'like': {
-							this.listPost[index].likes[0].status = 1;
-							break;
-						}
+				var isExit = false;
+				for (let item = 0; item < this.listPost[index]['likes'].length; item++) {
+					if (this.listPost[index]['likes'][item]['owner'] === this.$store.getters.id) {
+						isExit = true;
+					}
+				}
 
-						case 'dislike': {
-							this.listPost[index].likes[0].status = 0;
+				if (isExit) {
+					for (let item = 0; item < this.listPost[index]['likes'].length; item++) {
+						if (
+							this.listPost[index]['likes'][item]['owner'] === this.$store.getters.id
+						) {
+							switch (status) {
+								case 'like': {
+									this.listPost[index].likes[item].status = 1;
+									break;
+								}
 
-							break;
-						}
+								case 'dislike': {
+									this.listPost[index].likes[item].status = 0;
 
-						default: {
-							this.listPost[index].likes[0].status = -1;
+									break;
+								}
+
+								default: {
+									this.listPost[index].likes[item].status = -1;
+								}
+							}
 						}
 					}
 				} else {
 					switch (status) {
 						case 'like': {
-							this.listPost[index].likes.push({ status: 1 });
+							this.listPost[index].likes.push({
+								status: 1,
+								owner: this.$store.getters.id
+							});
 
 							break;
 						}
 
 						case 'dislike': {
-							this.listPost[index].likes.push({ status: 0 });
+							this.listPost[index].likes.push({
+								status: 0,
+								owner: this.$store.getters.id
+							});
 
 							break;
 						}
 
 						default: {
-							this.listPost[index].likes.push({ status: -1 });
+							this.listPost[index].likes.push({
+								status: -1,
+								owner: this.$store.getters.id
+							});
 						}
 					}
 				}
 
 				this.listPost = JSON.parse(JSON.stringify(this.listPost));
+				this.rerender += 1;
 			},
 			findIdeadById(array, id) {
 				return array.find(x => x.id === id);
