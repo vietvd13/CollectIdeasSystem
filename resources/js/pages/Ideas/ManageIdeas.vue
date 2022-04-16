@@ -108,12 +108,15 @@
 											<span>{{ $t('IDEA.BUTTON_COMMENT') }}</span>
 										</div>
 									</div>
-								</b-col>
-								<b-col cols="3" sm="12" md="3" lg="3">
+								</b-col> </b-row
+							>'
+
+							<b-row style="margin-top: px">
+								<b-col>
 									<div class="d-flex flex-column justify-content-center">
 										<div
 											@click="handleDowloadZip(idea.id)"
-											:class="{ 'btn-react': true }"
+											:class="{ 'btn-react': true, 'btn-react-active': true }"
 										>
 											<i class="fas fa-folder-download"></i>
 											<span>Download Zip</span>
