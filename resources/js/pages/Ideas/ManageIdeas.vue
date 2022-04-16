@@ -18,7 +18,10 @@
 							v-b-modal.modal-ideas
 						/>
 					</div>
+				</div>
+				<div class="card">
 					<div class="card-body">
+						<h5>Sort By </h5>
 						<b-form-select
 							id="orderby"
 							v-model="orderBy"
@@ -380,8 +383,8 @@
 				isShowModalPost: false,
 				selected: null,
 				order: [
-					{ value: 'newest', text: 'Popular Ideas' },
-					{ value: 'popular', text: 'Newest Ideas' }
+					{ value: 'newest', text: 'Newest Ideas' },
+					{ value: 'popular', text: 'Popular Ideas' }
 				],
 				orderBy: 'newest',
 				liences: false,
