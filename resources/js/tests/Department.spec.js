@@ -3,7 +3,7 @@ import router from '@/router';
 import { mount, createLocalVue } from '@vue/test-utils';
 import DepartmentManagement from '../pages/DepartmentManagement';
 
-describe('TEST FUNCTION IN SCREEN CATEGORY', () => {
+describe('TEST FUNCTION IN SCREEN DEPARTMENT', () => {
 	test('TEST RENDER COMPONENT TEMPLATE', async () => {
 		const localVue = createLocalVue();
 		const wrapper = mount(DepartmentManagement, {
@@ -12,16 +12,16 @@ describe('TEST FUNCTION IN SCREEN CATEGORY', () => {
 			store
 		});
 
-		const CATEGORY_MANAGEMENT = wrapper.find('.account-management');
-		expect(CATEGORY_MANAGEMENT.exists()).toBe(true);
+		const DEPARTMENT_MANAGEMENT = wrapper.find('.account-management');
+		expect(DEPARTMENT_MANAGEMENT.exists()).toBe(true);
 
-		const HEADER = CATEGORY_MANAGEMENT.find('.account-management__header');
+		const HEADER = DEPARTMENT_MANAGEMENT.find('.account-management__header');
 		expect(HEADER.exists()).toBe(true);
 
-		const SEARCHING = CATEGORY_MANAGEMENT.find('.account-management__searching');
+		const SEARCHING = DEPARTMENT_MANAGEMENT.find('.account-management__searching');
 		expect(SEARCHING.exists()).toBe(true);
 
-		const CONTENT = CATEGORY_MANAGEMENT.find('.account-management__content');
+		const CONTENT = DEPARTMENT_MANAGEMENT.find('.account-management__content');
 		expect(CONTENT.exists()).toBe(true);
 
 		wrapper.destroy();
