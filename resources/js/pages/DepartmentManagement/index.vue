@@ -42,7 +42,7 @@
 					<button @click="handleModal(item.item.id)" class="btn btn-warning">
 						<i class="fas fa-edit"></i>
 					</button>
-					<button @click="handleDeleteDepartment(item.id)" class="btn btn-danger">
+					<button @click="handleDeleteDepartment(item.item.id)" class="btn btn-danger">
 						<i class="fas fa-trash-alt"></i>
 					</button>
 				</template>
