@@ -29,8 +29,8 @@ class CommentMail extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'), "{$this->data['owner_name']}Comment in your submitsion")
-        ->text(new HtmlString("Comment : {$this->data['comment']}"))
+        return $this->from(env('MAIL_FROM_ADDRESS'), "{$this->data['user']} comment in your submitsion")
+        ->text(new HtmlString("Comment : {$this->data['comment']->comment} at {$this->data['comment']->created_at}"))
         ->subject("Comment in your submitsion");
     }
 }
