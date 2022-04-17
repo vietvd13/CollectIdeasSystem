@@ -105,7 +105,7 @@
 										</div>
 									</div>
 								</b-col>
-								<b-col cols="12" sm="12" md="4" lg="4" xl="4">
+								<b-col cols="12" sm="" md="4" lg="4" xl="4">
 									<div class="d-flex flex-column justify-content-center">
 										<div
 											@click="showModal(true, idea.id)"
@@ -115,10 +115,10 @@
 											<span>{{ $t('IDEA.BUTTON_COMMENT') }}</span>
 										</div>
 									</div>
-								</b-col> </b-row
-							>'
+								</b-col>
+							</b-row>
 
-							<b-row style="margin-top: px">
+							<b-row style="margin-top: 10px">
 								<b-col>
 									<div class="d-flex flex-column justify-content-center">
 										<div

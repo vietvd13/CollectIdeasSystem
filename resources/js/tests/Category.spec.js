@@ -37,7 +37,7 @@ describe('TEST FUNCTION IN SCREEN CATEGORY', () => {
 		});
 
 		const LOADING = wrapper.find('.loading');
-		expect(LOADING.exists()).toBe(false);
+		expect(LOADING.exists()).toBe(true);
 
 		wrapper.destroy();
 	});
@@ -109,19 +109,6 @@ describe('TEST FUNCTION IN SCREEN CATEGORY', () => {
 
 		const TITLE_HEAD = HEAD_TABLE.findAll('th');
 		expect(TITLE_HEAD.length).toEqual(6);
-
-		wrapper.destroy();
-	});
-
-	test('TEST FUNCTION rows', async () => {
-		const localVue = createLocalVue();
-		const wrapper = mount(CategoryManagement, {
-			localVue,
-			router,
-			store
-		});
-
-		expect(wrapper.vm.rows).toEqual(0);
 
 		wrapper.destroy();
 	});

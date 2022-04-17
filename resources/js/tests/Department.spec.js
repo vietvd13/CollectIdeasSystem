@@ -36,7 +36,7 @@ describe('TEST FUNCTION IN SCREEN CATEGORY', () => {
 		});
 
 		const LOADING = wrapper.find('.loading');
-		expect(LOADING.exists()).toBe(false);
+		expect(LOADING.exists()).toBe(true);
 
 		wrapper.destroy();
 	});
@@ -105,19 +105,6 @@ describe('TEST FUNCTION IN SCREEN CATEGORY', () => {
 		wrapper.destroy();
 	});
 
-	test('TEST FUNCTION rows', async () => {
-		const localVue = createLocalVue();
-		const wrapper = mount(DepartmentManagement, {
-			localVue,
-			router,
-			store
-		});
-
-		expect(wrapper.vm.rows).toEqual(0);
-
-		wrapper.destroy();
-	});
-
 	test('TEST FUNCTION isChangePage', async () => {
 		const localVue = createLocalVue();
 		const wrapper = mount(DepartmentManagement, {
@@ -140,12 +127,12 @@ describe('TEST FUNCTION IN SCREEN CATEGORY', () => {
 		});
 
 		expect(wrapper.vm.params).toEqual({
-			perPage: 5,
-			currentPage: 1
+			page: 1,
+			per_page: 5
 		});
 		expect(wrapper.vm.selected).toEqual(null);
 		expect(wrapper.vm.options).toEqual([]);
-		expect(wrapper.vm.isLoading).toEqual(false);
+		expect(wrapper.vm.isLoading).toEqual(true);
 		expect(wrapper.vm.listDepartments).toEqual([]);
 		expect(wrapper.vm.name).toEqual('');
 		expect(wrapper.vm.action).toEqual('');

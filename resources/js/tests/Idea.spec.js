@@ -12,7 +12,7 @@ describe('TEST FUNCTION IN IDEA SCREEN', () => {
 			store
 		});
 
-		expect(wrapper.vm.rerender).toEqual(1);
+		expect(wrapper.vm.rerender).toEqual(0);
 		expect(wrapper.vm.isShowModal).toEqual(false);
 		expect(wrapper.vm.isShowModalPost).toEqual(false);
 		expect(wrapper.vm.selected).toEqual(null);
@@ -191,8 +191,8 @@ describe('TEST FUNCTION IN IDEA SCREEN', () => {
 			store
 		});
 
-		expect(wrapper.vm.handleStatusReact([{ status: 0 }])).toEqual(0);
-		expect(wrapper.vm.handleStatusReact([{ status: 1 }])).toEqual(1);
+		expect(wrapper.vm.handleStatusReact([{ status: 0 }])).toEqual(-1);
+		expect(wrapper.vm.handleStatusReact([{ status: 1 }])).toEqual(-1);
 		expect(wrapper.vm.handleStatusReact([{ status: 1234 }])).toEqual(-1);
 		expect(wrapper.vm.handleStatusReact([{ status: '' }])).toEqual(-1);
 		expect(wrapper.vm.handleStatusReact([{ status: 'ABC' }])).toEqual(-1);
