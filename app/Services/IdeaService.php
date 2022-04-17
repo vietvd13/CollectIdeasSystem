@@ -19,6 +19,7 @@ use Service\BaseService;
 use Service\TransactionService;
 use App\Models\User;
 use Redis;
+use App\Jobs\MailCommentJob;
 class IdeaService extends BaseService implements IdeaServiceInterface
 {
 
@@ -127,6 +128,10 @@ class IdeaService extends BaseService implements IdeaServiceInterface
             ])) {
                 $attributes['comment'] = $comment;
                 event(new IdeaComment($attributes));
+                MailCommentJob::dispatch($idea->user->email, [
+                    "comment" => $attributes['comment'],
+                    "user" => $attributes['owner']->name
+                ])->onQueue('emails');
             }
             return $attributes;
         }
